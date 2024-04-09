@@ -253,8 +253,8 @@ const handleDrop = (event) => {
     </div>
 
     <!-- main -->
-    <div class="flex-1 grid grid-cols-3 gap-2 p-2">
-      <div class="col-span-3 flex flex-row gap-2">
+    <div class="flex-1 grid grid-cols-3 gap-2 p-2 max-w-full">
+      <div class="col-span-3 flex flex-row max-sm:flex-col gap-2">
         <div
           class="flex-1 bg-base-100 border border-amber-400 rounded flex flex-col p-2 text-center justify-center"
         >
@@ -274,10 +274,12 @@ const handleDrop = (event) => {
           <div class="text-white text-2xl">John Doe</div>
         </div>
       </div>
-      <!-- main left 1/3 -->
-      <div class="col-span-2 flex flex-col gap-2">
+      <!-- main left 2/3 -->
+      <div class="col-span-2 max-sm:col-span-3 flex flex-col gap-2">
         <!-- left top -->
-        <div class="grid grid-cols-5 flex-1 gap-2">
+        <div
+          class="grid grid-cols-5 max-sm:grid max-sm:grid-cols-1 flex-1 gap-2"
+        >
           <!-- enrolled debt - today -->
           <div class="col-span-1 bg-base-300 gap-2 flex flex-col">
             <div
@@ -355,7 +357,7 @@ const handleDrop = (event) => {
         <div class="col-span-1 gap-2 flex flex-col flex-1">
           <!-- chart wrapper -->
           <div
-            class="bg-base-100 flex-1 border border-slate-400 rounded flex flex-col p-2"
+            class="bg-base-100 flex-1 border border-slate-400 rounded flex flex-col p-2 max-w-full overflow-x-auto"
           >
             <div class="">Clients Enrolled - Week</div>
             <div
@@ -370,7 +372,7 @@ const handleDrop = (event) => {
         </div>
       </div>
 
-      <div class="flex flex-col">
+      <div class="flex flex-col col-span-1 max-sm:col-span-3 gap-2">
         <div
           class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col"
         >
