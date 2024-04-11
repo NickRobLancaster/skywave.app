@@ -3,7 +3,7 @@ import { ref, computed, reactive, watch, Teleport, onMounted } from "vue";
 import { csvParse } from "d3-dsv";
 import Chart from "./Chart.vue";
 
-const showUploadModal = ref(false);
+const showUploadModal = ref(true);
 const fileInput = ref(null); // the file object
 const fileName = ref(""); // the name of the csv file
 const columns = ref([]); //the columns in the csv file
@@ -12,6 +12,14 @@ const today = ref("");
 const start = ref("");
 const end = ref("");
 const totalDebtLast7Days = ref([]);
+
+watch(data, (newVal) => {
+  if (data.value.length > 0) {
+    showUploadModal.value = false;
+  } else {
+    showUploadModal.value = true;
+  }
+});
 
 //toggle upload modal
 const toggleUploadModal = () => {
@@ -121,6 +129,19 @@ const handleFiles = (event) => {
 const handleDrop = (event) => {
   event.preventDefault(); // Prevent default behavior for drag and drop
   handleFiles(event);
+};
+
+const wipeData = () => {
+  const confirmWipe = confirm(
+    "Are you sure you want to wipe all the CSV data?"
+  );
+
+  if (!confirmWipe) {
+    return;
+  }
+
+  data.value = [];
+  fileName.value = "";
 };
 
 const todaysDate = computed(() => {
@@ -475,11 +496,18 @@ const newClientsToday = computed(() => {
         Weekly Enrollments ({{ startDate }} - {{ endDate }})
       </h1>
       <div class="ml-auto flex flex-row items-center gap-2">
-        <button
+        <!-- <button
           @click="toggleUploadModal"
           class="btn bg-white text-slate-500 hover:bg-slate-700 hover:text-white"
         >
           <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
+        </button> -->
+
+        <button
+          @click="wipeData"
+          class="btn text-white bg-red-500 hover:bg-red-700"
+        >
+          <font-awesome-icon icon="fa-solid fa-arrows-rotate" />
         </button>
         <img
           class="h-10 w-10 rounded-full"
