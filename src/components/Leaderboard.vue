@@ -107,7 +107,7 @@ const handleFiles = (event) => {
     // Parse CSV text into JSON
     fileName.value = file.name;
     const jsonData = csvParse(csvText);
-    data.value = jsonData; // Store the parsed data for use in your component
+    data.value = trimPropertyNames(jsonData);
 
     columns.value = jsonData.columns;
     console.log(jsonData); // Output to verify
@@ -131,6 +131,19 @@ const todaysDate = computed(() => {
 
   return `${month}/${day}/${year}`;
 });
+
+const trimPropertyNames = (arr) => {
+  return arr.map((obj) => {
+    const newObj = {};
+
+    Object.entries(obj).forEach(([key, value]) => {
+      const trimmedKey = key.trim();
+      newObj[trimmedKey] = value;
+    });
+
+    return newObj;
+  });
+};
 
 //computed function that returns the sum of "Debt Amount" for todaysDate
 const sumDebtsOnDate = (date) => {
@@ -341,9 +354,7 @@ const spiffTodayHoverLeave = () => {
           class="h-full w-full bg-base-100 rounded-xl border border-slate-400"
         >
           <div class="flex flex-col gap-2 p-2 h-full w-full">
-            <h1 class="text-2xl font-bold text-white">
-              Upload File {{ topSalesUsers }}
-            </h1>
+            <h1 class="text-2xl font-bold text-white">Upload File</h1>
             <div class="flex-1 flex flex-row justify-center items-center">
               <div
                 v-if="!fileName"
