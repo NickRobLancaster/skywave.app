@@ -238,9 +238,9 @@ const clientsEnrolledWeek = computed(() => {
 const averageProgramLength = computed(() => {
   return (
     data.value
-      .map((item) => parseInt(item["Term"]))
+      .map((item) => parseInt(Number(item["Term"])))
       .reduce((acc, currentValue) => acc + currentValue, 0) / data.value.length
-  ).toFixed(2);
+  ).toFixed(0);
 });
 
 const topSalesUsers = computed(() => {
