@@ -559,7 +559,10 @@ const newClientsToday = computed(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="">Enrolled Debt - Today ({{ todaysDate }})</div>
+              <div class="">
+                Enrolled Debt <br />
+                - Today
+              </div>
               <div
                 class="flex-1 flex flex-col justify-center items-center text-4xl text-emerald-400"
               >
@@ -569,7 +572,10 @@ const newClientsToday = computed(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="">Average Debt / Client - Week</div>
+              <div class="">
+                Average Debt / Client<br />
+                - Week
+              </div>
               <div
                 class="flex-1 flex flex-col justify-center items-center text-4xl text-blue-400"
               >
@@ -583,7 +589,7 @@ const newClientsToday = computed(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="">Clients Enrolled - Week</div>
+              <div class="">Enrolled Debt - Week</div>
 
               <div class="flex-1">
                 <Chart
@@ -599,7 +605,10 @@ const newClientsToday = computed(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col p-2"
             >
-              <div class="">Enrollments Today</div>
+              <div class="">
+                Enrollments <br />
+                - Today
+              </div>
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl text-orange-400"
               >
@@ -609,7 +618,10 @@ const newClientsToday = computed(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col p-2"
             >
-              <div class="">Average Program Length</div>
+              <div class="">
+                Average Program Length <br />
+                - Week
+              </div>
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl text-purple-400"
               >
@@ -619,7 +631,10 @@ const newClientsToday = computed(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col p-2"
             >
-              <div class="">Clients Enrolled - Week</div>
+              <div class="">
+                Clients Enrolled <br />
+                - Week
+              </div>
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl text-sky-400"
               >
@@ -633,7 +648,7 @@ const newClientsToday = computed(() => {
           <div
             class="bg-base-100 flex-1 border border-slate-400 rounded flex flex-col p-2 max-w-full overflow-x-auto"
           >
-            <div class="">Clients Enrolled - Week</div>
+            <div class="">Enrollments by Rep - Week</div>
             <div
               class="flex-1 flex flex-col justify-center items-center text-5xl"
             >
