@@ -3,7 +3,9 @@ import { ref, computed, reactive, watch, Teleport, onMounted } from "vue";
 import { csvParse } from "d3-dsv";
 import Chart from "./Chart.vue";
 
+const showSidebarModal = ref(false);
 const showUploadModal = ref(true);
+
 const fileInput = ref(null); // the file object
 const fileName = ref(""); // the name of the csv file
 const columns = ref([]); //the columns in the csv file
@@ -24,6 +26,10 @@ watch(data, (newVal) => {
 //toggle upload modal
 const toggleUploadModal = () => {
   showUploadModal.value = !showUploadModal.value;
+};
+
+const toggleSidebarModal = () => {
+  showSidebarModal.value = !showSidebarModal.value;
 };
 
 //chart options for goal chart
@@ -302,24 +308,14 @@ onMounted(() => {
 });
 
 //spiffsToday array or default to the local storage value
-const spiffsToday = ref(
-  JSON.parse(localStorage.getItem("spiffsToday")) || [
-    {
-      sales_rep: "",
-      spiff_amount: "",
-    },
-  ]
+const company_name = ref(
+  JSON.parse(localStorage.getItem("companyName")) || "Quick Dash"
 );
+//spiffsToday array or default to the local storage value
+const spiffsToday = ref(JSON.parse(localStorage.getItem("spiffsToday")) || []);
 
 //spiffsWeek array or default to the local storage value
-const spiffsWeek = ref(
-  JSON.parse(localStorage.getItem("spiffsWeek")) || [
-    {
-      sales_rep: "",
-      spiff_amount: "",
-    },
-  ]
-);
+const spiffsWeek = ref(JSON.parse(localStorage.getItem("spiffsWeek")) || []);
 
 const spiffAdderToday = () => {
   console.log(spiffsToday.value);
@@ -336,6 +332,11 @@ const spiffAdderWeek = () => {
   });
 };
 
+//watch the spiffsToday array and store in local storage
+watch(company_name, (newVal) => {
+  console.log(newVal);
+  localStorage.setItem("companyName", JSON.stringify(newVal));
+});
 //watch the spiffsToday array and store in local storage
 watch(spiffsToday.value, (newVal) => {
   console.log(newVal);
@@ -378,9 +379,135 @@ const newClientsToday = computed(() => {
 
   return data.value.filter((item) => item["Enrolled Date"] === formattedToday);
 });
+
+const wipeLocalStorage = () => {
+  const confirmWipe = confirm(
+    "Are you sure you want to wipe all the local storage data?"
+  );
+
+  if (!confirmWipe) {
+    return;
+  }
+
+  localStorage.clear();
+
+  //reload the page
+  location.reload();
+};
 </script>
 
 <template>
+  <Teleport to="#modals">
+    <transition
+      enter-active-class="transition ease-out duration-300"
+      enter-from-class="translate-x-full opacity-0"
+      enter-to-class="translate-x-0 opacity-100"
+      leave-active-class="transition ease-in duration-300"
+      leave-from-class="translate-x-0 opacity-100"
+      leave-to-class="translate-x-full opacity-0"
+    >
+      <div
+        v-if="showSidebarModal"
+        @click.self="toggleSidebarModal"
+        class="fixed top-0 left-0 w-screen h-screen backdrop-brightness-50 z-50 max-w-screen max-h-screen flex flex-col items-end"
+      >
+        <div class="h-full w-1/3 bg-base-100 border-l border-slate-400">
+          <div class="flex flex-col gap-2 p-2 h-full w-full">
+            <h1 class="text-2xl font-bold text-white text-right">
+              <span class="cursive-text"> Quick Dash </span> &trade;
+            </h1>
+
+            <div
+              class="border border-slate-400 rounded p-2 flex flex-col gap-5"
+            >
+              <h1 class="text-xl text-white">Welcome to Quick Dash</h1>
+              <p class="text-base">
+                In case you haven't figured out how to use Quick Dash &trade;
+                yet... It's pretty simple.
+              </p>
+              <ol
+                class="text-base list-decimal list-inside gap-2 space-y-2 pl-5"
+              >
+                <li>
+                  Upon landing at our page you'll immediately be prompted to
+                  drag and drop or browse a CSV file.
+                </li>
+                <li>Drag it, Drop it, Browse it, whatever you prefer</li>
+                <li>
+                  As long as you didn't upload some janky CSV or one of those
+                  ".xls" files, you'll immediately see your metrics displayed
+                </li>
+                <li>Cheers 🍾</li>
+              </ol>
+
+              <p class="text-base">Feel free to give it a shot below</p>
+            </div>
+
+            <div class="w-1/2 ml-auto">
+              <div class="flex-1 flex flex-row justify-center items-center">
+                <div
+                  v-if="!fileName"
+                  class="p-8 border-slate-400 rounded-xl border-dotted border-4 flex flex-col items-center justify-center gap-8 h-full w-full"
+                  @dragover.prevent
+                  @dragleave.prevent
+                  @drop="handleDrop"
+                >
+                  <p class="text-xl text-center">Drag and Drop CSV File Here</p>
+
+                  <p>OR</p>
+
+                  <button
+                    @click="triggerFileInput"
+                    class="bg-blue-500 text-white p-2 rounded"
+                  >
+                    Browse for a CSV File
+                  </button>
+                  <input
+                    type="file"
+                    ref="fileInput"
+                    class="hidden"
+                    accept=".csv"
+                    @change="handleFiles"
+                    placeholder="Upload File"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="border border-slate-400 rounded p-2 flex flex-col gap-5 mt-auto"
+            >
+              <h1>Settings</h1>
+
+              <div class="grid grid-cols-4 gap-3">
+                <div class="col-span-3 flex flex-col gap-3">
+                  <label for="startDate">Company Name</label>
+                  <input
+                    type="text"
+                    v-model="company_name"
+                    class="input input-sm rounded bg-gray-100 text-slate-600"
+                  />
+                </div>
+                <button
+                  class="btn btn-sm rounded bg-red-500 text-white mt-auto"
+                  @click="wipeLocalStorage"
+                >
+                  Wipe Storage
+                </button>
+              </div>
+            </div>
+            <button
+              @click="toggleSidebarModal"
+              class="btn bg-slate-700 text-white hover:bg-white hover:text-slate-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </Teleport>
+
   <Teleport to="#modals">
     <transition
       enter-active-class="transition ease-out duration-300"
@@ -495,11 +622,16 @@ const newClientsToday = computed(() => {
       <h1 class="text-2xl font-bold text-white">
         Weekly Enrollments ({{ startDate }} - {{ endDate }})
       </h1>
+
+      <div class="ml-auto text-3xl text-white cursive-text">
+        {{ company_name }}
+      </div>
+
       <div class="ml-auto flex flex-row items-center gap-2">
         <button
           v-if="data.length < 1"
           @click="toggleUploadModal"
-          class="btn bg-white text-slate-500 hover:bg-slate-700 hover:text-white"
+          class="btn bg-blue-500 text-white hover:bg-blue-700"
         >
           <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
         </button>
@@ -510,6 +642,13 @@ const newClientsToday = computed(() => {
           class="btn text-white bg-red-500 hover:bg-red-700"
         >
           <font-awesome-icon icon="fa-solid fa-arrows-rotate" />
+        </button>
+
+        <button
+          @click="toggleSidebarModal"
+          class="btn text-slate-600 bg-white hover:bg-base-100 hover:text-white hover:border hover:border-slate-400"
+        >
+          <font-awesome-icon icon="fa-solid fa-bars" />
         </button>
         <!-- <img
           class="h-10 w-10 rounded-full"
@@ -706,7 +845,7 @@ const newClientsToday = computed(() => {
                 <div class="">Spiffs - Today</div>
                 <button
                   @click="spiffAdderToday"
-                  class="ml-auto btn btn-xs border border-slate-400"
+                  class="ml-auto btn btn-xs border border-slate-400 hover:bg-gray-100 hover:text-slate-600"
                 >
                   +
                 </button>
@@ -748,7 +887,7 @@ const newClientsToday = computed(() => {
                     <td v-if="spiffTodayHovered">
                       <button
                         @click="spiffsToday.splice(i, 1)"
-                        class="btn btn-sm bg-red bg-red-500 text-white hover:bg-red-700"
+                        class="btn btn-sm bg-red bg-red-500 text-white hover:bg-red-700 rounded"
                       >
                         <font-awesome-icon icon="fa-solid fa-xmark" />
                       </button>
@@ -767,7 +906,7 @@ const newClientsToday = computed(() => {
                 <div class="">Spiffs - Week</div>
                 <button
                   @click="spiffAdderWeek"
-                  class="ml-auto btn btn-xs border border-slate-400"
+                  class="ml-auto btn btn-xs border border-slate-400 hover:bg-gray-100 hover:text-slate-600"
                 >
                   +
                 </button>
@@ -809,7 +948,7 @@ const newClientsToday = computed(() => {
                     <td v-if="spiffWeekHovered">
                       <button
                         @click="spiffsWeek.splice(i, 1)"
-                        class="btn btn-sm bg-red bg-red-500 text-white hover:bg-red-700"
+                        class="btn btn-sm bg-red bg-red-500 text-white hover:bg-red-700 rounded"
                       >
                         <font-awesome-icon icon="fa-solid fa-xmark" />
                       </button>
@@ -833,5 +972,9 @@ const newClientsToday = computed(() => {
 <style scoped>
 .hide-scroll::-webkit-scrollbar {
   display: none;
+}
+
+.cursive-text {
+  font-family: "Dancing Script", cursive;
 }
 </style>
