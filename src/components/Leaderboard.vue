@@ -110,7 +110,7 @@ const handleFiles = (event) => {
     data.value = trimPropertyNames(jsonData);
 
     columns.value = jsonData.columns;
-    console.log(jsonData); // Output to verify
+    console.log(data); // Output to verify
   };
 
   reader.onerror = (e) => console.error("Error reading file:", e.target.error);
@@ -147,7 +147,7 @@ const trimPropertyNames = (arr) => {
 
 //computed function that returns the sum of "Debt Amount" for todaysDate
 const sumDebtsOnDate = (date) => {
-  return `$${Intl.NumberFormat("en-US").format(
+  return `$${formatWholeNumberWithCommas(
     data.value
       .filter((item) => item["Enrolled Date"] === date)
       .map(
@@ -214,7 +214,7 @@ const averageDebtAmount = computed(() => {
 
   const average =
     filteredItems.length > 0 ? totalDebt / filteredItems.length : 0;
-  return `$${Intl.NumberFormat("en-US").format(average.toFixed(2))}`; // Convert to 2 decimal places string
+  return `$${Intl.NumberFormat("en-US").format(average.toFixed(0))}`; // Convert to 2 decimal places string
 });
 
 //gets the total client that enrolled today from the "Enrolled Date" key on the objects in the data array
@@ -244,20 +244,30 @@ const averageProgramLength = computed(() => {
 });
 
 const topSalesUsers = computed(() => {
-  const userCounts = data.value.reduce((acc, item) => {
+  const userAggregates = data.value.reduce((acc, item) => {
     const user = item["Sales User"];
+    const debtAmount = parseFloat(item["Debt Amount"].replace(/[\$,]/g, ""));
+
     if (!acc[user]) {
-      acc[user] = 0;
+      acc[user] = { count: 0, debt_load: 0 };
     }
-    acc[user] += 1;
+    acc[user].count += 1;
+    acc[user].debt_load += debtAmount;
+
     return acc;
   }, {});
 
-  const sortedUsers = Object.entries(userCounts)
-    .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
-    .map(([user, _count]) => user); // Extract the user names
+  const userObjects = Object.entries(userAggregates).map(
+    ([sales_user, data]) => ({
+      sales_user,
+      debt_load: data.debt_load.toFixed(2), // Formatting the debt_load to 2 decimal places
+    })
+  );
 
-  return sortedUsers.slice(0, 3); // Return the top 3 users
+  // Sorting by count, but could also sort by debt_load if that's more relevant
+  userObjects.sort((a, b) => b.debt_load - a.debt_load);
+
+  return userObjects.slice(0, 3); // Return the top 3 sales users
 });
 
 onMounted(() => {
@@ -333,6 +343,20 @@ const spiffTodayHoverOver = () => {
 const spiffTodayHoverLeave = () => {
   spiffTodayHovered.value = false;
 };
+
+const formatWholeNumberWithCommas = (number) => {
+  const wholeNumber = Math.floor(number); // Or use Math.ceil() or Math.round() as needed
+  return new Intl.NumberFormat("en-US").format(wholeNumber);
+};
+
+const newClientsToday = computed(() => {
+  const today = new Date();
+  const formattedToday = `${
+    today.getMonth() + 1
+  }/${today.getDate()}/${today.getFullYear()}`;
+
+  return data.value.filter((item) => item["Enrolled Date"] === formattedToday);
+});
 </script>
 
 <template>
@@ -348,7 +372,7 @@ const spiffTodayHoverLeave = () => {
       <div
         v-if="showUploadModal"
         @click.self="toggleUploadModal"
-        class="fixed top-0 left-0 w-screen h-screen backdrop-brightness-50 p-10 z-50"
+        class="fixed top-0 left-0 w-screen h-screen backdrop-brightness-50 p-10 z-50 max-w-screen max-h-screen"
       >
         <div
           class="h-full w-full bg-base-100 rounded-xl border border-slate-400"
@@ -466,25 +490,34 @@ const spiffTodayHoverLeave = () => {
     </div>
 
     <!-- main -->
-    <div class="flex-1 grid grid-cols-3 gap-2 p-2 max-w-full">
+    <div class="flex-1 grid grid-cols-3 gap-2 p-2 max-w-full overflow-hidden">
       <div class="col-span-3 flex flex-row max-sm:flex-col gap-2">
         <div
           class="flex-1 bg-base-100 border border-amber-400 rounded flex flex-col p-2 text-center justify-center"
         >
           <div class="text-white text-3xl">1st</div>
-          <div class="text-white text-2xl">John Doe</div>
+          <div class="text-white text-2xl">
+            {{ topSalesUsers[0]?.sales_user }} -
+            {{ `$${formatWholeNumberWithCommas(topSalesUsers[0]?.debt_load)}` }}
+          </div>
         </div>
         <div
           class="flex-1 bg-base-100 border border-gray-200 rounded flex flex-col p-2 text-center justify-center"
         >
           <div class="text-white text-3xl">2nd</div>
-          <div class="text-white text-2xl">John Doe</div>
+          <div class="text-white text-2xl">
+            {{ topSalesUsers[1]?.sales_user }} -
+            {{ `$${formatWholeNumberWithCommas(topSalesUsers[1]?.debt_load)}` }}
+          </div>
         </div>
         <div
           class="flex-1 bg-base-100 border border-amber-600 rounded flex flex-col p-2 text-center justify-center"
         >
           <div class="text-white text-3xl">3rd</div>
-          <div class="text-white text-2xl">John Doe</div>
+          <div class="text-white text-2xl">
+            {{ topSalesUsers[2]?.sales_user }} -
+            {{ `$${formatWholeNumberWithCommas(topSalesUsers[2]?.debt_load)}` }}
+          </div>
         </div>
       </div>
       <!-- main left 2/3 -->
@@ -500,7 +533,7 @@ const spiffTodayHoverLeave = () => {
             >
               <div class="">Enrolled Debt - Today ({{ todaysDate }})</div>
               <div
-                class="flex-1 flex flex-col justify-center items-center text-5xl"
+                class="flex-1 flex flex-col justify-center items-center text-4xl text-emerald-400"
               >
                 {{ sumDebtsOnDate(todaysDate) }}
               </div>
@@ -510,7 +543,7 @@ const spiffTodayHoverLeave = () => {
             >
               <div class="">Average Debt / Client - Week</div>
               <div
-                class="flex-1 flex flex-col justify-center items-center text-5xl"
+                class="flex-1 flex flex-col justify-center items-center text-4xl text-blue-400"
               >
                 {{ averageDebtAmount }}
               </div>
@@ -540,7 +573,7 @@ const spiffTodayHoverLeave = () => {
             >
               <div class="">Enrollments Today</div>
               <div
-                class="flex-1 flex flex-col justify-center items-center text-5xl"
+                class="flex-1 flex flex-col justify-center items-center text-5xl text-orange-400"
               >
                 {{ clientsEnrolledToday }}
               </div>
@@ -550,7 +583,7 @@ const spiffTodayHoverLeave = () => {
             >
               <div class="">Average Program Length</div>
               <div
-                class="flex-1 flex flex-col justify-center items-center text-5xl"
+                class="flex-1 flex flex-col justify-center items-center text-5xl text-purple-400"
               >
                 {{ averageProgramLength === "NaN" ? 0 : averageProgramLength }}
               </div>
@@ -560,7 +593,7 @@ const spiffTodayHoverLeave = () => {
             >
               <div class="">Clients Enrolled - Week</div>
               <div
-                class="flex-1 flex flex-col justify-center items-center text-5xl"
+                class="flex-1 flex flex-col justify-center items-center text-5xl text-sky-400"
               >
                 {{ clientsEnrolledWeek }}
               </div>
@@ -589,41 +622,30 @@ const spiffTodayHoverLeave = () => {
         <div
           class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col"
         >
-          <div class="flex-1 bg-base-100 rounded flex flex-col p-2 gap-5">
-            <div class="">Todays New Clients</div>
+          <div
+            class="h-2/3 bg-base-100 rounded flex flex-col gap-5 overflow-y-auto"
+          >
+            <div class="p-2">New Clients - Today</div>
+
             <div class="flex-1 flex flex-col text-5xl">
-              <div class="overflow-x-auto">
+              <div class="overflow-y-auto">
                 <table class="table table-zebra">
                   <!-- head -->
                   <thead>
                     <tr>
-                      <th></th>
-                      <th>Name</th>
-                      <th>Job</th>
-                      <th>Favorite Color</th>
+                      <th>Program Consultant</th>
+                      <th>Client Name</th>
+                      <th>Term</th>
+                      <th>Total Debt</th>
                     </tr>
                   </thead>
                   <tbody>
                     <!-- row 1 -->
-                    <tr>
-                      <th>1</th>
-                      <td>Cy Ganderton</td>
-                      <td>Quality Control Specialist</td>
-                      <td>Blue</td>
-                    </tr>
-                    <!-- row 2 -->
-                    <tr>
-                      <th>2</th>
-                      <td>Hart Hagerty</td>
-                      <td>Desktop Support Technician</td>
-                      <td>Purple</td>
-                    </tr>
-                    <!-- row 3 -->
-                    <tr>
-                      <th>3</th>
-                      <td>Brice Swyre</td>
-                      <td>Tax Accountant</td>
-                      <td>Red</td>
+                    <tr v-for="(item, i) in newClientsToday" :key="i">
+                      <td>{{ item["Sales User"] }}</td>
+                      <th>{{ item["Customer Name"] }}</th>
+                      <td>{{ item["Term"] }}</td>
+                      <td>{{ item["Debt Amount"] }}</td>
                     </tr>
                   </tbody>
                 </table>
