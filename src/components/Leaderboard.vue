@@ -185,20 +185,23 @@ const endDate = computed(() => {
 
 //computed function that gets average "Debt Amount" for clients enrolled between startDate and endDate
 const averageDebtAmount = computed(() => {
-  return `$${Intl.NumberFormat("en-US").format(
-    data.value
-      .filter((item) => {
-        const itemDate = new Date(item["Enrolled Date"]);
+  const start = new Date(startDate.value);
+  const end = new Date(endDate.value);
 
-        console.log("Item Date: ", itemDate);
+  const filteredItems = data.value.filter((item) => {
+    const enrolledDate = new Date(item["Enrolled Date"]);
+    return enrolledDate >= start && enrolledDate <= end;
+  });
 
-        return itemDate >= startDate && itemDate <= endDate;
-      })
-      .map(
-        (item) => parseFloat(item["Debt Amount"].replace(/[\$,]/g, "")) // Remove $ and , then parse to float
-      )
-      .reduce((acc, currentValue) => acc + currentValue, 0) / data.value.length
-  )}`;
+  const totalDebt = filteredItems.reduce((acc, item) => {
+    // Remove $ and commas, then convert to number
+    const amount = parseFloat(item["Debt Amount"].replace(/[\$,]/g, ""));
+    return acc + amount;
+  }, 0);
+
+  const average =
+    filteredItems.length > 0 ? totalDebt / filteredItems.length : 0;
+  return `$${Intl.NumberFormat("en-US").format(average.toFixed(2))}`; // Convert to 2 decimal places string
 });
 
 //gets the total client that enrolled today from the "Enrolled Date" key on the objects in the data array
@@ -209,10 +212,12 @@ const clientsEnrolledToday = computed(() => {
 
 //computd function that returns the total clients enrolled between the startDate and endDate
 const clientsEnrolledWeek = computed(() => {
-  return data.value.filter((item) => {
-    const itemDate = new Date(item["Enrolled Date"]);
+  const start = new Date(startDate.value);
+  const end = new Date(endDate.value);
 
-    return itemDate >= startDate && itemDate <= endDate;
+  return data.value.filter((item) => {
+    const enrolledDate = new Date(item["Enrolled Date"]);
+    return enrolledDate >= start && enrolledDate <= end;
   }).length;
 });
 
@@ -220,9 +225,26 @@ const clientsEnrolledWeek = computed(() => {
 const averageProgramLength = computed(() => {
   return (
     data.value
-      .map((item) => parseInt(item["Term"])) //parse the program length to int
+      .map((item) => parseInt(item["Term"]))
       .reduce((acc, currentValue) => acc + currentValue, 0) / data.value.length
-  ).toFixed(2); //sum up the program lengths and divide by the number of clients
+  ).toFixed(2);
+});
+
+const topSalesUsers = computed(() => {
+  const userCounts = data.value.reduce((acc, item) => {
+    const user = item["Sales User"];
+    if (!acc[user]) {
+      acc[user] = 0;
+    }
+    acc[user] += 1;
+    return acc;
+  }, {});
+
+  const sortedUsers = Object.entries(userCounts)
+    .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
+    .map(([user, _count]) => user); // Extract the user names
+
+  return sortedUsers.slice(0, 3); // Return the top 3 users
 });
 
 onMounted(() => {
@@ -319,7 +341,9 @@ const spiffTodayHoverLeave = () => {
           class="h-full w-full bg-base-100 rounded-xl border border-slate-400"
         >
           <div class="flex flex-col gap-2 p-2 h-full w-full">
-            <h1 class="text-2xl font-bold text-white">Upload File</h1>
+            <h1 class="text-2xl font-bold text-white">
+              Upload File {{ topSalesUsers }}
+            </h1>
             <div class="flex-1 flex flex-row justify-center items-center">
               <div
                 v-if="!fileName"
@@ -517,7 +541,7 @@ const spiffTodayHoverLeave = () => {
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl"
               >
-                {{ averageProgramLength }}
+                {{ averageProgramLength === "NaN" ? 0 : averageProgramLength }}
               </div>
             </div>
             <div
