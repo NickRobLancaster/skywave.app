@@ -595,71 +595,10 @@ const spiffTodayHoverLeave = () => {
               </div>
             </div>
           </div>
+          <!-- spiff adders -->
           <div
             class="h-1/3 bg-base-100 flex-col grid grid-cols-2 border-t border-t-slate-400 divide-x divide-slate-400"
           >
-            <div class="h-full overflow-y-auto hide-scroll">
-              <div class="flex flex-row items-center p-2">
-                <div class="">Spiffs - Week</div>
-                <button
-                  @click="spiffAdderWeek"
-                  class="ml-auto btn btn-xs border border-slate-400"
-                >
-                  +
-                </button>
-              </div>
-              <table class="table table-zebra table-xs">
-                <!-- head -->
-                <thead class="sticky top-0 bg-base-100">
-                  <tr>
-                    <th>Rep</th>
-                    <th>Spiff</th>
-                    <th
-                      class="text-center"
-                      v-if="spiffWeekHovered && spiffsWeek.length !== 0"
-                    >
-                      <font-awesome-icon icon="fa-solid fa-trash" />
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  @mouseover="spiffWeekHoverOver"
-                  @mouseleave="spiffWeekHoverLeave"
-                >
-                  <!-- row 1 -->
-                  <tr v-for="(item, i) in spiffsWeek" :key="i">
-                    <td>
-                      <input
-                        type="text"
-                        v-model="spiffsWeek[i].sales_rep"
-                        class="w-full p-1 bg-transparent border border-slate-600 text-base rounded"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        v-model="spiffsWeek[i].spiff_amount"
-                        class="w-full text-emerald-500 p-1 bg-transparent border border-slate-600 text-base rounded"
-                      />
-                    </td>
-                    <td v-if="spiffWeekHovered">
-                      <button
-                        @click="spiffsWeek.splice(i, 1)"
-                        class="btn btn-sm bg-red bg-red-500 text-white hover:bg-red-700"
-                      >
-                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div v-if="spiffsWeek.length === 0" class="p-2">
-                <div class="bg-blue-500 p-5 rounded text-white text-center">
-                  No Spiffs This Week Yet
-                </div>
-              </div>
-            </div>
-
             <div class="h-full overflow-y-auto hide-scroll">
               <div class="flex flex-row items-center p-2">
                 <div class="">Spiffs - Today</div>
@@ -718,6 +657,67 @@ const spiffTodayHoverLeave = () => {
               <div v-if="spiffsToday.length === 0" class="p-2">
                 <div class="bg-blue-500 p-5 rounded text-white text-center">
                   No Spiffs Today Yet
+                </div>
+              </div>
+            </div>
+            <div class="h-full overflow-y-auto hide-scroll">
+              <div class="flex flex-row items-center p-2">
+                <div class="">Spiffs - Week</div>
+                <button
+                  @click="spiffAdderWeek"
+                  class="ml-auto btn btn-xs border border-slate-400"
+                >
+                  +
+                </button>
+              </div>
+              <table class="table table-zebra table-xs">
+                <!-- head -->
+                <thead class="sticky top-0 bg-base-100">
+                  <tr>
+                    <th>Rep</th>
+                    <th>Spiff</th>
+                    <th
+                      class="text-center"
+                      v-if="spiffWeekHovered && spiffsWeek.length !== 0"
+                    >
+                      <font-awesome-icon icon="fa-solid fa-trash" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  @mouseover="spiffWeekHoverOver"
+                  @mouseleave="spiffWeekHoverLeave"
+                >
+                  <!-- row 1 -->
+                  <tr v-for="(item, i) in spiffsWeek" :key="i">
+                    <td>
+                      <input
+                        type="text"
+                        v-model="spiffsWeek[i].sales_rep"
+                        class="w-full p-1 bg-transparent border border-slate-600 text-base rounded"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        v-model="spiffsWeek[i].spiff_amount"
+                        class="w-full text-emerald-500 p-1 bg-transparent border border-slate-600 text-base rounded"
+                      />
+                    </td>
+                    <td v-if="spiffWeekHovered">
+                      <button
+                        @click="spiffsWeek.splice(i, 1)"
+                        class="btn btn-sm bg-red bg-red-500 text-white hover:bg-red-700"
+                      >
+                        <font-awesome-icon icon="fa-solid fa-xmark" />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div v-if="spiffsWeek.length === 0" class="p-2">
+                <div class="bg-blue-500 p-5 rounded text-white text-center">
+                  No Spiffs This Week Yet
                 </div>
               </div>
             </div>
