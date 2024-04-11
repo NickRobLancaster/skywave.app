@@ -645,7 +645,7 @@ const spiffTodayHoverLeave = () => {
                     <td v-if="spiffWeekHovered">
                       <button
                         @click="spiffsWeek.splice(i, 1)"
-                        class="btn btn-sm bg-red bg-red-500 text-white"
+                        class="btn btn-sm bg-red bg-red-500 text-white hover:bg-red-700"
                       >
                         <font-awesome-icon icon="fa-solid fa-xmark" />
                       </button>
@@ -708,7 +708,7 @@ const spiffTodayHoverLeave = () => {
                     <td v-if="spiffTodayHovered">
                       <button
                         @click="spiffsToday.splice(i, 1)"
-                        class="btn btn-sm bg-red bg-red-500 text-white"
+                        class="btn btn-sm bg-red bg-red-500 text-white hover:bg-red-700"
                       >
                         <font-awesome-icon icon="fa-solid fa-xmark" />
                       </button>
