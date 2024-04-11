@@ -511,11 +511,11 @@ const newClientsToday = computed(() => {
         >
           <font-awesome-icon icon="fa-solid fa-arrows-rotate" />
         </button>
-        <img
+        <!-- <img
           class="h-10 w-10 rounded-full"
           src="https://i.pinimg.com/736x/ce/d3/90/ced39071be26c0d491c35492e073c59f.jpg"
           alt=""
-        />
+        /> -->
       </div>
     </div>
 
