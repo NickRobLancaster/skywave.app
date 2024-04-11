@@ -1,9 +1,25 @@
 <script setup>
-import { ref, computed, Teleport } from "vue";
+import { ref, computed, reactive, watch, Teleport, onMounted } from "vue";
 import { csvParse } from "d3-dsv";
 import Chart from "./Chart.vue";
 
-const goalChartOptions = {
+const showUploadModal = ref(false);
+const fileInput = ref(null); // the file object
+const fileName = ref(""); // the name of the csv file
+const columns = ref([]); //the columns in the csv file
+const data = ref([]); //the data from the csv file - array of objects
+const today = ref("");
+const start = ref("");
+const end = ref("");
+const totalDebtLast7Days = ref([]);
+
+//toggle upload modal
+const toggleUploadModal = () => {
+  showUploadModal.value = !showUploadModal.value;
+};
+
+//chart options for goal chart
+const goalChartOptions = reactive({
   maintainAspectRatio: false,
   plugins: {
     legend: {
@@ -30,14 +46,15 @@ const goalChartOptions = {
   },
   indexAxis: "y", // Makes the bar chart horizontal
   // Other configurations...
-};
+});
 
-const goalChartData = {
+//chart data for goal chart
+const goalChartData = reactive({
   labels: ["Debt Load"],
   datasets: [
     {
       //disable the labels
-      data: [5, 10, 15, 20],
+      data: totalDebtLast7Days.value,
       backgroundColor: "rgba(255, 99, 132, 0.2)",
       borderColor: "rgba(255, 99, 132, 1)",
       borderWidth: 1,
@@ -45,9 +62,10 @@ const goalChartData = {
       barThickness: 75, // This sets the height of each horizontal bar
     },
   ],
-};
+});
 
-const userChartOptions = {
+//chart options for user chart
+const userChartOptions = reactive({
   //disable the labels
   plugins: {
     legend: {
@@ -56,9 +74,10 @@ const userChartOptions = {
   },
   responsive: true,
   maintainAspectRatio: false,
-};
+});
 
-const userChartData = {
+//chart data for user chart
+const userChartData = reactive({
   labels: ["January", "February", "March", "April"],
   datasets: [
     {
@@ -67,20 +86,7 @@ const userChartData = {
       data: [40, 20, 12, 39],
     },
   ],
-};
-
-const showUploadModal = ref(false);
-const toggleUploadModal = () => {
-  showUploadModal.value = !showUploadModal.value;
-};
-
-const fileInput = ref(null);
-
-const fileName = ref("");
-
-const columns = ref([]);
-
-const data = ref([]); // Store the parsed data
+});
 
 const triggerFileInput = () => {
   fileInput.value.click(); // Trigger the hidden file input click event
@@ -116,6 +122,182 @@ const handleDrop = (event) => {
   event.preventDefault(); // Prevent default behavior for drag and drop
   handleFiles(event);
 };
+
+const todaysDate = computed(() => {
+  const today = new Date();
+  const month = today.getMonth() + 1; // January is 0!
+  const day = today.getDate();
+  const year = today.getFullYear();
+
+  return `${month}/${day}/${year}`;
+});
+
+//computed function that returns the sum of "Debt Amount" for todaysDate
+const sumDebtsOnDate = (date) => {
+  return `$${Intl.NumberFormat("en-US").format(
+    data.value
+      .filter((item) => item["Enrolled Date"] === date)
+      .map(
+        (item) => parseFloat(item["Debt Amount"].replace(/[\$,]/g, "")) // Remove $ and , then parse to float
+      )
+      .reduce((acc, currentValue) => acc + currentValue, 0)
+  )}`; // Sum up the values
+};
+
+//we need a function that get's the sum of all debts within the last 7 days
+const sumDebtsBetweenStartAndEndDates = computed(() => {
+  const totalDebt = data.value
+    .filter((item) => {
+      const itemDate = new Date(item["Enrolled Date"]);
+      return itemDate >= new Date(startDate) && itemDate <= new Date(endDate);
+    })
+    .map(
+      (item) => parseFloat(item["Debt Amount"].replace(/[\$,]/g, "")) // Remove $ and , then parse to float
+    )
+    .reduce((acc, currentValue) => acc + currentValue, 0); // Sum up the values
+
+  return `$${Intl.NumberFormat("en-US").format(totalDebt)}`;
+});
+
+const startDate = computed(() => {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // Adjust if today is Sunday
+  const start = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + diffToMonday
+  );
+  return `${start.getMonth() + 1}/${start.getDate()}/${start.getFullYear()}`;
+});
+
+const endDate = computed(() => {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const diffToFriday = 5 - dayOfWeek;
+  const end = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + diffToFriday
+  );
+  return `${end.getMonth() + 1}/${end.getDate()}/${end.getFullYear()}`;
+});
+
+//computed function that gets average "Debt Amount" for clients enrolled between startDate and endDate
+const averageDebtAmount = computed(() => {
+  return `$${Intl.NumberFormat("en-US").format(
+    data.value
+      .filter((item) => {
+        const itemDate = new Date(item["Enrolled Date"]);
+
+        console.log("Item Date: ", itemDate);
+
+        return itemDate >= startDate && itemDate <= endDate;
+      })
+      .map(
+        (item) => parseFloat(item["Debt Amount"].replace(/[\$,]/g, "")) // Remove $ and , then parse to float
+      )
+      .reduce((acc, currentValue) => acc + currentValue, 0) / data.value.length
+  )}`;
+});
+
+//gets the total client that enrolled today from the "Enrolled Date" key on the objects in the data array
+const clientsEnrolledToday = computed(() => {
+  return data.value.filter((item) => item["Enrolled Date"] === todaysDate.value)
+    .length;
+});
+
+//computd function that returns the total clients enrolled between the startDate and endDate
+const clientsEnrolledWeek = computed(() => {
+  return data.value.filter((item) => {
+    const itemDate = new Date(item["Enrolled Date"]);
+
+    return itemDate >= startDate && itemDate <= endDate;
+  }).length;
+});
+
+//computed function that gets the average program length of all clients
+const averageProgramLength = computed(() => {
+  return (
+    data.value
+      .map((item) => parseInt(item["Term"])) //parse the program length to int
+      .reduce((acc, currentValue) => acc + currentValue, 0) / data.value.length
+  ).toFixed(2); //sum up the program lengths and divide by the number of clients
+});
+
+onMounted(() => {
+  today.value = todaysDate.value;
+  start.value = startDate.value;
+  end.value = endDate.value;
+
+  console.log("Today: ", today.value);
+  console.log("Start: ", start.value);
+  console.log("End: ", end.value);
+});
+
+//spiffsToday array or default to the local storage value
+const spiffsToday = ref(
+  JSON.parse(localStorage.getItem("spiffsToday")) || [
+    {
+      sales_rep: "",
+      spiff_amount: "",
+    },
+  ]
+);
+
+//spiffsWeek array or default to the local storage value
+const spiffsWeek = ref(
+  JSON.parse(localStorage.getItem("spiffsWeek")) || [
+    {
+      sales_rep: "",
+      spiff_amount: "",
+    },
+  ]
+);
+
+const spiffAdderToday = () => {
+  console.log(spiffsToday.value);
+  spiffsToday.value.push({
+    sales_rep: "",
+    spiff_amount: "",
+  });
+};
+
+const spiffAdderWeek = () => {
+  spiffsWeek.value.push({
+    sales_rep: "",
+    spiff_amount: "",
+  });
+};
+
+//watch the spiffsToday array and store in local storage
+watch(spiffsToday.value, (newVal) => {
+  console.log(newVal);
+  localStorage.setItem("spiffsToday", JSON.stringify(newVal));
+});
+
+//watch the spiffsWeek array and store in local storage
+watch(spiffsWeek.value, (newVal) => {
+  console.log(newVal);
+
+  localStorage.setItem("spiffsWeek", JSON.stringify(newVal));
+});
+
+const spiffWeekHovered = ref(false);
+const spiffTodayHovered = ref(false);
+
+const spiffWeekHoverOver = () => {
+  spiffWeekHovered.value = true;
+};
+const spiffWeekHoverLeave = () => {
+  spiffWeekHovered.value = false;
+};
+const spiffTodayHoverOver = () => {
+  spiffTodayHovered.value = true;
+};
+const spiffTodayHoverLeave = () => {
+  spiffTodayHovered.value = false;
+};
 </script>
 
 <template>
@@ -138,9 +320,6 @@ const handleDrop = (event) => {
         >
           <div class="flex flex-col gap-2 p-2 h-full w-full">
             <h1 class="text-2xl font-bold text-white">Upload File</h1>
-            <!-- <pre>
-          {{ data }}
-        </pre> -->
             <div class="flex-1 flex flex-row justify-center items-center">
               <div
                 v-if="!fileName"
@@ -180,11 +359,9 @@ const handleDrop = (event) => {
                   </span>
                 </p>
 
-                <!-- COLUMN HEADER -->
-                <p>Column / Headers</p>
+                <!-- <p>Column / Headers</p>
                 <div class="overflow-x-auto border rounded-lg">
                   <table class="table">
-                    <!-- head -->
                     <thead class="">
                       <tr class="divide-x divide-white text-white">
                         <th v-for="(col, i) in columns">
@@ -192,31 +369,30 @@ const handleDrop = (event) => {
                         </th>
                       </tr>
                     </thead>
-                    <!-- <tbody>
-                     
+                    <tbody>
                       <tr>
                         <th>1</th>
                         <td>Cy Ganderton</td>
                         <td>Quality Control Specialist</td>
                         <td>Blue</td>
                       </tr>
-                     
+
                       <tr>
                         <th>2</th>
                         <td>Hart Hagerty</td>
                         <td>Desktop Support Technician</td>
                         <td>Purple</td>
                       </tr>
-                     
+
                       <tr>
                         <th>3</th>
                         <td>Brice Swyre</td>
                         <td>Tax Accountant</td>
                         <td>Red</td>
                       </tr>
-                    </tbody> -->
+                    </tbody>
                   </table>
-                </div>
+                </div> -->
               </div>
             </div>
             <button
@@ -236,7 +412,9 @@ const handleDrop = (event) => {
     <div
       class="flex flex-row items-center p-2 bg-base-100 border-b border-b-slate-400"
     >
-      <h1 class="text-2xl font-bold text-white">Weekly Enrollments</h1>
+      <h1 class="text-2xl font-bold text-white">
+        Weekly Enrollments ({{ startDate }} - {{ endDate }})
+      </h1>
       <div class="ml-auto flex flex-row items-center gap-2">
         <button
           @click="toggleUploadModal"
@@ -285,21 +463,21 @@ const handleDrop = (event) => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="">Enrolled Debt - Today</div>
+              <div class="">Enrolled Debt - Today ({{ todaysDate }})</div>
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl"
               >
-                80K
+                {{ sumDebtsOnDate(todaysDate) }}
               </div>
             </div>
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="">Average Debt / Client</div>
+              <div class="">Average Debt / Client - Week</div>
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl"
               >
-                3.5K
+                {{ averageDebtAmount }}
               </div>
             </div>
           </div>
@@ -329,7 +507,7 @@ const handleDrop = (event) => {
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl"
               >
-                5
+                {{ clientsEnrolledToday }}
               </div>
             </div>
             <div
@@ -339,7 +517,7 @@ const handleDrop = (event) => {
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl"
               >
-                43
+                {{ averageProgramLength }}
               </div>
             </div>
             <div
@@ -349,7 +527,7 @@ const handleDrop = (event) => {
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl"
               >
-                25
+                {{ clientsEnrolledWeek }}
               </div>
             </div>
           </div>
@@ -414,6 +592,136 @@ const handleDrop = (event) => {
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+          </div>
+          <div
+            class="h-1/3 bg-base-100 rounded flex-col p-2 gap-2 grid grid-cols-2"
+          >
+            <div class="border p-2 border-slate-400 rounded">
+              <div class="flex flex-row">
+                <div>Spiffs - Week</div>
+                <button
+                  @click="spiffAdderWeek"
+                  class="ml-auto btn btn-xs border border-slate-400"
+                >
+                  +
+                </button>
+              </div>
+              <table class="table table-zebra table-xs">
+                <!-- head -->
+                <thead>
+                  <tr>
+                    <th>Rep</th>
+                    <th>Spiff</th>
+                    <th
+                      class="text-center"
+                      v-if="spiffWeekHovered && spiffsWeek.length !== 0"
+                    >
+                      <font-awesome-icon icon="fa-solid fa-trash" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  @mouseover="spiffWeekHoverOver"
+                  @mouseleave="spiffWeekHoverLeave"
+                >
+                  <!-- row 1 -->
+                  <tr v-for="(item, i) in spiffsWeek" :key="i">
+                    <td>
+                      <input
+                        type="text"
+                        v-model="spiffsWeek[i].sales_rep"
+                        class="w-full p-1 bg-transparent border border-slate-600 text-base rounded"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        v-model="spiffsWeek[i].spiff_amount"
+                        class="w-full text-emerald-500 p-1 bg-transparent border border-slate-600 text-base rounded"
+                      />
+                    </td>
+                    <td v-if="spiffWeekHovered">
+                      <button
+                        @click="spiffsWeek.splice(i, 1)"
+                        class="btn btn-sm bg-red bg-red-500 text-white"
+                      >
+                        <font-awesome-icon icon="fa-solid fa-xmark" />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div
+                v-if="spiffsWeek.length === 0"
+                class="bg-blue-500 p-5 rounded text-white text-center"
+              >
+                No Spiffs This Week Yet
+              </div>
+            </div>
+
+            <div class="border border-slate-400 rounded p-2">
+              <div class="flex flex-row">
+                <div>Spiffs - Today</div>
+                <button
+                  @click="spiffAdderToday"
+                  class="ml-auto btn btn-xs border border-slate-400"
+                >
+                  +
+                </button>
+              </div>
+              <table class="table table-zebra table-xs">
+                <!-- head -->
+                <thead>
+                  <tr>
+                    <th>Rep</th>
+                    <th>Spiff</th>
+                    <th
+                      v-if="spiffTodayHovered && spiffsToday.length !== 0"
+                      class="text-center"
+                    >
+                      <font-awesome-icon icon="fa-solid fa-trash" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  @mouseover="spiffTodayHoverOver"
+                  @mouseleave="spiffTodayHoverLeave"
+                >
+                  <!-- row 1 -->
+                  <tr v-for="(item, i) in spiffsToday" :key="i">
+                    <td>
+                      <input
+                        type="text"
+                        v-model="spiffsToday[i].sales_rep"
+                        class="w-full p-1 bg-transparent border border-slate-600 text-base rounded"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        v-model="spiffsToday[i].spiff_amount"
+                        class="w-full text-emerald-500 p-1 bg-transparent border border-slate-600 text-base rounded"
+                      />
+                    </td>
+                    <td v-if="spiffTodayHovered">
+                      <button
+                        @click="spiffsToday.splice(i, 1)"
+                        class="btn btn-sm bg-red bg-red-500 text-white"
+                      >
+                        <font-awesome-icon icon="fa-solid fa-xmark" />
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div
+                v-if="spiffsToday.length === 0"
+                class="bg-blue-500 p-5 rounded text-white text-center"
+              >
+                No Spiffs Today Yet
               </div>
             </div>
           </div>
