@@ -496,14 +496,16 @@ const newClientsToday = computed(() => {
         Weekly Enrollments ({{ startDate }} - {{ endDate }})
       </h1>
       <div class="ml-auto flex flex-row items-center gap-2">
-        <!-- <button
+        <button
+          v-if="data.length < 1"
           @click="toggleUploadModal"
           class="btn bg-white text-slate-500 hover:bg-slate-700 hover:text-white"
         >
           <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
-        </button> -->
+        </button>
 
         <button
+          v-if="data.length > 0"
           @click="wipeData"
           class="btn text-white bg-red-500 hover:bg-red-700"
         >
