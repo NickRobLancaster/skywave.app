@@ -596,9 +596,9 @@ const spiffTodayHoverLeave = () => {
             </div>
           </div>
           <div
-            class="h-1/3 bg-base-100 rounded flex-col p-2 gap-2 grid grid-cols-2"
+            class="h-1/3 bg-base-100 flex-col grid grid-cols-2 border-t border-t-slate-400 divide-x divide-slate-400"
           >
-            <div class="border p-2 border-slate-400 rounded">
+            <div class="p-2">
               <div class="flex flex-row">
                 <div>Spiffs - Week</div>
                 <button
@@ -661,7 +661,7 @@ const spiffTodayHoverLeave = () => {
               </div>
             </div>
 
-            <div class="border border-slate-400 rounded p-2">
+            <div class="p-2">
               <div class="flex flex-row">
                 <div>Spiffs - Today</div>
                 <button
