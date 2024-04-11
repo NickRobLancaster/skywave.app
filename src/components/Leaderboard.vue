@@ -668,30 +668,78 @@ const wipeLocalStorage = () => {
     <div class="flex-1 grid grid-cols-3 gap-2 p-2 max-w-full overflow-hidden">
       <div class="col-span-3 flex flex-row max-sm:flex-col gap-2">
         <div
-          class="flex-1 bg-base-100 border border-amber-400 rounded flex flex-col p-2 text-center justify-center"
+          class="flex-1 bg-amber-500 rounded flex flex-col text-center justify-center glass divide-x"
         >
-          <div class="text-white text-3xl">1st</div>
-          <div class="text-white text-2xl">
-            {{ topSalesUsers[0]?.sales_user }} -
-            {{ `$${formatWholeNumberWithCommas(topSalesUsers[0]?.debt_load)}` }}
+          <div class="flex flex-row items-center">
+            <div class="flex flex-col">
+              <div class="p-4">
+                <font-awesome-icon
+                  class="absolute top-2 left-2 text-amber-500"
+                  icon="fa-solid fa-crown"
+                  size="xl"
+                />
+              </div>
+              <div class="text-white text-5xl pl-3 pb-4">1st</div>
+            </div>
+            <div class="text-white text-2xl flex-1 text-center">
+              {{ topSalesUsers[0]?.sales_user }}
+            </div>
+            <div
+              class="text-2xl flex-1 text-right py-5 pr-5 flex flex-row items-center justify-end gap-3"
+            >
+              <h2 class="text-3xl font-bold text-emerald-600">
+                {{
+                  `$${formatWholeNumberWithCommas(topSalesUsers[0]?.debt_load)}`
+                }}
+              </h2>
+              <span class="text-orange-900">
+                <font-awesome-icon icon="fa-solid fa-sack-dollar" size="xl" />
+              </span>
+            </div>
           </div>
         </div>
         <div
-          class="flex-1 bg-base-100 border border-gray-200 rounded flex flex-col p-2 text-center justify-center"
+          class="flex-1 bg-gray-400 rounded flex flex-col text-center justify-center glass divide-x"
         >
-          <div class="text-white text-3xl">2nd</div>
-          <div class="text-white text-2xl">
-            {{ topSalesUsers[1]?.sales_user }} -
-            {{ `$${formatWholeNumberWithCommas(topSalesUsers[1]?.debt_load)}` }}
+          <div class="flex flex-row items-center">
+            <div class="text-white text-3xl py-5 pl-5 rounded-full">2nd</div>
+            <div class="text-white text-2xl flex-1 text-center">
+              {{ topSalesUsers[1]?.sales_user }}
+            </div>
+            <div
+              class="text-2xl flex-1 text-right py-5 pr-5 flex flex-row items-center justify-end gap-3"
+            >
+              <h2 class="text-3xl font-bold text-emerald-600">
+                {{
+                  `$${formatWholeNumberWithCommas(topSalesUsers[1]?.debt_load)}`
+                }}
+              </h2>
+              <span class="text-orange-900">
+                <font-awesome-icon icon="fa-solid fa-sack-dollar" size="xl" />
+              </span>
+            </div>
           </div>
         </div>
         <div
-          class="flex-1 bg-base-100 border border-amber-600 rounded flex flex-col p-2 text-center justify-center"
+          class="flex-1 bg-orange-500 rounded flex flex-col text-center justify-center glass divide-x"
         >
-          <div class="text-white text-3xl">3rd</div>
-          <div class="text-white text-2xl">
-            {{ topSalesUsers[2]?.sales_user }} -
-            {{ `$${formatWholeNumberWithCommas(topSalesUsers[2]?.debt_load)}` }}
+          <div class="flex flex-row items-center">
+            <div class="text-white text-3xl py-5 pl-5 rounded-full">3rd</div>
+            <div class="text-white text-2xl flex-1 text-center">
+              {{ topSalesUsers[2]?.sales_user }}
+            </div>
+            <div
+              class="text-2xl flex-1 text-right py-5 pr-5 flex flex-row items-center justify-end gap-3"
+            >
+              <h2 class="text-3xl font-bold text-emerald-600">
+                {{
+                  `$${formatWholeNumberWithCommas(topSalesUsers[2]?.debt_load)}`
+                }}
+              </h2>
+              <span class="text-orange-900">
+                <font-awesome-icon icon="fa-solid fa-sack-dollar" size="xl" />
+              </span>
+            </div>
           </div>
         </div>
       </div>
