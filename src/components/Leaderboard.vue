@@ -699,6 +699,7 @@ const wipeLocalStorage = () => {
           </div>
         </div>
         <div
+          v-if="topSalesUsers.length >= 2"
           class="flex-1 bg-gray-400 rounded flex flex-col text-center justify-center glass divide-x"
         >
           <div class="flex flex-row items-center">
@@ -721,6 +722,7 @@ const wipeLocalStorage = () => {
           </div>
         </div>
         <div
+          v-if="topSalesUsers.length >= 3"
           class="flex-1 bg-orange-500 rounded flex flex-col text-center justify-center glass divide-x"
         >
           <div class="flex flex-row items-center">
