@@ -491,6 +491,7 @@ const wipeLocalStorage = () => {
                 <button
                   class="btn btn-sm rounded bg-red-500 text-white mt-auto"
                   @click="wipeLocalStorage"
+                  title="Wipe All Local Storage Data"
                 >
                   Wipe Storage
                 </button>
@@ -631,6 +632,7 @@ const wipeLocalStorage = () => {
         <button
           v-if="data.length < 1"
           @click="toggleUploadModal"
+          title="Upload a CSV file"
           class="btn bg-blue-500 text-white hover:bg-blue-700"
         >
           <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
@@ -639,6 +641,7 @@ const wipeLocalStorage = () => {
         <button
           v-if="data.length > 0"
           @click="wipeData"
+          title="Wipe the CSV Data"
           class="btn text-white bg-red-500 hover:bg-red-700"
         >
           <font-awesome-icon icon="fa-solid fa-arrows-rotate" />
