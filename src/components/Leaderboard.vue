@@ -414,7 +414,7 @@ const wipeLocalStorage = () => {
         <div class="h-full w-1/3 bg-base-100 border-l border-slate-400">
           <div class="flex flex-col gap-2 p-2 h-full w-full">
             <h1 class="text-2xl font-bold text-white text-right">
-              <span class="cursive-text"> Quick Dash </span> &trade;
+              <span class="cursive-text"> Quick Dash </span>&trade;
             </h1>
 
             <div
@@ -422,7 +422,7 @@ const wipeLocalStorage = () => {
             >
               <h1 class="text-xl text-white">Welcome to Quick Dash</h1>
               <p class="text-base">
-                In case you haven't figured out how to use Quick Dash &trade;
+                In case you haven't figured out how to use Quick Dash&trade;
                 yet... It's pretty simple.
               </p>
               <ol
@@ -536,7 +536,10 @@ const wipeLocalStorage = () => {
                 @dragleave.prevent
                 @drop="handleDrop"
               >
-                <p class="text-3xl">Drag and Drop CSV File Here</p>
+                <h1 class="text-3xl">
+                  Welcome to <span class="cursive-text">Quick Dash</span>&trade;
+                </h1>
+                <p class="text-xl">Drag and Drop a CSV File Here</p>
 
                 <p>OR</p>
 
