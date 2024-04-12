@@ -47,9 +47,61 @@ const endDate = computed(() => {
   return `${end.getMonth() + 1}/${end.getDate()}/${end.getFullYear()}`;
 });
 
-//computed function that returns a unique set of the Sales User names
+//computed function that looks into the data array and returns a new array of unique sales reps in the order of their Debt Amount sum greatest to least
 const salesReps = computed(() => {
-  return [...new Set(data.value.map((item) => item["Sales User"]))].sort();
+  return [...new Set(data.value.map((item) => item["Sales User"]))].sort(
+    (a, b) => {
+      const aDebt = data.value
+        .filter((item) => item["Sales User"] === a)
+        .reduce((acc, item) => {
+          const amount = parseFloat(item["Debt Amount"].replace(/[\$,]/g, ""));
+          return acc + amount;
+        }, 0);
+
+      const bDebt = data.value
+        .filter((item) => item["Sales User"] === b)
+        .reduce((acc, item) => {
+          const amount = parseFloat(item["Debt Amount"].replace(/[\$,]/g, ""));
+          return acc + amount;
+        }, 0);
+
+      return bDebt - aDebt;
+    }
+  );
+});
+
+//computed function that looks into the data array and returns a new array of objects where each object belongs to a user and contains a property called sales_rep which holds their name, then the sum of the "Debt Amount" can be put into debt_load_total property, and then a 3rd property called deal_count which contains the count of objects that belong to that Sales User
+const salesUsers = computed(() => {
+  return salesReps.value
+    .map((rep) => {
+      return {
+        sales_rep: rep,
+        debt_load_total: data.value
+          .filter((item) => item["Sales User"] === rep)
+          .reduce((acc, item) => {
+            const amount = parseFloat(
+              item["Debt Amount"].replace(/[\$,]/g, "")
+            );
+            return acc + amount;
+          }, 0)
+          .toFixed(2),
+        deal_count: data.value.filter((item) => item["Sales User"] === rep)
+          .length,
+      };
+    })
+    .sort(
+      //sort by highest to lowest debt load
+      (a, b) => b.debt_load_total - a.debt_load_total
+    );
+});
+
+//computed function that returns an object with 3 different arrays - the first is the sales_rep array, the second is the debt_load_total array, and the third is the deal_count array
+const salesUsersData = computed(() => {
+  return {
+    sales_rep: salesUsers.value.map((item) => item.sales_rep),
+    debt_load_total: salesUsers.value.map((item) => item.debt_load_total),
+    deal_count: salesUsers.value.map((item) => item.deal_count),
+  };
 });
 
 //computed function that uses the salesReps array return a new array of numbers where each number is the sum of the "Debt Amount" between the startDate and endDate for each sales rep and in the same order as the salesReps array
@@ -129,19 +181,19 @@ const goalChartOptions = reactive({
           borderWidth: 2,
           borderDash: [10, 5],
         },
-        label1: {
-          type: "label",
-          xMin: () => debt_goal.value,
-          xMax: () => debt_goal.value,
-          color: "white",
-          borderRadius: 5,
-          backgroundColor: "rgba(65, 196, 122)",
-          content: () =>
-            `GOAL: $${formatWholeNumberWithCommas(debt_goal.value)}`,
-          font: {
-            size: 18,
-          },
-        },
+        // label1: {
+        //   type: "label",
+        //   xMin: () => debt_goal.value,
+        //   xMax: () => debt_goal.value,
+        //   color: "white",
+        //   borderRadius: 5,
+        //   backgroundColor: "rgba(65, 196, 122)",
+        //   content: () =>
+        //     `GOAL: $${formatWholeNumberWithCommas(debt_goal.value)}`,
+        //   font: {
+        //     size: 18,
+        //   },
+        // },
       },
     },
   },
@@ -166,6 +218,7 @@ const goalChartData = reactive({
   ],
 });
 
+//dynamic color function for the goal chart
 const determineColor = (debtLoad) => {
   if (debtLoad < 75000) return "red";
   else if (debtLoad >= 75000 && debtLoad < 100000) return "orange";
@@ -184,13 +237,13 @@ const userChartOptions = reactive({
     y: {
       beginAtZero: true,
       title: {
-        display: true,
+        display: false,
         text: "Debt Load",
       },
     },
     x: {
       title: {
-        display: true,
+        display: false,
         text: "Sales Rep",
       },
     },
@@ -200,7 +253,7 @@ const userChartOptions = reactive({
       //labels
       labels: {
         font: {
-          size: 18,
+          size: 30, //font size
 
           //color as rgb
           color: "rgb(255, 99, 132)",
@@ -685,7 +738,8 @@ onMounted(() => {
                 @drop="handleDrop"
               >
                 <h1 class="text-3xl">
-                  Welcome to <span class="cursive-text">Quick Dash</span>&trade;
+                  Welcome to
+                  <span class="cursive-text">Quick Dash </span>&trade;
                 </h1>
                 <p class="text-xl">Drag and Drop a CSV File Here</p>
 
@@ -1013,6 +1067,21 @@ onMounted(() => {
                 :options="userChartOptions"
                 v-if="refreshData"
               />
+            </div>
+            <div class="h-10 pl-20 pr-8">
+              <div
+                class="h-full flex flex-row justify-between items-center gap-12"
+              >
+                <div
+                  v-for="(item, i) in salesUsersData['deal_count']"
+                  :key="i"
+                  class="text-center flex-1"
+                >
+                  <span class="bg-blue-400 p-1 rounded text-white">{{
+                    item
+                  }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
