@@ -136,7 +136,8 @@ const goalChartOptions = reactive({
           color: "white",
           borderRadius: 5,
           backgroundColor: "rgba(65, 196, 122)",
-          content: () => `GOAL: $${debt_goal.value}`,
+          content: () =>
+            `GOAL: $${formatWholeNumberWithCommas(debt_goal.value)}`,
           font: {
             size: 18,
           },
