@@ -186,6 +186,7 @@ const handleFiles = (event) => {
     sumDebtsBetweenStartAndEndDates();
 
     columns.value = jsonData.columns;
+    showUploadModal.value = false;
   };
 
   reader.onerror = (e) => console.error("Error reading file:", e.target.error);
@@ -746,8 +747,10 @@ onMounted(() => {
     </div>
 
     <!-- main -->
-    <div class="flex-1 grid grid-cols-3 gap-2 p-2 max-w-full overflow-hidden">
-      <div class="col-span-3 flex flex-row max-sm:flex-col gap-2">
+    <div
+      class="flex-1 grid grid-rows-12 grid-cols-3 gap-2 p-2 max-w-full overflow-hidden"
+    >
+      <div class="col-span-3 row-span-1 flex flex-row max-sm:flex-col gap-2">
         <div
           class="flex-1 bg-amber-500 rounded flex flex-col text-center justify-center glass divide-x"
         >
@@ -827,7 +830,7 @@ onMounted(() => {
         </div>
       </div>
       <!-- main left 2/3 -->
-      <div class="col-span-2 max-sm:col-span-3 flex flex-col gap-2">
+      <div class="col-span-2 row-span-11 max-sm:col-span-3 flex flex-col gap-2">
         <!-- left top -->
         <div
           class="grid grid-cols-5 max-sm:grid max-sm:grid-cols-1 flex-1 gap-2"
@@ -945,7 +948,7 @@ onMounted(() => {
         </div>
       </div>
 
-      <div class="flex flex-col col-span-1 max-sm:col-span-3 gap-2">
+      <div class="flex flex-col col-span-1 row-span-11 max-sm:col-span-3 gap-2">
         <div
           class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col"
         >
