@@ -19,6 +19,8 @@ const spiffTodayHovered = ref(false); // Hover state for showing delete button
 const debt_goal = ref(JSON.parse(localStorage.getItem("debtGoal")) || 100000); // Goal for the week
 const refreshData = ref(false);
 
+//get unique array of all sales reps names
+
 //returns the startDate of the week based on the current day - will always be monday
 const startDate = computed(() => {
   const today = new Date();
@@ -43,6 +45,31 @@ const endDate = computed(() => {
     today.getDate() + diffToFriday
   );
   return `${end.getMonth() + 1}/${end.getDate()}/${end.getFullYear()}`;
+});
+
+//computed function that returns a unique set of the Sales User names
+const salesReps = computed(() => {
+  return [...new Set(data.value.map((item) => item["Sales User"]))].sort();
+});
+
+//computed function that uses the salesReps array return a new array of numbers where each number is the sum of the "Debt Amount" between the startDate and endDate for each sales rep and in the same order as the salesReps array
+const salesRepsDebt = computed(() => {
+  return salesReps.value.map((rep) => {
+    return data.value
+      .filter((item) => item["Sales User"] === rep)
+      .reduce((acc, item) => {
+        const enrolledDate = new Date(item["Enrolled Date"]);
+        if (
+          enrolledDate >= new Date(startDate.value) &&
+          enrolledDate <= new Date(endDate.value)
+        ) {
+          const amount = parseFloat(item["Debt Amount"].replace(/[\$,]/g, ""));
+          return acc + amount;
+        }
+        return acc;
+      }, 0)
+      .toFixed(2);
+  });
 });
 
 //watching data to auto toggle the upload modal
@@ -98,7 +125,7 @@ const goalChartOptions = reactive({
           type: "line",
           xMin: () => debt_goal.value,
           xMax: () => debt_goal.value,
-          borderColor: "rgb(65, 196, 122)",
+          borderColor: "white",
           borderWidth: 2,
           borderDash: [10, 5],
         },
@@ -129,8 +156,8 @@ const goalChartData = reactive({
     {
       //disable the labels
       data: totalDebtWeek,
-      backgroundColor: "rgba(255, 99, 132, 0.2)",
-      borderColor: "rgba(255, 99, 132, 1)",
+      backgroundColor: "rgba(3, 148, 252, 0.2)",
+      borderColor: "rgba(3, 148, 252, 1)",
       borderWidth: 1,
       // Set the bar thickness here
       barThickness: 75, // This sets the height of each horizontal bar
@@ -138,11 +165,47 @@ const goalChartData = reactive({
   ],
 });
 
+const determineColor = (debtLoad) => {
+  if (debtLoad < 75000) return "red";
+  else if (debtLoad >= 75000 && debtLoad < 100000) return "orange";
+  else if (debtLoad >= 100000 && debtLoad < 125000) return "red";
+  else if (debtLoad >= 125000 && debtLoad < 150000) return "brown";
+  else if (debtLoad >= 150000 && debtLoad < 175000) return "orange";
+  else if (debtLoad >= 175000 && debtLoad < 200000) return "yellow";
+  else if (debtLoad >= 200000 && debtLoad < 225000) return "purple";
+  else if (debtLoad >= 225000 && debtLoad < 250000) return "blue";
+  else if (debtLoad >= 250000) return "green";
+};
+
 //chart options for user chart
 const userChartOptions = reactive({
-  //disable the labels
+  scales: {
+    y: {
+      beginAtZero: true,
+      title: {
+        display: true,
+        text: "Debt Load",
+      },
+    },
+    x: {
+      title: {
+        display: true,
+        text: "Sales Rep",
+      },
+    },
+  },
   plugins: {
     legend: {
+      //labels
+      labels: {
+        font: {
+          size: 18,
+
+          //color as rgb
+          color: "rgb(255, 99, 132)",
+        },
+      },
+
       display: false,
     },
   },
@@ -152,11 +215,13 @@ const userChartOptions = reactive({
 
 //chart data for user chart
 const userChartData = reactive({
+  labels: salesReps,
   datasets: [
     {
-      label: "Users",
-      backgroundColor: "#f87979",
-      data: [40, 20, 12, 39],
+      backgroundColor: "rgba(65, 209, 156, 0.2)",
+      borderColor: "rgba(65, 209, 156, 1)",
+      borderWidth: 1,
+      data: salesRepsDebt, // Example debt load values for each sales rep
     },
   ],
 });
@@ -706,7 +771,7 @@ onMounted(() => {
       class="flex flex-row items-center p-2 bg-base-100 border-b border-b-slate-400"
     >
       <h1 class="text-2xl font-bold text-gray-100">
-        Weekly Enrollments ({{ startDate }} - {{ endDate }}) {{ totalDebtWeek }}
+        Weekly Enrollments ({{ startDate }} - {{ endDate }})
       </h1>
 
       <div class="ml-auto text-3xl text-gray-100 cursive-text">
@@ -942,7 +1007,11 @@ onMounted(() => {
             <div
               class="flex-1 flex flex-col justify-center items-center text-5xl"
             >
-              <Chart :data="userChartData" :options="userChartOptions" />
+              <Chart
+                :data="userChartData"
+                :options="userChartOptions"
+                v-if="refreshData"
+              />
             </div>
           </div>
         </div>
