@@ -106,7 +106,7 @@ const salesUsersData = computed(() => {
 
 //computed function that uses the salesReps array return a new array of numbers where each number is the sum of the "Debt Amount" between the startDate and endDate for each sales rep and in the same order as the salesReps array
 const salesRepsDebt = computed(() => {
-  return salesReps.value.map((rep) => {
+  const target = salesReps.value.map((rep) => {
     return data.value
       .filter((item) => item["Sales User"] === rep)
       .reduce((acc, item) => {
@@ -122,6 +122,8 @@ const salesRepsDebt = computed(() => {
       }, 0)
       .toFixed(2);
   });
+
+  return target;
 });
 
 //watching data to auto toggle the upload modal
@@ -1077,7 +1079,7 @@ onMounted(() => {
                   :key="i"
                   class="text-center flex-1"
                 >
-                  <span class="bg-blue-400 p-1 rounded text-white">{{
+                  <span class="bg-blue-500 p-1 rounded text-white">{{
                     item
                   }}</span>
                 </div>
