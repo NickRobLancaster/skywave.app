@@ -12,14 +12,47 @@ const columns = ref([]); //the columns in the csv file
 const data = ref([]); //the data from the csv file - array of objects
 const today = ref("");
 const start = ref("");
-const end = ref("");
-const totalDebtLast7Days = ref([]);
+const end = ref(""); //
+const totalDebtWeek = ref([]); // Total debt for the last 7 days
+const spiffWeekHovered = ref(false); // Hover state for showing delete button
+const spiffTodayHovered = ref(false); // Hover state for showing delete button
+const debt_goal = ref(JSON.parse(localStorage.getItem("debtGoal")) || 100000); // Goal for the week
+const refreshData = ref(false);
 
+//returns the startDate of the week based on the current day - will always be monday
+const startDate = computed(() => {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // Adjust if today is Sunday
+  const start = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + diffToMonday
+  );
+  return `${start.getMonth() + 1}/${start.getDate()}/${start.getFullYear()}`;
+});
+
+//retuns the endDate of the week based on the current day - will always be friday
+const endDate = computed(() => {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const diffToFriday = 5 - dayOfWeek;
+  const end = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + diffToFriday
+  );
+  return `${end.getMonth() + 1}/${end.getDate()}/${end.getFullYear()}`;
+});
+
+//watching data to auto toggle the upload modal
 watch(data, (newVal) => {
   if (data.value.length > 0) {
-    showUploadModal.value = false;
+    // showUploadModal.value = false;
+    refreshData.value = true;
   } else {
-    showUploadModal.value = true;
+    // showUploadModal.value = true;
+    refreshData.value = false;
   }
 });
 
@@ -28,13 +61,32 @@ const toggleUploadModal = () => {
   showUploadModal.value = !showUploadModal.value;
 };
 
+//toggle sidebar modal
 const toggleSidebarModal = () => {
   showSidebarModal.value = !showSidebarModal.value;
+};
+
+const resetData = () => {
+  const tmp_data = data.value;
+  const tmp_fileName = fileName.value;
+
+  data.value = [];
+  fileName.value = "";
+
+  setTimeout(() => {
+    data.value = tmp_data;
+    fileName.value = tmp_fileName;
+  }, 1000);
 };
 
 //chart options for goal chart
 const goalChartOptions = reactive({
   maintainAspectRatio: false,
+  //turn off labels
+  labels: {
+    display: false,
+  },
+
   plugins: {
     legend: {
       display: false, // Disables the legend
@@ -44,15 +96,22 @@ const goalChartOptions = reactive({
       annotations: {
         line1: {
           type: "line",
-          yMin: 0,
-          yMax: 100,
-          borderColor: "rgb(255, 99, 132)",
+          xMin: () => debt_goal.value,
+          xMax: () => debt_goal.value,
+          borderColor: "rgb(65, 196, 122)",
           borderWidth: 2,
           borderDash: [10, 5],
-          label: {
-            content: "Goal Threshold",
-            enabled: true,
-            position: "end",
+        },
+        label1: {
+          type: "label",
+          xMin: () => debt_goal.value,
+          xMax: () => debt_goal.value,
+          color: "white",
+          borderRadius: 5,
+          backgroundColor: "rgba(65, 196, 122)",
+          content: () => `GOAL: $${debt_goal.value}`,
+          font: {
+            size: 18,
           },
         },
       },
@@ -64,11 +123,12 @@ const goalChartOptions = reactive({
 
 //chart data for goal chart
 const goalChartData = reactive({
-  labels: ["Debt Load"],
+  labels: ["Debt Total"],
+
   datasets: [
     {
       //disable the labels
-      data: totalDebtLast7Days.value,
+      data: totalDebtWeek,
       backgroundColor: "rgba(255, 99, 132, 0.2)",
       borderColor: "rgba(255, 99, 132, 1)",
       borderWidth: 1,
@@ -92,7 +152,6 @@ const userChartOptions = reactive({
 
 //chart data for user chart
 const userChartData = reactive({
-  labels: ["January", "February", "March", "April"],
   datasets: [
     {
       label: "Users",
@@ -106,6 +165,7 @@ const triggerFileInput = () => {
   fileInput.value.click(); // Trigger the hidden file input click event
 };
 
+//handles the files to upload and add data to the data array
 const handleFiles = (event) => {
   const files = event.target.files || event.dataTransfer.files;
   if (files.length === 0) {
@@ -123,8 +183,9 @@ const handleFiles = (event) => {
     const jsonData = csvParse(csvText);
     data.value = trimPropertyNames(jsonData);
 
+    sumDebtsBetweenStartAndEndDates();
+
     columns.value = jsonData.columns;
-    console.log(data); // Output to verify
   };
 
   reader.onerror = (e) => console.error("Error reading file:", e.target.error);
@@ -132,11 +193,13 @@ const handleFiles = (event) => {
   reader.readAsText(file); // Read the file as text for parsing
 };
 
+//handles the file drop
 const handleDrop = (event) => {
   event.preventDefault(); // Prevent default behavior for drag and drop
   handleFiles(event);
 };
 
+//wipes the csv data
 const wipeData = () => {
   const confirmWipe = confirm(
     "Are you sure you want to wipe all the CSV data?"
@@ -150,6 +213,7 @@ const wipeData = () => {
   fileName.value = "";
 };
 
+//computed function to return todays date in the format the csv file uses
 const todaysDate = computed(() => {
   const today = new Date();
   const month = today.getMonth() + 1; // January is 0!
@@ -159,6 +223,7 @@ const todaysDate = computed(() => {
   return `${month}/${day}/${year}`;
 });
 
+//cleans the csv headers and trims the whitespace on keys
 const trimPropertyNames = (arr) => {
   return arr.map((obj) => {
     const newObj = {};
@@ -184,44 +249,27 @@ const sumDebtsOnDate = (date) => {
   )}`; // Sum up the values
 };
 
-//we need a function that get's the sum of all debts within the last 7 days
-const sumDebtsBetweenStartAndEndDates = computed(() => {
-  const totalDebt = data.value
-    .filter((item) => {
-      const itemDate = new Date(item["Enrolled Date"]);
-      return itemDate >= new Date(startDate) && itemDate <= new Date(endDate);
-    })
-    .map(
-      (item) => parseFloat(item["Debt Amount"].replace(/[\$,]/g, "")) // Remove $ and , then parse to float
-    )
-    .reduce((acc, currentValue) => acc + currentValue, 0); // Sum up the values
+//gets the sum of debt amounts between the startDate (monday) and endDate (friday)
+const sumDebtsBetweenStartAndEndDates = () => {
+  const start = new Date(startDate.value);
+  const end = new Date(endDate.value);
 
-  return `$${Intl.NumberFormat("en-US").format(totalDebt)}`;
-});
+  const sumOfDebtsForWeek = data.value
+    .reduce((acc, item) => {
+      const enrolledDate = new Date(item["Enrolled Date"]);
+      if (enrolledDate >= start && enrolledDate <= end) {
+        // Convert the "Debt Amount" to a number and add it to the accumulator
+        const amount = parseFloat(item["Debt Amount"].replace(/[\$,]/g, ""));
+        return acc + amount;
+      }
+      return acc;
+    }, 0)
+    .toFixed(2); // Sum the amounts, then format to 2 decimal places
 
-const startDate = computed(() => {
-  const today = new Date();
-  const dayOfWeek = today.getDay();
-  const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // Adjust if today is Sunday
-  const start = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() + diffToMonday
-  );
-  return `${start.getMonth() + 1}/${start.getDate()}/${start.getFullYear()}`;
-});
+  console.log(sumOfDebtsForWeek);
 
-const endDate = computed(() => {
-  const today = new Date();
-  const dayOfWeek = today.getDay();
-  const diffToFriday = 5 - dayOfWeek;
-  const end = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() + diffToFriday
-  );
-  return `${end.getMonth() + 1}/${end.getDate()}/${end.getFullYear()}`;
-});
+  totalDebtWeek.value = [sumOfDebtsForWeek];
+};
 
 //computed function that gets average "Debt Amount" for clients enrolled between startDate and endDate
 const averageDebtAmount = computed(() => {
@@ -250,6 +298,15 @@ const clientsEnrolledToday = computed(() => {
     .length;
 });
 
+//computed function that gets the average program length of all clients
+const averageProgramLength = computed(() => {
+  return (
+    data.value
+      .map((item) => parseInt(Number(item["Term"])))
+      .reduce((acc, currentValue) => acc + currentValue, 0) / data.value.length
+  ).toFixed(0);
+});
+
 //computd function that returns the total clients enrolled between the startDate and endDate
 const clientsEnrolledWeek = computed(() => {
   const start = new Date(startDate.value);
@@ -261,15 +318,7 @@ const clientsEnrolledWeek = computed(() => {
   }).length;
 });
 
-//computed function that gets the average program length of all clients
-const averageProgramLength = computed(() => {
-  return (
-    data.value
-      .map((item) => parseInt(Number(item["Term"])))
-      .reduce((acc, currentValue) => acc + currentValue, 0) / data.value.length
-  ).toFixed(0);
-});
-
+//returns an array with 3 objects where the first is 1st place, second is 2nd place, and third is 3rd place - each contain the name and debt load total for the week
 const topSalesUsers = computed(() => {
   const userAggregates = data.value.reduce((acc, item) => {
     const user = item["Sales User"];
@@ -297,16 +346,6 @@ const topSalesUsers = computed(() => {
   return userObjects.slice(0, 3); // Return the top 3 sales users
 });
 
-onMounted(() => {
-  today.value = todaysDate.value;
-  start.value = startDate.value;
-  end.value = endDate.value;
-
-  console.log("Today: ", today.value);
-  console.log("Start: ", start.value);
-  console.log("End: ", end.value);
-});
-
 //spiffsToday array or default to the local storage value
 const company_name = ref(
   JSON.parse(localStorage.getItem("companyName")) || "Quick Dash"
@@ -332,11 +371,12 @@ const spiffAdderWeek = () => {
   });
 };
 
-//watch the spiffsToday array and store in local storage
-watch(company_name, (newVal) => {
-  console.log(newVal);
-  localStorage.setItem("companyName", JSON.stringify(newVal));
-});
+const saveSettings = () => {
+  localStorage.setItem("companyName", JSON.stringify(company_name.value));
+  localStorage.setItem("debtGoal", JSON.stringify(debt_goal.value));
+  resetData();
+};
+
 //watch the spiffsToday array and store in local storage
 watch(spiffsToday.value, (newVal) => {
   console.log(newVal);
@@ -350,27 +390,33 @@ watch(spiffsWeek.value, (newVal) => {
   localStorage.setItem("spiffsWeek", JSON.stringify(newVal));
 });
 
-const spiffWeekHovered = ref(false);
-const spiffTodayHovered = ref(false);
-
+//function to handle the hover over event for spiff Week - toggle for showing delete button
 const spiffWeekHoverOver = () => {
   spiffWeekHovered.value = true;
 };
+
+//function to handle the hover leave event for spiff Week - toggle for hiding delete button
 const spiffWeekHoverLeave = () => {
   spiffWeekHovered.value = false;
 };
+
+//function to handle the hover over event for spiff Today - toggle for showing delete button
 const spiffTodayHoverOver = () => {
   spiffTodayHovered.value = true;
 };
+
+//function to handle the hover leave even for spiff Today - toggle for hiding delete button
 const spiffTodayHoverLeave = () => {
   spiffTodayHovered.value = false;
 };
 
+//function to return whole number format with commas and no decimal - example: 1,000,000
 const formatWholeNumberWithCommas = (number) => {
   const wholeNumber = Math.floor(number); // Or use Math.ceil() or Math.round() as needed
   return new Intl.NumberFormat("en-US").format(wholeNumber);
 };
 
+//computed function that returns the new clients today
 const newClientsToday = computed(() => {
   const today = new Date();
   const formattedToday = `${
@@ -380,6 +426,7 @@ const newClientsToday = computed(() => {
   return data.value.filter((item) => item["Enrolled Date"] === formattedToday);
 });
 
+//wipes all the local storage for client side data
 const wipeLocalStorage = () => {
   const confirmWipe = confirm(
     "Are you sure you want to wipe all the local storage data?"
@@ -394,6 +441,17 @@ const wipeLocalStorage = () => {
   //reload the page
   location.reload();
 };
+
+//onMounted setting a few variables
+onMounted(() => {
+  today.value = todaysDate.value;
+  start.value = startDate.value;
+  end.value = endDate.value;
+
+  console.log("Today: ", today.value);
+  console.log("Start: ", start.value);
+  console.log("End: ", end.value);
+});
 </script>
 
 <template>
@@ -413,14 +471,14 @@ const wipeLocalStorage = () => {
       >
         <div class="h-full w-1/3 bg-base-100 border-l border-slate-400">
           <div class="flex flex-col gap-2 p-2 h-full w-full">
-            <h1 class="text-2xl font-bold text-white text-right">
-              <span class="cursive-text"> Quick Dash </span>&trade;
+            <h1 class="text-2xl font-bold text-gray-100 text-right">
+              <span class="cursive-text text-white"> Quick Dash </span>&trade;
             </h1>
 
             <div
-              class="border border-slate-400 rounded p-2 flex flex-col gap-5"
+              class="border border-slate-400 rounded p-2 flex flex-col gap-5 text-white"
             >
-              <h1 class="text-xl text-white">Welcome to Quick Dash</h1>
+              <h1 class="text-xl text-gray-100">Welcome to Quick Dash</h1>
               <p class="text-base">
                 In case you haven't figured out how to use Quick Dash&trade;
                 yet... It's pretty simple.
@@ -458,7 +516,7 @@ const wipeLocalStorage = () => {
 
                   <button
                     @click="triggerFileInput"
-                    class="bg-blue-500 text-white p-2 rounded"
+                    class="bg-blue-500 text-gray-100 p-2 rounded"
                   >
                     Browse for a CSV File
                   </button>
@@ -475,34 +533,57 @@ const wipeLocalStorage = () => {
             </div>
 
             <div
-              class="border border-slate-400 rounded p-2 flex flex-col gap-5 mt-auto"
+              class="border border-slate-400 rounded p-2 flex flex-col gap-5 mt-auto text-white"
             >
-              <h1>Settings</h1>
+              <div class="flex flex-row items-center gap-2">
+                <h1>Settings</h1>
+                <button
+                  class="btn btn-sm rounded bg-red-500 text-white ml-auto"
+                  @click="wipeLocalStorage"
+                  title="Wipe All Local Storage Data"
+                >
+                  Reset To Default
+                </button>
+                <button
+                  class="btn btn-sm rounded bg-emerald-500 text-white"
+                  @click="saveSettings"
+                  title="Wipe All Local Storage Data"
+                >
+                  Save Settings
+                </button>
+              </div>
 
               <div class="grid grid-cols-4 gap-3">
-                <div class="col-span-3 flex flex-col gap-3">
-                  <label for="startDate">Company Name</label>
+                <div class="col-span-2 flex flex-col gap-3">
+                  <label for="company_name">Company Name</label>
                   <input
+                    id="company_name"
                     type="text"
                     v-model="company_name"
                     class="input input-sm rounded bg-gray-100 text-slate-600"
                   />
                 </div>
-                <button
-                  class="btn btn-sm rounded bg-red-500 text-white mt-auto"
-                  @click="wipeLocalStorage"
-                  title="Wipe All Local Storage Data"
-                >
-                  Wipe Storage
-                </button>
+
+                <div class="col-span-2 flex flex-col gap-3">
+                  <label for="debt_goal">Debt Goal</label>
+                  <input
+                    id="debt_goal"
+                    type="text"
+                    v-model.number="debt_goal"
+                    class="input input-sm rounded bg-gray-100 text-slate-600"
+                  />
+                </div>
               </div>
             </div>
-            <button
-              @click="toggleSidebarModal"
-              class="btn bg-slate-700 text-white hover:bg-white hover:text-slate-700"
-            >
-              Close
-            </button>
+
+            <div class="flex flex-row items-center justify-between">
+              <button
+                @click="toggleSidebarModal"
+                class="btn btn-sm btn-block bg-slate-700 text-gray-100 hover:bg-white hover:text-slate-700"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -527,7 +608,7 @@ const wipeLocalStorage = () => {
           class="h-full w-full bg-base-100 rounded-xl border border-slate-400"
         >
           <div class="flex flex-col gap-2 p-2 h-full w-full">
-            <h1 class="text-2xl font-bold text-white">Upload File</h1>
+            <h1 class="text-2xl font-bold text-gray-100">Upload File</h1>
             <div class="flex-1 flex flex-row justify-center items-center">
               <div
                 v-if="!fileName"
@@ -545,7 +626,7 @@ const wipeLocalStorage = () => {
 
                 <button
                   @click="triggerFileInput"
-                  class="bg-blue-500 text-white p-2 rounded"
+                  class="bg-blue-500 text-gray-100 p-2 rounded"
                 >
                   Browse for a CSV File
                 </button>
@@ -565,7 +646,7 @@ const wipeLocalStorage = () => {
               >
                 <p class="text-3xl">
                   Uploaded:
-                  <span class="bg-blue-500 text-white p-2 rounded">
+                  <span class="bg-blue-500 text-gray-100 p-2 rounded">
                     {{ fileName }}
                   </span>
                 </p>
@@ -574,7 +655,7 @@ const wipeLocalStorage = () => {
                 <div class="overflow-x-auto border rounded-lg">
                   <table class="table">
                     <thead class="">
-                      <tr class="divide-x divide-white text-white">
+                      <tr class="divide-x divide-white text-gray-100">
                         <th v-for="(col, i) in columns">
                           {{ col }}
                         </th>
@@ -608,7 +689,7 @@ const wipeLocalStorage = () => {
             </div>
             <button
               @click="toggleUploadModal"
-              class="btn bg-slate-700 text-white hover:bg-white hover:text-slate-700"
+              class="btn bg-slate-700 text-gray-100 hover:bg-white hover:text-slate-700"
             >
               Close
             </button>
@@ -623,11 +704,11 @@ const wipeLocalStorage = () => {
     <div
       class="flex flex-row items-center p-2 bg-base-100 border-b border-b-slate-400"
     >
-      <h1 class="text-2xl font-bold text-white">
-        Weekly Enrollments ({{ startDate }} - {{ endDate }})
+      <h1 class="text-2xl font-bold text-gray-100">
+        Weekly Enrollments ({{ startDate }} - {{ endDate }}) {{ totalDebtWeek }}
       </h1>
 
-      <div class="ml-auto text-3xl text-white cursive-text">
+      <div class="ml-auto text-3xl text-gray-100 cursive-text">
         {{ company_name }}
       </div>
 
@@ -636,7 +717,7 @@ const wipeLocalStorage = () => {
           v-if="data.length < 1"
           @click="toggleUploadModal"
           title="Upload a CSV file"
-          class="btn bg-blue-500 text-white hover:bg-blue-700"
+          class="btn bg-blue-500 text-gray-100 hover:bg-blue-700"
         >
           <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
         </button>
@@ -645,14 +726,14 @@ const wipeLocalStorage = () => {
           v-if="data.length > 0"
           @click="wipeData"
           title="Wipe the CSV Data"
-          class="btn text-white bg-red-500 hover:bg-red-700"
+          class="btn text-gray-100 bg-red-500 hover:bg-red-700"
         >
           <font-awesome-icon icon="fa-solid fa-arrows-rotate" />
         </button>
 
         <button
           @click="toggleSidebarModal"
-          class="btn text-slate-600 bg-white hover:bg-base-100 hover:text-white hover:border hover:border-slate-400"
+          class="btn text-slate-600 bg-white hover:bg-base-100 hover:text-gray-100 hover:border hover:border-slate-400"
         >
           <font-awesome-icon icon="fa-solid fa-bars" />
         </button>
@@ -679,9 +760,9 @@ const wipeLocalStorage = () => {
                   size="xl"
                 />
               </div>
-              <div class="text-white text-5xl pl-3 pb-4">1st</div>
+              <div class="text-gray-100 text-5xl pl-3 pb-4">1st</div>
             </div>
-            <div class="text-white text-2xl flex-1 text-center">
+            <div class="text-gray-100 text-2xl flex-1 text-center">
               {{ topSalesUsers[0]?.sales_user }}
             </div>
             <div
@@ -703,8 +784,8 @@ const wipeLocalStorage = () => {
           class="flex-1 bg-gray-400 rounded flex flex-col text-center justify-center glass divide-x"
         >
           <div class="flex flex-row items-center">
-            <div class="text-white text-3xl py-5 pl-5 rounded-full">2nd</div>
-            <div class="text-white text-2xl flex-1 text-center">
+            <div class="text-gray-100 text-3xl py-5 pl-5 rounded-full">2nd</div>
+            <div class="text-gray-100 text-2xl flex-1 text-center">
               {{ topSalesUsers[1]?.sales_user }}
             </div>
             <div
@@ -726,8 +807,8 @@ const wipeLocalStorage = () => {
           class="flex-1 bg-orange-500 rounded flex flex-col text-center justify-center glass divide-x"
         >
           <div class="flex flex-row items-center">
-            <div class="text-white text-3xl py-5 pl-5 rounded-full">3rd</div>
-            <div class="text-white text-2xl flex-1 text-center">
+            <div class="text-gray-100 text-3xl py-5 pl-5 rounded-full">3rd</div>
+            <div class="text-gray-100 text-2xl flex-1 text-center">
               {{ topSalesUsers[2]?.sales_user }}
             </div>
             <div
@@ -756,12 +837,12 @@ const wipeLocalStorage = () => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="">
+              <div class="text-gray-100">
                 Enrolled Debt <br />
                 - Today
               </div>
               <div
-                class="flex-1 flex flex-col justify-center items-center text-4xl text-emerald-400"
+                class="flex-1 flex flex-col justify-center items-center text-4xl text-blue-400"
               >
                 {{ sumDebtsOnDate(todaysDate) }}
               </div>
@@ -769,12 +850,12 @@ const wipeLocalStorage = () => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="">
+              <div class="text-gray-100">
                 Average Debt / Client<br />
                 - Week
               </div>
               <div
-                class="flex-1 flex flex-col justify-center items-center text-4xl text-blue-400"
+                class="flex-1 flex flex-col justify-center items-center text-4xl text-yellow-400"
               >
                 {{ averageDebtAmount }}
               </div>
@@ -786,12 +867,21 @@ const wipeLocalStorage = () => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="">Enrolled Debt - Week</div>
+              <div class="text-gray-100">Enrolled Debt - Week</div>
 
-              <div class="flex-1">
+              <div
+                class="text-center flex-1 flex flex-col items-center justify-center"
+              >
+                <h1 class="text-green-400 text-6xl">
+                  ${{ formatWholeNumberWithCommas(totalDebtWeek[0]) }}
+                </h1>
+              </div>
+
+              <div class="">
                 <Chart
-                  :chartData="goalChartData"
-                  :chartOptions="goalChartOptions"
+                  :data="goalChartData"
+                  :options="goalChartOptions"
+                  v-if="refreshData"
                 />
               </div>
             </div>
@@ -802,12 +892,12 @@ const wipeLocalStorage = () => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col p-2"
             >
-              <div class="">
+              <div class="text-gray-100">
                 Enrollments <br />
                 - Today
               </div>
               <div
-                class="flex-1 flex flex-col justify-center items-center text-5xl text-orange-400"
+                class="flex-1 flex flex-col justify-center items-center text-5xl text-rose-400"
               >
                 {{ clientsEnrolledToday }}
               </div>
@@ -815,7 +905,7 @@ const wipeLocalStorage = () => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col p-2"
             >
-              <div class="">
+              <div class="text-gray-100">
                 Average Program Length <br />
                 - Week
               </div>
@@ -828,7 +918,7 @@ const wipeLocalStorage = () => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col p-2"
             >
-              <div class="">
+              <div class="text-gray-100">
                 Clients Enrolled <br />
                 - Week
               </div>
@@ -845,14 +935,11 @@ const wipeLocalStorage = () => {
           <div
             class="bg-base-100 flex-1 border border-slate-400 rounded flex flex-col p-2 max-w-full overflow-x-auto"
           >
-            <div class="">Enrollments by Rep - Week</div>
+            <div class="text-gray-100">Enrollments by Rep - Week</div>
             <div
               class="flex-1 flex flex-col justify-center items-center text-5xl"
             >
-              <Chart
-                :chartData="userChartData"
-                :chartOptions="userChartOptions"
-              />
+              <Chart :data="userChartData" :options="userChartOptions" />
             </div>
           </div>
         </div>
@@ -865,13 +952,13 @@ const wipeLocalStorage = () => {
           <div
             class="h-2/3 bg-base-100 rounded flex flex-col gap-5 overflow-y-auto"
           >
-            <div class="p-2">New Clients - Today</div>
+            <div class="p-2 text-gray-100">New Clients - Today</div>
 
             <div class="flex-1 flex flex-col text-5xl">
               <div class="overflow-y-auto">
                 <table class="table table-zebra">
                   <!-- head -->
-                  <thead>
+                  <thead class="text-gray-100">
                     <tr>
                       <th>Program Consultant</th>
                       <th>Client Name</th>
@@ -879,7 +966,7 @@ const wipeLocalStorage = () => {
                       <th>Total Debt</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="text-gray-100">
                     <!-- row 1 -->
                     <tr v-for="(item, i) in newClientsToday" :key="i">
                       <td>{{ item["Sales User"] }}</td>
@@ -898,7 +985,7 @@ const wipeLocalStorage = () => {
           >
             <div class="h-full overflow-y-auto hide-scroll">
               <div class="flex flex-row items-center p-2">
-                <div class="">Spiffs - Today</div>
+                <div class="text-gray-100">Spiffs - Today</div>
                 <button
                   @click="spiffAdderToday"
                   class="ml-auto btn btn-xs border border-slate-400 hover:bg-gray-100 hover:text-slate-600"
@@ -908,7 +995,7 @@ const wipeLocalStorage = () => {
               </div>
               <table class="table table-zebra table-xs">
                 <!-- head -->
-                <thead class="sticky top-0 bg-base-100">
+                <thead class="sticky top-0 bg-base-100 text-gray-100">
                   <tr>
                     <th>Rep</th>
                     <th>Spiff</th>
@@ -930,7 +1017,7 @@ const wipeLocalStorage = () => {
                       <input
                         type="text"
                         v-model="spiffsToday[i].sales_rep"
-                        class="w-full p-1 bg-transparent border border-slate-600 text-base rounded"
+                        class="w-full p-1 bg-transparent border border-slate-600 text-base text-gray-100 rounded"
                       />
                     </td>
                     <td>
@@ -943,7 +1030,7 @@ const wipeLocalStorage = () => {
                     <td v-if="spiffTodayHovered">
                       <button
                         @click="spiffsToday.splice(i, 1)"
-                        class="btn btn-sm bg-red bg-red-500 text-white hover:bg-red-700 rounded"
+                        class="btn btn-sm bg-red bg-red-500 text-gray-100 hover:bg-red-700 rounded"
                       >
                         <font-awesome-icon icon="fa-solid fa-xmark" />
                       </button>
@@ -952,14 +1039,14 @@ const wipeLocalStorage = () => {
                 </tbody>
               </table>
               <div v-if="spiffsToday.length === 0" class="p-2">
-                <div class="bg-blue-500 p-5 rounded text-white text-center">
+                <div class="bg-blue-500 p-5 rounded text-gray-100 text-center">
                   No Spiffs Today Yet
                 </div>
               </div>
             </div>
             <div class="h-full overflow-y-auto hide-scroll">
               <div class="flex flex-row items-center p-2">
-                <div class="">Spiffs - Week</div>
+                <div class="text-gray-100">Spiffs - Week</div>
                 <button
                   @click="spiffAdderWeek"
                   class="ml-auto btn btn-xs border border-slate-400 hover:bg-gray-100 hover:text-slate-600"
@@ -969,7 +1056,7 @@ const wipeLocalStorage = () => {
               </div>
               <table class="table table-zebra table-xs">
                 <!-- head -->
-                <thead class="sticky top-0 bg-base-100">
+                <thead class="sticky top-0 bg-base-100 text-gray-100">
                   <tr>
                     <th>Rep</th>
                     <th>Spiff</th>
@@ -1004,7 +1091,7 @@ const wipeLocalStorage = () => {
                     <td v-if="spiffWeekHovered">
                       <button
                         @click="spiffsWeek.splice(i, 1)"
-                        class="btn btn-sm bg-red bg-red-500 text-white hover:bg-red-700 rounded"
+                        class="btn btn-sm bg-red bg-red-500 text-gray-100 hover:bg-red-700 rounded"
                       >
                         <font-awesome-icon icon="fa-solid fa-xmark" />
                       </button>
@@ -1013,7 +1100,7 @@ const wipeLocalStorage = () => {
                 </tbody>
               </table>
               <div v-if="spiffsWeek.length === 0" class="p-2">
-                <div class="bg-blue-500 p-5 rounded text-white text-center">
+                <div class="bg-blue-500 p-5 rounded text-gray-100 text-center">
                   No Spiffs This Week Yet
                 </div>
               </div>

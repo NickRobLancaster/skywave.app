@@ -1,28 +1,58 @@
-<script setup>
-import { ref, watchEffect } from "vue";
+<script>
 import { Bar } from "vue-chartjs";
-import { Chart, registerables } from "chart.js";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+
 import ChartAnnotation from "chartjs-plugin-annotation";
-Chart.register(...registerables);
+// import ChartDataLabels from "chartjs-plugin-datalabels";
 
-// Props for chart data and options
-const props = defineProps({
-  chartData: Object,
-  chartOptions: Object,
-});
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  ChartAnnotation
+  // ChartDataLabels
+);
 
-// Ref for the chart instance
-const chartRef = ref(null);
+//create props for the data and the options
 
-// Watch for changes in chartData to update the chart
-watchEffect(() => {
-  if (chartRef.value && props.chartData) {
-    chartRef.value.data = props.chartData;
-    chartRef.value.update();
-  }
-});
+export default {
+  name: "Chart",
+  components: { Bar },
+  props: {
+    // Defining props to accept data and options from a parent component
+    data: {
+      type: Object,
+      required: true, // Making the data prop required
+    },
+    options: {
+      type: Object,
+      required: false, // This prop is optional
+      default: () => ({
+        responsive: true, // Default options if none are provided
+      }),
+    },
+  },
+  data() {
+    return {
+      // Local state is now sourced from props
+      chartData: this.data,
+      chartOptions: this.options,
+    };
+  },
+};
 </script>
 
 <template>
-  <Bar ref="chartRef" :data="props.chartData" :options="props.chartOptions" />
+  <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
 </template>
