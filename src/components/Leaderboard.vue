@@ -1079,7 +1079,7 @@ onMounted(() => {
                   :key="i"
                   class="text-center flex-1"
                 >
-                  <span class="py-1 px-3 rounded text-white text-5xl">{{
+                  <span class="py-1 px-3 rounded text-white text-4xl">{{
                     item
                   }}</span>
                 </div>
