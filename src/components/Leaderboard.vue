@@ -1079,7 +1079,7 @@ onMounted(() => {
                   :key="i"
                   class="text-center flex-1"
                 >
-                  <span class="bg-blue-500 p-1 rounded text-white">{{
+                  <span class="bg-blue-500 p-1 rounded text-white text-lg">{{
                     item
                   }}</span>
                 </div>
