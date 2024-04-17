@@ -1070,7 +1070,7 @@ onMounted(() => {
                 v-if="refreshData"
               />
             </div>
-            <div class="h-10 pl-20 pr-8">
+            <div class="h-10 pl-14 pr-6">
               <div
                 class="h-full flex flex-row justify-between items-center gap-12"
               >
@@ -1079,9 +1079,10 @@ onMounted(() => {
                   :key="i"
                   class="text-center flex-1"
                 >
-                  <span class="bg-blue-500 p-1 rounded text-white text-lg">{{
-                    item
-                  }}</span>
+                  <span
+                    class="bg-blue-500 py-1 px-3 rounded text-white text-3xl"
+                    >{{ item }}</span
+                  >
                 </div>
               </div>
             </div>
