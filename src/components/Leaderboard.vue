@@ -962,7 +962,7 @@ onMounted(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="text-gray-100">
+              <div class="text-gray-100 text-xl">
                 Enrolled Debt <br />
                 - Today
               </div>
@@ -975,7 +975,7 @@ onMounted(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="text-gray-100">
+              <div class="text-gray-100 text-xl">
                 Average Debt / Client<br />
                 - Week
               </div>
@@ -992,7 +992,7 @@ onMounted(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="text-gray-100">Enrolled Debt - Week</div>
+              <div class="text-gray-100 text-xl">Enrolled Debt - Week</div>
 
               <div
                 class="text-center flex-1 flex flex-col items-center justify-center"
@@ -1017,7 +1017,7 @@ onMounted(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col p-2"
             >
-              <div class="text-gray-100">
+              <div class="text-gray-100 text-xl">
                 Enrollments <br />
                 - Today
               </div>
@@ -1030,7 +1030,7 @@ onMounted(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col p-2"
             >
-              <div class="text-gray-100">
+              <div class="text-gray-100 text-xl">
                 Average Program Length <br />
                 - Week
               </div>
@@ -1043,7 +1043,7 @@ onMounted(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col p-2"
             >
-              <div class="text-gray-100">
+              <div class="text-gray-100 text-xl">
                 Clients Enrolled <br />
                 - Week
               </div>
@@ -1060,7 +1060,7 @@ onMounted(() => {
           <div
             class="bg-base-100 flex-1 border border-slate-400 rounded flex flex-col p-2 max-w-full overflow-x-auto"
           >
-            <div class="text-gray-100">Enrollments by Rep - Week</div>
+            <div class="text-gray-100 text-xl">Enrollments by Rep - Week</div>
             <div
               class="flex-1 flex flex-col justify-center items-center text-5xl"
             >
@@ -1096,7 +1096,7 @@ onMounted(() => {
           <div
             class="h-2/3 bg-base-100 rounded flex flex-col gap-5 overflow-y-auto"
           >
-            <div class="p-2 text-gray-100">New Clients - Today</div>
+            <div class="p-2 text-gray-100 text-xl">New Clients - Today</div>
 
             <div class="flex-1 flex flex-col text-5xl">
               <div class="overflow-y-auto">
@@ -1129,7 +1129,7 @@ onMounted(() => {
           >
             <div class="h-full overflow-y-auto hide-scroll">
               <div class="flex flex-row items-center p-2">
-                <div class="text-gray-100">Spiffs - Today</div>
+                <div class="text-gray-100 text-xl">Spiffs - Today</div>
                 <button
                   @click="spiffAdderToday"
                   class="ml-auto btn btn-xs border border-slate-400 hover:bg-gray-100 hover:text-slate-600"
@@ -1190,7 +1190,7 @@ onMounted(() => {
             </div>
             <div class="h-full overflow-y-auto hide-scroll">
               <div class="flex flex-row items-center p-2">
-                <div class="text-gray-100">Spiffs - Week</div>
+                <div class="text-gray-100 text-xl">Spiffs - Week</div>
                 <button
                   @click="spiffAdderWeek"
                   class="ml-auto btn btn-xs border border-slate-400 hover:bg-gray-100 hover:text-slate-600"
@@ -1222,7 +1222,7 @@ onMounted(() => {
                       <input
                         type="text"
                         v-model="spiffsWeek[i].sales_rep"
-                        class="w-full p-1 bg-transparent border border-slate-600 text-base rounded"
+                        class="w-full p-1 bg-transparent border border-slate-600 text-base rounded text-gray-100"
                       />
                     </td>
                     <td>
