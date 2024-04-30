@@ -1094,7 +1094,7 @@ onMounted(() => {
           class="flex-1 bg-base-100 border border-slate-400 rounded flex flex-col"
         >
           <div
-            class="h-2/3 bg-base-100 rounded flex flex-col gap-5 overflow-y-auto"
+            class="h-2/4 bg-base-100 rounded flex flex-col gap-5 overflow-y-auto"
           >
             <div class="p-2 text-gray-100 text-xl">New Clients - Today</div>
 
@@ -1125,7 +1125,7 @@ onMounted(() => {
           </div>
           <!-- spiff adders -->
           <div
-            class="h-1/3 bg-base-100 flex-col grid grid-cols-2 border-t border-t-slate-400 divide-x divide-slate-400"
+            class="h-2/4 bg-base-100 flex-col grid grid-cols-2 border-t border-t-slate-400 divide-x divide-slate-400"
           >
             <div class="h-full overflow-y-auto hide-scroll">
               <div class="flex flex-row items-center p-2">
