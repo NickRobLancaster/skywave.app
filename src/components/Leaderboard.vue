@@ -18,33 +18,50 @@ const spiffWeekHovered = ref(false); // Hover state for showing delete button
 const spiffTodayHovered = ref(false); // Hover state for showing delete button
 const debt_goal = ref(JSON.parse(localStorage.getItem("debtGoal")) || 100000); // Goal for the week
 const refreshData = ref(false);
+const timeRangePeriod = ref("week");
 
 //get unique array of all sales reps names
 
 //returns the startDate of the week based on the current day - will always be monday
 const startDate = computed(() => {
   const today = new Date();
-  const dayOfWeek = today.getDay();
-  const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // Adjust if today is Sunday
-  const start = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() + diffToMonday
-  );
-  return `${start.getMonth() + 1}/${start.getDate()}/${start.getFullYear()}`;
+
+  if (timeRangePeriod.value === "week") {
+    const dayOfWeek = today.getDay();
+    const diffToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // Adjust if today is Sunday
+    const start = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + diffToMonday
+    );
+    return `${start.getMonth() + 1}/${start.getDate()}/${start.getFullYear()}`;
+  } else if (timeRangePeriod.value === "month") {
+    const start = new Date(today.getFullYear(), today.getMonth(), 1);
+    return `${start.getMonth() + 1}/${start.getDate()}/${start.getFullYear()}`;
+  } else {
+    return "Invalid time range period";
+  }
 });
 
 //retuns the endDate of the week based on the current day - will always be friday
 const endDate = computed(() => {
   const today = new Date();
-  const dayOfWeek = today.getDay();
-  const diffToFriday = 5 - dayOfWeek;
-  const end = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() + diffToFriday
-  );
-  return `${end.getMonth() + 1}/${end.getDate()}/${end.getFullYear()}`;
+
+  if (timeRangePeriod.value === "week") {
+    const dayOfWeek = today.getDay();
+    const diffToFriday = 5 - dayOfWeek;
+    const end = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + diffToFriday
+    );
+    return `${end.getMonth() + 1}/${end.getDate()}/${end.getFullYear()}`;
+  } else if (timeRangePeriod.value === "month") {
+    const end = new Date(today.getFullYear(), today.getMonth() + 1, 0); // Last day of the current month
+    return `${end.getMonth() + 1}/${end.getDate()}/${end.getFullYear()}`;
+  } else {
+    return "Invalid time range period";
+  }
 });
 
 //computed function that looks into the data array and returns a new array of unique sales reps in the order of their Debt Amount sum greatest to least
@@ -388,7 +405,7 @@ const sumDebtsBetweenStartAndEndDates = () => {
     }, 0)
     .toFixed(2); // Sum the amounts, then format to 2 decimal places
 
-  console.log(sumOfDebtsForWeek);
+  console.log("SUM OF DEBTS FOR WEEK", sumOfDebtsForWeek);
 
   totalDebtWeek.value = [sumOfDebtsForWeek];
 };
@@ -422,8 +439,14 @@ const clientsEnrolledToday = computed(() => {
 
 //computed function that gets the average program length of all clients
 const averageProgramLength = computed(() => {
+  const start = new Date(startDate.value);
+  const end = new Date(endDate.value);
   return (
     data.value
+      .filter((item) => {
+        const enrolledDate = new Date(item["Enrolled Date"]);
+        return enrolledDate >= start && enrolledDate <= end;
+      })
       .map((item) => parseInt(Number(item["Term"])))
       .reduce((acc, currentValue) => acc + currentValue, 0) / data.value.length
   ).toFixed(0);
@@ -573,6 +596,12 @@ onMounted(() => {
   console.log("Today: ", today.value);
   console.log("Start: ", start.value);
   console.log("End: ", end.value);
+});
+
+//watch the timeRangePeriod and run resetData function
+watch(timeRangePeriod, () => {
+  sumDebtsBetweenStartAndEndDates();
+  resetData();
 });
 </script>
 
@@ -828,7 +857,16 @@ onMounted(() => {
       class="flex flex-row items-center p-2 bg-base-100 border-b border-b-slate-400"
     >
       <h1 class="text-2xl font-bold text-gray-100">
-        Weekly Enrollments ({{ startDate }} - {{ endDate }})
+        <span>
+          <select
+            class="appearance-none border-b border-slate-400 text-center"
+            v-model="timeRangePeriod"
+          >
+            <option value="week">Week</option>
+            <option value="month">Month</option>
+          </select>
+        </span>
+        Enrollments ({{ startDate }} - {{ endDate }})
       </h1>
 
       <div class="ml-auto text-3xl text-gray-100 cursive-text">
@@ -977,7 +1015,7 @@ onMounted(() => {
             >
               <div class="text-gray-100 text-xl">
                 Average Debt / Client<br />
-                - Week
+                - <span class="capitalize">{{ timeRangePeriod }}</span>
               </div>
               <div
                 class="flex-1 flex flex-col justify-center items-center text-4xl text-yellow-400"
@@ -992,7 +1030,10 @@ onMounted(() => {
             <div
               class="flex-1 bg-base-100 border border-slate-400 rounded p-2 flex flex-col"
             >
-              <div class="text-gray-100 text-xl">Enrolled Debt - Week</div>
+              <div class="text-gray-100 text-xl">
+                Enrolled Debt -
+                <span class="capitalize">{{ timeRangePeriod }}</span>
+              </div>
 
               <div
                 class="text-center flex-1 flex flex-col items-center justify-center"
@@ -1032,7 +1073,7 @@ onMounted(() => {
             >
               <div class="text-gray-100 text-xl">
                 Average Program Length <br />
-                - Week
+                - <span class="capitalize">{{ timeRangePeriod }}</span>
               </div>
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl text-purple-400"
@@ -1045,7 +1086,7 @@ onMounted(() => {
             >
               <div class="text-gray-100 text-xl">
                 Clients Enrolled <br />
-                - Week
+                - <span class="capitalize">{{ timeRangePeriod }}</span>
               </div>
               <div
                 class="flex-1 flex flex-col justify-center items-center text-5xl text-sky-400"
@@ -1060,7 +1101,10 @@ onMounted(() => {
           <div
             class="bg-base-100 flex-1 border border-slate-400 rounded flex flex-col p-2 max-w-full overflow-x-auto"
           >
-            <div class="text-gray-100 text-xl">Enrollments by Rep - Week</div>
+            <div class="text-gray-100 text-xl">
+              Enrollments by Rep -
+              <span class="capitalize">{{ timeRangePeriod }}</span>
+            </div>
             <div
               class="flex-1 flex flex-col justify-center items-center text-5xl"
             >
@@ -1190,7 +1234,9 @@ onMounted(() => {
             </div>
             <div class="h-full overflow-y-auto hide-scroll">
               <div class="flex flex-row items-center p-2">
-                <div class="text-gray-100 text-xl">Spiffs - Week</div>
+                <div class="text-gray-100 text-xl">
+                  Spiffs - <span class="capitalize">{{ timeRangePeriod }}</span>
+                </div>
                 <button
                   @click="spiffAdderWeek"
                   class="ml-auto btn btn-xs border border-slate-400 hover:bg-gray-100 hover:text-slate-600"
