@@ -1,3 +1,72 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* Webkit-based browsers */
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+  }
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .sw-btn {
+    @apply px-4 py-2 text-white rounded-md shadow-md;
+  }
+
+  .sw-font {
+    @apply text-gray-500;
+  }
+
+  .sw-border {
+    @apply border border-gray-300;
+  }
+
+  .bg-glass {
+    @apply bg-opacity-10 backdrop-blur-md backdrop-filter;
+  }
+
+  /* Example 6: Custom transition */
+  .transition-custom {
+    @apply transition-all duration-300 ease-in-out; /* Tailwind utility for custom transition */
+  }
+
+  @keyframes press {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* Create a custom utility class for the button press animation */
+  .animate-press {
+    @apply transition-transform duration-150 ease-in-out;
+    animation: press 0.15s ease-in-out;
+  }
+}

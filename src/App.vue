@@ -1,7 +1,5 @@
-<script setup>
-import Leaderboard from "./components/Leaderboard.vue";
-</script>
+<script setup></script>
 
 <template>
-  <Leaderboard />
+  <router-view />
 </template>
