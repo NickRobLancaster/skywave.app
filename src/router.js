@@ -1,42 +1,46 @@
 // src/router.js
 import { createRouter, createWebHistory, onBeforeRouteLeave } from "vue-router";
 
+import Website from "./components/Website.vue";
+import Home from "./components/Home.vue";
+import Products from "./components/Products.vue";
+import Features from "./components/Features.vue";
+import Pricing from "./components/Pricing.vue";
+import GettingStarted from "./components/GettingStarted.vue";
+
 import { useWebsiteStore } from "./../stores/websiteStore";
 
 const routes = [
   {
     path: "/",
     name: "root",
-    component: () => import("./components/Website.vue"),
-    redirect: "/home",
+    component: Website,
+    redirect: { name: "home" },
     children: [
       {
-        path: "/home",
+        path: "home", // Path should be relative
         name: "home",
-        components: { root: () => import("./components/Home.vue") },
+        components: { root: Home },
       },
       {
-        path: "/products",
+        path: "products", // Path should be relative
         name: "products",
-        components: { root: () => import("./components/Products.vue") },
+        components: { root: Products },
       },
       {
-        path: "/features",
+        path: "features", // Path should be relative
         name: "features",
-        components: { root: () => import("./components/Features.vue") },
+        components: { root: Features },
       },
       {
-        path: "/pricing",
+        path: "pricing", // Path should be relative
         name: "pricing",
-        components: { root: () => import("./components/Pricing.vue") },
+        components: { root: Pricing }, // Fixed components declaration
       },
       {
-        path: "/get-started",
+        path: "get-started", // Path should be relative
         name: "get-started",
-
-        components: {
-          modals: () => import("./components/GettingStarted.vue"),
-        },
+        components: { modals: GettingStarted }, // Fixed component declaration
       },
     ],
   },
