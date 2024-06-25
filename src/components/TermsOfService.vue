@@ -32,7 +32,7 @@ const websiteStore = useWebsiteStore();
       class="container mx-auto p-10 bg-gray-50 rounded-xl flex flex-col gap-5 text-gray-600"
     >
       <div>
-        <div>
+        <div class="text-sm md:text-base">
           THIS IS AN AGREEMENT BETWEEN YOU OR THE ENTITY THAT YOU REPRESENT
           (hereinafter “You” or “Your”) AND Skywave CRM (hereinafter “Skywave
           CRM”) GOVERNING YOUR USE OF Skywave CRM SUITE OF ONLINE BUSINESS
@@ -42,9 +42,9 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Parts of this Agreement</div>
+        <div class="text-xl md:text-3xl">Parts of this Agreement</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           This Agreement consists of the following terms and conditions
           (hereinafter the “General Terms”) and terms and conditions, if any,
           specific to use of individual Services (hereinafter the “Service
@@ -56,9 +56,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Acceptance of the Terms</div>
+        <div class="text-xl md:text-3xl">Acceptance of the Terms</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           You must be of legal age to enter into a binding agreement in order to
           accept the Terms. If you do not agree to the General Terms, do not use
           any of our Services. If you agree to the General Terms and do not
@@ -69,9 +69,9 @@ const websiteStore = useWebsiteStore();
         </div>
       </div>
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Description of Service</div>
+        <div class="text-xl md:text-3xl">Description of Service</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We provide an array of services for online collaboration and
           management including word processor, spreadsheet, presentation tool,
           database application creator, email client, chat client, organizer,
@@ -87,9 +87,9 @@ const websiteStore = useWebsiteStore();
         </div>
       </div>
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Subscription to Beta Service</div>
+        <div class="text-xl md:text-3xl">Subscription to Beta Service</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We may offer certain Services as closed or open beta services (“Beta
           Service” or “Beta Services”) for the purpose of testing and
           evaluation. You agree that we have the sole authority and discretion
@@ -108,9 +108,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Modification of Terms of Service</div>
+        <div class="text-xl md:text-3xl">Modification of Terms of Service</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We may modify the Terms upon notice to you at any time through a
           service announcement or by sending email to your primary email
           address. If we make significant changes to the Terms that affect your
@@ -128,9 +128,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">User Sign up Obligations</div>
+        <div class="text-xl md:text-3xl">User Sign up Obligations</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           You need to sign up for a user account by providing all required
           information in order to access or use the Services. If you represent
           an organization and wish to use the Services for corporate internal
@@ -150,9 +150,11 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Organization Accounts and Administrators</div>
+        <div class="text-xl md:text-3xl">
+          Organization Accounts and Administrators
+        </div>
 
-        <div>
+        <div class="text-sm md:text-base">
           When you sign up for an account for your organization you may specify
           one or more administrators. The administrators will have the right to
           configure the Services based on your requirements and manage end users
@@ -163,7 +165,7 @@ const websiteStore = useWebsiteStore();
           specifying such party’s roles and restrictions as an administrator of
           your organization account.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           You are responsible for i) ensuring confidentiality of your
           organization account password, ii) appointing competent individuals as
           administrators for managing your organization account, and iii)
@@ -172,7 +174,7 @@ const websiteStore = useWebsiteStore();
           Skywave CRM is not responsible for account administration and internal
           management of the Services for you.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           You are responsible for taking necessary steps for ensuring that your
           organization does not lose control of the administrator accounts. You
           may specify a process to be followed for recovering control in the
@@ -188,9 +190,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Personal Information and Privacy</div>
+        <div class="text-xl md:text-3xl">Personal Information and Privacy</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           Personal information you provide to Skywave CRM through the Service is
           governed by Skywave CRM Privacy Policy. Your election to use the
           Service indicates your acceptance of the terms of the Skywave CRM
@@ -207,9 +209,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Communications from Skywave CRM</div>
+        <div class="text-xl md:text-3xl">Communications from Skywave CRM</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           The Service may include certain communications from Skywave CRM, such
           as service announcements, administrative messages and newsletters. You
           understand that these communications shall be considered part of using
@@ -221,9 +223,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Complaints</div>
+        <div class="text-xl md:text-3xl">Complaints</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           If we receive a complaint from any person against you with respect to
           your activities as part of use of the Services, we will forward the
           complaint to the primary email address of your user account. You must
@@ -240,9 +242,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Fees and Payments</div>
+        <div class="text-xl md:text-3xl">Fees and Payments</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           The Services are available under subscription plans of various
           durations. Payments for subscription plans of duration of less than a
           year can be made only by Credit Card. Your subscription will be
@@ -259,7 +261,7 @@ const websiteStore = useWebsiteStore();
           you will be presumed to have authorized Skywave CRM to charge the
           subscription fee to the Credit Card last used by you.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           From time to time, we may change the price of any Service or charge
           for use of Services that are currently available free of charge. Any
           increase in charges will not apply until the expiry of your then
@@ -269,9 +271,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Restrictions on Use</div>
+        <div class="text-xl md:text-3xl">Restrictions on Use</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           In addition to all other terms and conditions of this Agreement, you
           shall not: (i) transfer the Services or otherwise make it available to
           any third party; (ii) provide any service based on the Services
@@ -290,9 +292,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Spamming and Illegal Activities</div>
+        <div class="text-xl md:text-3xl">Spamming and Illegal Activities</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           You agree to be solely responsible for the contents of your
           transmissions through the Services. You agree not to use the Services
           for illegal purposes or for the transmission of material that is
@@ -310,9 +312,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Inactive User Accounts Policy</div>
+        <div class="text-xl md:text-3xl">Inactive User Accounts Policy</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We reserve the right to terminate unpaid user accounts that are
           inactive for a continuous period of 120 days. In the event of such
           termination, all data associated with such user account will be
@@ -329,9 +331,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Data Ownership</div>
+        <div class="text-xl md:text-3xl">Data Ownership</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We respect your right to ownership of content created or stored by
           you. You own the content created or stored by you. Unless specifically
           permitted by you, your use of the Services does not grant Skywave CRM
@@ -346,7 +348,7 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">User Generated Content</div>
+        <div class="text-xl md:text-3xl">User Generated Content</div>
 
         <div class="break-all">
           You may transmit or publish content created by you using any of the
@@ -379,21 +381,21 @@ const websiteStore = useWebsiteStore();
           party rights in such content by the agent designated by Skywave CRM
           for this purpose.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           For procedure relating to complaints of illegality or infringement of
           third party rights in content transmitted or published using the
           Services, click here.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           If you wish to protest any blocking or removal of content by Skywave
           CRM, you may do so in the manner provided here.
         </div>
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Sample files and Applications</div>
+        <div class="text-xl md:text-3xl">Sample files and Applications</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           Skywave CRM may provide sample files and applications for the purpose
           of demonstrating the possibility of using the Services effectively for
           specific purposes. The information contained in any such sample files
@@ -403,7 +405,7 @@ const websiteStore = useWebsiteStore();
           applications.
         </div>
         <div class="font-bold">Trademark</div>
-        <div>
+        <div class="text-sm md:text-base">
           Skywave CRM, Skywave CRM logo, the names of individual Services and
           their logos are trademarks of Skywave CRM. You agree not to display or
           use, in any manner, the Skywave CRM trademarks, without Skywave CRM’s
@@ -412,9 +414,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Disclaimer of Warranties</div>
+        <div class="text-xl md:text-3xl">Disclaimer of Warranties</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           YOU EXPRESSLY UNDERSTAND AND AGREE THAT THE USE OF THE SERVICES IS AT
           YOUR SOLE RISK. THE SERVICES ARE PROVIDED ON AN AS-IS-AND-AS-AVAILABLE
           BASIS. Skywave CRM EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY KIND,
@@ -433,9 +435,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Limitation of Liability</div>
+        <div class="text-xl md:text-3xl">Limitation of Liability</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           YOU AGREE THAT Skywave CRM SHALL, IN NO EVENT, BE LIABLE FOR ANY
           CONSEQUENTIAL, INCIDENTAL, INDIRECT, SPECIAL, PUNITIVE, OR OTHER LOSS
           OR DAMAGE WHATSOEVER OR FOR LOSS OF BUSINESS PROFITS, BUSINESS
@@ -449,9 +451,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Indemnification</div>
+        <div class="text-xl md:text-3xl">Indemnification</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           You agree to indemnify and hold harmless Skywave CRM, its officers,
           directors, employees, suppliers, and affiliates, from and against any
           losses, damages, fines and expenses (including attorney’s fees and
@@ -462,7 +464,7 @@ const websiteStore = useWebsiteStore();
           authorized by Skywave CRM.
         </div>
         <div class="font-bold">Arbitration</div>
-        <div>
+        <div class="text-sm md:text-base">
           Any controversy or claim arising out of or relating to the Terms shall
           be settled by binding arbitration in accordance with the commercial
           arbitration rules of the American Arbitration Association. Any such
@@ -478,9 +480,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Suspension and Termination</div>
+        <div class="text-xl md:text-3xl">Suspension and Termination</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We may suspend your user account or temporarily disable access to
           whole or part of any Service in the event of any suspected illegal
           activity, extended periods of inactivity or requests by law
@@ -490,7 +492,7 @@ const websiteStore = useWebsiteStore();
           suspended or disabled user account after thirty days. We will also
           terminate your user account on your request.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           In addition, we reserve the right to terminate your user account and
           deny the Services upon reasonable belief that you have violated the
           Terms and to terminate your access to any Beta Service in case of
@@ -505,9 +507,9 @@ const websiteStore = useWebsiteStore();
       </div>
 
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">END OF TERMS OF SERVICE</div>
+        <div class="text-xl md:text-3xl">END OF TERMS OF SERVICE</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           If you have any questions or concerns regarding this Agreement, please
           contact us at legal@skywave.app.
         </div>
