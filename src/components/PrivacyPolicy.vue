@@ -33,9 +33,9 @@ const websiteStore = useWebsiteStore();
     >
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">General</div>
+        <div class="text-xl md:text-3xl">General</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           At Skywave CRM, we respect your need for online privacy and protect
           any Personal Information that you may share with us, in an appropriate
           manner. Our practice with respect to use of your Personal Information
@@ -48,9 +48,11 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Children’s Online Privacy Protection</div>
+        <div class="text-xl md:text-3xl">
+          Children’s Online Privacy Protection
+        </div>
 
-        <div>
+        <div class="text-sm md:text-base">
           Skywave CRM does not knowingly collect Personal Information from users
           who are under 13 years of age.
         </div>
@@ -58,10 +60,10 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Information Recorded and Use:</div>
+        <div class="text-xl md:text-3xl">Information Recorded and Use:</div>
 
         <div class="font-bold">Personal Information</div>
-        <div>
+        <div class="text-sm md:text-base">
           During the Registration Process for creating a user account, we
           request Company Name, Company Address, Company Contact information and
           an email address. You will also be asked to choose a unique username
@@ -73,7 +75,7 @@ const websiteStore = useWebsiteStore();
           inform you regarding new services, releases, upcoming events and
           changes in this Privacy Policy Statement.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           Skywave CRM will have access to third party personal information
           provided by you as part of using Skywave CRM Services such as contacts
           in your Skywave CRM Mail account. This information may include third
@@ -88,7 +90,7 @@ const websiteStore = useWebsiteStore();
           support@skywave.app to request that we remove this information from
           our database.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           We post user testimonials on our website. These testimonials may
           include names and other Personal Information and we acquire permission
           from our users prior to posting these on our website. Skywave CRM is
@@ -98,7 +100,7 @@ const websiteStore = useWebsiteStore();
 
         <div class="font-bold">Usage Details</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           Your usage details such as time, frequency, duration and pattern of
           use, features used and the amount of storage used will be recorded by
           us in order to enhance your experience of the Skywave CRM Services and
@@ -106,14 +108,14 @@ const websiteStore = useWebsiteStore();
         </div>
         <div class="font-bold">Contents of your User Account</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We store and maintain files, documents, to-do lists, emails and other
           data stored in your user account at our facilities in the United
           States. In order to prevent loss of data due to errors or system
           failures, we also keep backup copies of data including the contents of
           your user account. Hence
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           your files and data may remain on our servers even after deletion or
           termination of your user account. We may retain and use your Personal
           Information and data as necessary to comply with our legal
@@ -127,7 +129,7 @@ const websiteStore = useWebsiteStore();
 
         <div class="font-bold">Payment Information</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           In case of services requiring payment, we request credit card or other
           payment account information, which will be used solely for processing
           payments. Your financial information will not be stored by us except
@@ -142,7 +144,7 @@ const websiteStore = useWebsiteStore();
 
         <div class="font-bold">Visitor Details</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We use the Internet Protocol address, browser type, browser language,
           referring URL, files accessed, errors generated, time zone, operating
           system and other visitor details collected in our log files to analyze
@@ -154,9 +156,11 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Cookies and Other Tracking Technologies</div>
+        <div class="text-xl md:text-3xl">
+          Cookies and Other Tracking Technologies
+        </div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We use temporary and permanent cookies to enhance your experience of
           our Skywave CRM Services. Temporary cookies will be removed from your
           computer each time you close your browser. By selecting ‘keep me
@@ -176,7 +180,7 @@ const websiteStore = useWebsiteStore();
           technologies by these companies on an individual as well as aggregated
           basis.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           We use Local Storage Objects (LSOs) such as HTML5 to store content
           information and preferences. Third parties with whom we partner to
           provide certain features on our site or to display advertising based
@@ -188,9 +192,11 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Behavioral Targeting / Re-Targeting</div>
+        <div class="text-xl md:text-3xl">
+          Behavioral Targeting / Re-Targeting
+        </div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We partner with third parties to manage our advertisements on other
           sites. Our third party partners may use technologies such as cookies
           to gather information about your activities on this site and other
@@ -205,9 +211,9 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Links from our website</div>
+        <div class="text-xl md:text-3xl">Links from our website</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           Some pages of our website contain external links. You are advised to
           verify the privacy practices of such other websites. We are not
           responsible for the manner of use or misuse of information made
@@ -219,9 +225,9 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Federated Authentication</div>
+        <div class="text-xl md:text-3xl">Federated Authentication</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           You can log in to our site using federated authentication providers
           such as Facebook Connect. These services will authenticate your
           identity and provide you the option to share certain Personal
@@ -232,9 +238,9 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">With whom we share Information</div>
+        <div class="text-xl md:text-3xl">With whom we share Information</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We may need to share your Personal Information and your data to our
           affiliates, resellers, service providers and business partners solely
           for the purpose of providing Skywave CRM Services to you. The purposes
@@ -273,9 +279,9 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">How secure is your Information</div>
+        <div class="text-xl md:text-3xl">How secure is your Information</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We adopt industry appropriate data collection, storage and processing
           practices and security measures, as well as physical security measures
           to protect against unauthorized access, alteration, disclosure or
@@ -289,9 +295,9 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Your Choice in Information Use</div>
+        <div class="text-xl md:text-3xl">Your Choice in Information Use</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           In the event we decide to use your Personal Information for any
           purpose other than as stated in this Privacy Policy Statement, we will
           offer you an effective way to opt out of the use of your Personal
@@ -306,11 +312,11 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">
+        <div class="text-xl md:text-3xl">
           Accessing, Updating and Removing Personal Information
         </div>
 
-        <div>
+        <div class="text-sm md:text-base">
           Upon request, we will provide you with information about whether we
           hold any of your Personal Information. Users who wish to correct,
           update or remove any Personal Information including those from a
@@ -323,9 +329,9 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Investigation of Illegal Activity</div>
+        <div class="text-xl md:text-3xl">Investigation of Illegal Activity</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We may need to provide access to your Personal Information and the
           contents of your user account to our employees and service providers
           for the purpose of investigating any suspected illegal activity or
@@ -338,9 +344,9 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Enforcement of Privacy Policy</div>
+        <div class="text-xl md:text-3xl">Enforcement of Privacy Policy</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We make every effort, including periodic reviews to ensure that
           Personal Information provided by you is used in conformity with this
           Privacy Policy Statement. If you have any concerns regarding our
@@ -355,9 +361,9 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Notification of Changes</div>
+        <div class="text-xl md:text-3xl">Notification of Changes</div>
 
-        <div>
+        <div class="break-before-all">
           We may modify the Privacy Policy Statement upon notice to you at any
           time through a service announcement or by sending email to your
           primary email address. If we make significant changes in the Privacy
@@ -373,16 +379,16 @@ const websiteStore = useWebsiteStore();
           agreement to the modified Privacy Policy Statement. You will not
           receive email notification of minor changes to the Privacy Policy
           Statement. If you are concerned about how your Personal Information is
-          used, you should check back at http://www.skywave.zpp/privacy-policy
+          used, you should check back at skywave.app/privacy-policy
           periodically.
         </div>
       </div>
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Blogs and Forums</div>
+        <div class="text-xl md:text-3xl">Blogs and Forums</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           We provide the capacity for users to post information in blogs and
           forums for sharing information in a public space on the website. This
           information is publicly available to all users of these forums and
@@ -394,7 +400,7 @@ const websiteStore = useWebsiteStore();
           Skywave CRM is not responsible for the Personal Information users
           elect to disclose.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           Skywave CRM also supports third party widgets such as Facebook and
           Twitter buttons on the website that allow users to share articles and
           other information on different platforms. These widgets may collect
@@ -409,9 +415,9 @@ const websiteStore = useWebsiteStore();
 
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Contact Us</div>
+        <div class="text-xl md:text-3xl">Contact Us</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           If you have any questions or concerns regarding this Privacy Policy
           Statement, please contact us at legal@skywave.app. We shall respond to
           all inquiries within 30 days of receipt upon ascertaining your
@@ -420,16 +426,16 @@ const websiteStore = useWebsiteStore();
       </div>
       <!-- TITLE & SECTION -->
       <div class="flex flex-col gap-3">
-        <div class="text-3xl">Processor Disclosure</div>
+        <div class="text-xl md:text-3xl">Processor Disclosure</div>
 
-        <div>
+        <div class="text-sm md:text-base">
           This certification covers our collection, use and disclosure of
           information we collect through our website www.skywave.zpp and through
           Skywave CRM Services. The use of information collected through Skywave
           CRM Services shall be limited to the purpose of providing the Skywave
           CRM Services to you.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           Skywave CRM acknowledges that you have the right to access your
           Personal Information. Skywave CRM has no direct relationship with the
           individuals whose personal data it processes. If you are an individual
@@ -444,7 +450,7 @@ const websiteStore = useWebsiteStore();
           will retain Personal Information as necessary to comply with our legal
           obligations, resolve disputes, and enforce our agreements.
         </div>
-        <div>
+        <div class="text-sm md:text-base">
           Skywave CRM may transfer Personal Information to third party service
           providers that help us in providing the Skywave CRM Services.
           Transfers to subsequent third parties are covered by the provisions in

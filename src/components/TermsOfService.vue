@@ -199,7 +199,7 @@ const websiteStore = useWebsiteStore();
           responsible for all activities that occur in your user account and you
           agree to inform us immediately of any unauthorized use of your user
           account by email to accounts@skywave.app or by calling us on any of
-          the numbers listed on https://www.skywave.app/contact.html. We are not
+          the numbers listed on our website at skywave.app home page. We are not
           responsible for any loss or damage to you or to any third party
           incurred as a result of any unauthorized access and/or use of your
           user account, or otherwise.
