@@ -36,16 +36,15 @@ const subscribe = async () => {
 
 <template>
   <div
-    class="flex flex-col gap-5 items-center justify-center py-24 bg-[url('../../public/images/bg-newsletter-pattern.png')]"
+    class="flex flex-col gap-5 bg-[url('../../public/images/bg-newsletter-pattern.png')]"
   >
     <div
-      class="flex flex-col gap-5 items-center justify-center backdrop-brightness-75 border border-slate-400 backdrop-blur-sm shadow-lg py-10 px-5 rounded-2xl"
+      class="flex flex-col gap-5 py-24 items-center justify-center backdrop-brightness-15 border border-slate-400 backdrop-blur-sm shadow-lg px-10"
     >
-      <h1 class="text-4xl text-gray-50">Subscribe to Updates</h1>
+      <h1 class="text-4xl text-gray-50">Email Newsletter</h1>
 
       <p class="text-gray-200">
-        Subscribe to our newsletter to receive updates on new features and
-        promotions.
+        Get the latest news, updates and offers delivered to your inbox
       </p>
 
       <div class="flex flex-col gap-5">
