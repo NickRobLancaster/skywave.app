@@ -11,7 +11,7 @@ const websiteStore = useWebsiteStore();
   <div
     class="h-screen flex flex-col justify-center items-center gap-10 p-5 bg-gradient-to-b from-gray-500 to-gray-300 text-white"
   >
-    <h1 class="text-5xl font-bold">Privacy Policy</h1>
+    <h1 class="text-5xl font-bold text-center">Privacy Policy</h1>
 
     <button
       @click="websiteStore.scrollToSection('privacy-policy')"

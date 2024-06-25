@@ -79,7 +79,7 @@ const websiteStore = useWebsiteStore();
       <div class="flex flex-col gap-4 md:items-center">
         <div class="flex flex-col gap-4">
           <h3 class="text-xl font-bold text-left">Contact Us</h3>
-          <ul class="flex flex-col gap-2">
+          <ul class="flex flex-col gap-2 text-sm md:text-base">
             <li class="text-gray-200">
               <a
                 target="_blank"
