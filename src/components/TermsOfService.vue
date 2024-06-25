@@ -348,7 +348,7 @@ const websiteStore = useWebsiteStore();
       <div class="flex flex-col gap-3">
         <div class="text-3xl">User Generated Content</div>
 
-        <div>
+        <div class="break-all">
           You may transmit or publish content created by you using any of the
           Services or otherwise. However, you shall be solely responsible for
           such content and the consequences of its transmission or publication.
