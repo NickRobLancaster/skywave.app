@@ -4,6 +4,11 @@ import { ref } from "vue";
 import { useWebsiteStore } from "../../stores/websiteStore";
 
 const websiteStore = useWebsiteStore();
+
+const changePageScrollTop = () => {
+  websiteStore.toggleClose("showHamburgerMenu");
+  websiteStore.instantTop();
+};
 </script>
 
 <template>
@@ -20,7 +25,7 @@ const websiteStore = useWebsiteStore();
       </button>
     </div>
     <router-link
-      @click="websiteStore.toggleClose('showHamburgerMenu')"
+      @click="changePageScrollTop"
       to="/home"
       active-class="bg-blue-200 text-blue-600"
       class="text-2xl text-gray-600 p-5 active:animate-press cursor-pointer hover:bg-gray-200"
@@ -28,7 +33,7 @@ const websiteStore = useWebsiteStore();
     >
 
     <router-link
-      @click="websiteStore.toggleClose('showHamburgerMenu')"
+      @click="changePageScrollTop"
       to="/products"
       active-class="bg-indigo-200 text-indigo-600"
       class="text-2xl text-gray-600 p-5 active:animate-press cursor-pointer hover:bg-gray-200"
@@ -36,7 +41,7 @@ const websiteStore = useWebsiteStore();
     >
 
     <router-link
-      @click="websiteStore.toggleClose('showHamburgerMenu')"
+      @click="changePageScrollTop"
       to="/features"
       active-class="bg-purple-200 text-purple-600"
       class="text-2xl text-gray-600 p-5 active:animate-press cursor-pointer hover:bg-gray-200"
@@ -44,7 +49,7 @@ const websiteStore = useWebsiteStore();
     >
 
     <router-link
-      @click="websiteStore.toggleClose('showHamburgerMenu')"
+      @click="changePageScrollTop"
       to="/pricing"
       active-class="bg-emerald-200 text-emerald-600"
       class="text-2xl text-gray-600 p-5 active:animate-press cursor-pointer hover:bg-gray-200"

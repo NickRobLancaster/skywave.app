@@ -7,6 +7,8 @@ import Products from "./components/Products.vue";
 import Features from "./components/Features.vue";
 import Pricing from "./components/Pricing.vue";
 import GettingStarted from "./components/GettingStarted.vue";
+import TermsOfService from "./components/TermsOfService.vue";
+import PrivacyPolicy from "./components/PrivacyPolicy.vue";
 
 import { useWebsiteStore } from "./../stores/websiteStore";
 
@@ -41,6 +43,17 @@ const routes = [
         path: "get-started", // Path should be relative
         name: "get-started",
         components: { modals: GettingStarted }, // Fixed component declaration
+      },
+      {
+        path: "terms-of-service", // Path should be relative
+        name: "terms-of-service",
+        components: { root: TermsOfService }, // Fixed component declaration
+      },
+
+      {
+        path: "privacy-policy", // Path should be relative
+        name: "privacy-policy",
+        components: { root: PrivacyPolicy }, // Fixed component declaration
       },
     ],
   },

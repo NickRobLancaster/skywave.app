@@ -3,6 +3,10 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      container: {
+        center: true, // Centers the container
+        padding: "1rem", // Default padding (adjust as needed)
+      },
       spacing: {
         0.5: "0.125rem",
       },

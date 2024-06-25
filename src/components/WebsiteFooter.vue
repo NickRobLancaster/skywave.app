@@ -1,14 +1,129 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { useWebsiteStore } from "../../stores/websiteStore";
+import phoneFormat from "../../utils/phoneFormat";
+
+const websiteStore = useWebsiteStore();
+</script>
 
 <template>
-  <footer class="bg-gray-800 text-white flex flex-col">
-    <div class="flex flex-row bg-gray-900">
-      <div>
+  <footer class="bg-gray-800 text-white flex flex-col items-between">
+    <div class="flex flex-col md:grid md:grid-cols-4 bg-gray-600 p-5 gap-5">
+      <div class="flex flex-col gap-4 items-center">
         <img
           src="https://skywave.app/wp-content/uploads/2020/06/skywave-transparent-small-1.png"
           alt="Skywave Company Logo"
-          class="w-52 py-3"
+          class="w-40 border border-slate-400 rounded p-1 bg-gray-50"
         />
+
+        <ul class="flex flex-col gap-2 list-disc list-inside">
+          <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+            <router-link
+              @click="websiteStore.instantTop"
+              to="/terms-of-service"
+              class="text-gray-200 hover:text-gray-400 cursor-pointer"
+            >
+              Terms of Service
+            </router-link>
+          </li>
+
+          <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+            <router-link
+              @click="websiteStore.instantTop"
+              to="/privacy-policy"
+              class="text-gray-200 hover:text-gray-400 cursor-pointer"
+            >
+              Privacy Policy
+            </router-link>
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex flex-col gap-4 items-center">
+        <div class="flex flex-col gap-4">
+          <h3 class="text-xl font-bold">Vertical Blueprints</h3>
+          <ul class="flex flex-col gap-2 list-disc list-inside">
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Debt Settlement
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Credit Repair
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Student
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Tax Overages / Settlements
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4 items-center">
+        <div class="flex flex-col gap-4">
+          <h3 class="text-xl font-bold">Resources</h3>
+          <ul class="flex flex-col gap-2 list-disc list-inside">
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              API Docs
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Change Log
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Uptime Status
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4 items-center">
+        <div class="flex flex-col gap-4">
+          <h3 class="text-xl font-bold text-left">Contact Us</h3>
+          <ul class="flex flex-col gap-2">
+            <li class="text-gray-200">
+              <a
+                target="_blank"
+                href="https://www.google.com/maps/place/Datacore+CRM/@33.9470667,-117.4009004,17z/data=!3m1!4b1!4m6!3m5!1s0x80dcb15fe6a4b84f:0x976dd481cf9be3a!8m2!3d33.9470667!4d-117.3983255!16s%2Fg%2F11fsqkmnn9?entry=ttu"
+              >
+                <div class="flex flex-row">
+                  <span class="mr-3 text-green-300">
+                    <font-awesome-icon :icon="['fas', 'location-pin']" />
+                  </span>
+                  <span class="hover:text-green-200 cursor-pointer">
+                    {{ websiteStore.company.address.building }}<br />
+                    {{ websiteStore.company.address.street }}<br />
+                    {{ websiteStore.company.address.street2 }}<br />
+                    {{ websiteStore.company.address.city }},
+                    {{ websiteStore.company.address.state }}
+                    {{ websiteStore.company.address.zip }}
+                  </span>
+                </div>
+              </a>
+            </li>
+
+            <li class="text-gray-200">
+              <a :href="`tel:+${websiteStore.company.phone}`">
+                <span class="mr-2 text-blue-300">
+                  <font-awesome-icon :icon="['fas', 'phone']" />
+                </span>
+                <span class="hover:text-blue-200 cursor-pointer">
+                  {{ phoneFormat(websiteStore.company.phone) }}
+                </span>
+              </a>
+            </li>
+
+            <li class="text-gray-200">
+              <a :href="`mailto:${websiteStore.company.email}`">
+                <span class="mr-2 text-red-300">
+                  <font-awesome-icon :icon="['fas', 'envelope']" />
+                </span>
+                <span class="hover:text-red-200 cursor-pointer">
+                  {{ websiteStore.company.email }}
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 

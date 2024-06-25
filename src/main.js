@@ -1,5 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+import { createAutoAnimatePlugin } from "@formkit/addons";
+import { plugin, defaultConfig } from "@formkit/vue";
 import "./style/index.css";
 import router from "./router";
 import { autoRegisterGlobalComponents } from "./../utils/autoRegisterComponents";
@@ -24,6 +26,30 @@ app.component("font-awesome-icon", FontAwesomeIcon);
 app.use(router);
 
 app.use(pinia);
+
+app.use(
+  plugin,
+  defaultConfig({
+    plugins: [
+      createAutoAnimatePlugin(
+        {
+          /* optional AutoAnimate config */
+          // default:
+          duration: 250,
+          easing: "ease-in-out",
+          delay: 0,
+        },
+        {
+          /* optional animation targets object */
+          // default:
+          global: ["outer", "inner"],
+          form: ["form"],
+          repeater: ["items"],
+        }
+      ),
+    ],
+  })
+);
 
 autoRegisterGlobalComponents(app);
 

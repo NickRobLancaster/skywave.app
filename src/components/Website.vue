@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <!-- FIXED UI ITEMS - BUTTONS / MODALS -->
+  <ToastNotification />
 
   <div class="fixed bottom-2 left-2">
     <BackToTop />
@@ -19,8 +19,9 @@
 
   <!-- WEBSITE PAGES ROUTER LINK -->
 
-  <router-view name="modals"></router-view>
+  <router-view name="modals" />
   <router-view name="root" />
 
+  <NewsletterSubscribe />
   <WebsiteFooter />
 </template>
