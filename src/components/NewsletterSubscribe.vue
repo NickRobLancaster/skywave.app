@@ -39,7 +39,7 @@ const subscribe = async () => {
     class="flex flex-col gap-5 bg-[url('../../public/images/bg-newsletter-pattern.png')]"
   >
     <div
-      class="flex flex-col gap-5 py-24 items-center justify-center backdrop-brightness-15 border border-slate-400 backdrop-blur-sm shadow-lg px-10"
+      class="flex flex-col gap-5 py-24 items-center justify-center backdrop-brightness-15 backdrop-blur-sm shadow-lg px-10"
     >
       <h1 class="text-4xl text-gray-50">Email Newsletter</h1>
 

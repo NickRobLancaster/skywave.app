@@ -5,7 +5,7 @@
   <div
     class="h-screen flex flex-col justify-center items-center gap-10 p-5 bg-gradient-to-b from-blue-900 to-blue-400 text-white"
   >
-    <h1 class="text-5xl font-bold">Skywave CRM</h1>
+    <h1 class="text-5xl font-bold text-center">Skywave CRM</h1>
     <p class="text-2xl text-center">
       The work OS that lets you shape workflows, YOUR WAY.
     </p>
