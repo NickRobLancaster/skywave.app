@@ -23,10 +23,12 @@ export const useWebsiteStore = defineStore("main", {
         },
 
         social: {
-          facebook: "",
-          twitter: "",
-          linkedin: "",
-          instagram: "",
+          facebook:
+            "https://www.facebook.com/people/skywavecrm/100063770514825/",
+          twitter: "https://twitter.com/skywave_app",
+          linkedin: "https://www.linkedin.com/company/skywave-app/",
+          instagram: "https://www.instagram.com/skywave_app/",
+          tiktok: "",
         },
 
         links: {

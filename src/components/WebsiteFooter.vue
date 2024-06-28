@@ -41,19 +41,28 @@ const websiteStore = useWebsiteStore();
 
       <div class="flex flex-col gap-4 md:items-center">
         <div class="flex flex-col gap-4">
-          <h3 class="text-xl font-bold">Vertical Blueprints</h3>
+          <h3 class="text-xl font-bold">Industry Tools</h3>
           <ul class="flex flex-col gap-2 list-disc list-inside">
             <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
-              Debt Settlement
+              Debt Settlement Calculator
             </li>
             <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
-              Credit Repair
+              Credit Repair Dispute System
             </li>
             <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
-              Student
+              Merchant Cash Advance
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              SBA Loans
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Student Loan Qualification
             </li>
             <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
               Tax Overages / Settlements
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Tax Resolution
             </li>
           </ul>
         </div>
@@ -72,6 +81,27 @@ const websiteStore = useWebsiteStore();
             <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
               Uptime Status
             </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4 md:items-center">
+        <div class="flex flex-col gap-4">
+          <h3 class="text-xl font-bold">Core Features</h3>
+          <ul class="flex flex-col gap-2 list-disc list-inside">
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Contact Management System
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Livesigner E-Signature
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              Inbound / Outbound Email System
+            </li>
+            <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
+              SMS Infra - Inbound / Outbound
+            </li>
+
           </ul>
         </div>
       </div>
@@ -125,6 +155,47 @@ const websiteStore = useWebsiteStore();
           </ul>
         </div>
       </div>
+    </div>
+    <div class="pb-5 bg-gray-600 flex flex-row gap-8 justify-center text-xl">
+      <a
+        :href="websiteStore.company.social.facebook"
+        target="_blank"
+        class="cursor-pointer hover:text-gray-300"
+      >
+        <font-awesome-icon :icon="['fab', 'facebook']" />
+      </a>
+
+      <a
+        :href="websiteStore.company.social.linkedin"
+        target="_blank"
+        class="cursor-pointer hover:text-gray-300"
+      >
+        <font-awesome-icon :icon="['fab', 'linkedin']" />
+      </a>
+
+      <a
+        :href="websiteStore.company.social.instagram"
+        target="_blank"
+        class="cursor-pointer hover:text-gray-300"
+      >
+        <font-awesome-icon :icon="['fab', 'instagram']" />
+      </a>
+
+      <a
+        :href="websiteStore.company.social.twitter"
+        target="_blank"
+        class="cursor-pointer hover:text-gray-300"
+      >
+        <font-awesome-icon :icon="['fab', 'twitter']" />
+      </a>
+
+      <!-- <a
+        :href="websiteStore.company.social.tiktok"
+        target="_blank"
+        class="cursor-pointer hover:text-gray-300"
+      >
+        <font-awesome-icon :icon="['fab', 'tiktok']" />
+      </a> -->
     </div>
 
     <div
