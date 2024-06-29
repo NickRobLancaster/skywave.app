@@ -84,14 +84,14 @@ const openCallDropdown = async () => {
     >
       <div
         v-if="showCallDropdown"
-        class="absolute max-md:-top-24 md:-bottom-24 bg-white rounded-xl border-gray-300 border flex flex-col p-1 gap-1"
+        class="absolute max-lg:-top-24 lg:-bottom-24 bg-white rounded-xl border-gray-300 border flex flex-col p-1 gap-1"
         @mouseleave="handleLeave"
         @mouseenter="setHovered"
       >
         <div class="whitespace-nowrap flex flex-row gap-2 items-center">
-          <span class="text-gray-500">{{
-            phoneFormat(websiteStore.company.phone)
-          }}</span>
+          <span class="text-gray-500">
+            {{ phoneFormat(websiteStore.company.phone) }}
+          </span>
           <button
             @click="handleCopy"
             class="btn btn-sm border-none text-gray-50 bg-gray-500"

@@ -43,7 +43,7 @@ const subscribe = async () => {
     >
       <h1 class="text-4xl text-gray-50">Email Newsletter</h1>
 
-      <p class="text-gray-200">
+      <p class="text-gray-200 text-center">
         Get the latest news, updates and offers delivered to your inbox
       </p>
 

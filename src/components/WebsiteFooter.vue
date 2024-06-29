@@ -8,8 +8,8 @@ const websiteStore = useWebsiteStore();
 
 <template>
   <footer class="bg-gray-800 text-white flex flex-col items-between">
-    <div class="flex flex-col md:grid md:grid-cols-4 bg-gray-600 p-5 gap-5">
-      <div class="flex flex-col gap-4 md:items-center">
+    <div class="flex flex-col lg:grid md:grid-cols-5 bg-gray-600 p-5 gap-5">
+      <div class="flex flex-col gap-4 lg:items-center">
         <img
           src="https://skywave.app/wp-content/uploads/2020/06/skywave-transparent-small-1.png"
           alt="Skywave Company Logo"
@@ -39,7 +39,7 @@ const websiteStore = useWebsiteStore();
         </ul>
       </div>
 
-      <div class="flex flex-col gap-4 md:items-center">
+      <div class="flex flex-col gap-4 lg:items-center">
         <div class="flex flex-col gap-4">
           <h3 class="text-xl font-bold">Industry Tools</h3>
           <ul class="flex flex-col gap-2 list-disc list-inside">
@@ -68,7 +68,7 @@ const websiteStore = useWebsiteStore();
         </div>
       </div>
 
-      <div class="flex flex-col gap-4 md:items-center">
+      <div class="flex flex-col gap-4 lg:items-center">
         <div class="flex flex-col gap-4">
           <h3 class="text-xl font-bold">Resources</h3>
           <ul class="flex flex-col gap-2 list-disc list-inside">
@@ -85,7 +85,7 @@ const websiteStore = useWebsiteStore();
         </div>
       </div>
 
-      <div class="flex flex-col gap-4 md:items-center">
+      <div class="flex flex-col gap-4 lg:items-center">
         <div class="flex flex-col gap-4">
           <h3 class="text-xl font-bold">Core Features</h3>
           <ul class="flex flex-col gap-2 list-disc list-inside">
@@ -101,12 +101,11 @@ const websiteStore = useWebsiteStore();
             <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
               SMS Infra - Inbound / Outbound
             </li>
-
           </ul>
         </div>
       </div>
 
-      <div class="flex flex-col gap-4 md:items-center">
+      <div class="flex flex-col gap-4 lg:items-center">
         <div class="flex flex-col gap-4">
           <h3 class="text-xl font-bold text-left">Contact Us</h3>
           <ul class="flex flex-col gap-2 text-sm md:text-base">
