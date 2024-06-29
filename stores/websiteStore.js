@@ -89,7 +89,7 @@ export const useWebsiteStore = defineStore("main", {
 
       setTimeout(() => {
         this.toast_notifications.shift();
-      }, 5000);
+      }, 2000);
     },
 
     addToHistory(from) {

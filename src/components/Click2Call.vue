@@ -101,7 +101,7 @@ const openCallDropdown = async () => {
         </div>
         <a
           :href="`tel:1+${websiteStore.company.phone}`"
-          class="whitespace-nowrap bg-blue-500 border-none btn text-gray-50"
+          class="whitespace-nowrap bg-blue-500 hover:bg-blue-700 border-none btn text-gray-50"
         >
           Call Now
         </a>
