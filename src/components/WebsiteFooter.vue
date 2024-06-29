@@ -108,8 +108,8 @@ const websiteStore = useWebsiteStore();
       <div class="flex flex-col gap-4 lg:items-center">
         <div class="flex flex-col gap-4">
           <h3 class="text-xl font-bold text-left">Contact Us</h3>
-          <ul class="flex flex-col gap-2 text-sm md:text-base">
-            <li class="text-gray-200">
+          <ul class="flex flex-col gap-2">
+            <li class="text-gray-200 text-sm md:text-base">
               <a
                 target="_blank"
                 href="https://www.google.com/maps/place/Datacore+CRM/@33.9470667,-117.4009004,17z/data=!3m1!4b1!4m6!3m5!1s0x80dcb15fe6a4b84f:0x976dd481cf9be3a!8m2!3d33.9470667!4d-117.3983255!16s%2Fg%2F11fsqkmnn9?entry=ttu"
@@ -130,7 +130,7 @@ const websiteStore = useWebsiteStore();
               </a>
             </li>
 
-            <li class="text-gray-200">
+            <li class="text-gray-200 text-sm md:text-base">
               <a :href="`tel:+${websiteStore.company.phone}`">
                 <span class="mr-2 text-blue-300">
                   <font-awesome-icon :icon="['fas', 'phone']" />
@@ -141,7 +141,7 @@ const websiteStore = useWebsiteStore();
               </a>
             </li>
 
-            <li class="text-gray-200">
+            <li class="text-gray-200 text-sm md:text-base">
               <a :href="`mailto:${websiteStore.company.email}`">
                 <span class="mr-2 text-red-300">
                   <font-awesome-icon :icon="['fas', 'envelope']" />
