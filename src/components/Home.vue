@@ -21,7 +21,9 @@ const websiteStore = useWebsiteStore();
     </button>
   </div>
 
-  <div class="bg-blue-400 flex flex-row justify-center pb-44 px-5">
+  <div
+    class="bg-blue-400 flex flex-row justify-center max-md:pb-6 md:pb-44 px-5"
+  >
     <div class="rounded-xl bg-gray-50 p-4 md:px-8 md:pb-8 -mt-52 container">
       <video
         id="automation-preview"
