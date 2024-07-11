@@ -32,38 +32,60 @@
           <div class="flex flex-col text-gray-50 items-center">
             <div class="divide-y border border-gray-50 rounded-xl">
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2 font-bold">Feature</div>
-                <div class="p-2 font-bold">Cost</div>
+                <div class="p-2 font-bold text-xs sm:text-md md:text-lg">
+                  Feature
+                </div>
+                <div class="p-2 font-bold text-xs sm:text-md md:text-lg">
+                  Cost
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">Users Included</div>
-                <div class="p-2 text-center">5</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Users Included
+                </div>
+                <div class="p-2 text-xs sm:text-md md:text-base text-center">
+                  5
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">Additional Users</div>
-                <div class="p-2">$75 / User / Month</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Additional Users
+                </div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  $75 / User / Month
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">Automations</div>
-                <div class="p-2">Free + Unlimited</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Automations
+                </div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Free + Unlimited
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">Email</div>
-                <div class="p-2">Free + Unlimited</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">Email</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Free + Unlimited
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">SMS</div>
-                <div class="p-2">Free + 0.0079 / SMS</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">SMS</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Free + 0.0079 / SMS
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">Custom Development</div>
-                <div class="p-2 text-center">
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Custom Development
+                </div>
+                <div class="p-2 text-xs sm:text-md md:text-base text-center">
                   <span class="py-1 bg-rose-400 text-gray-50 rounded-xl px-2">
                     <font-awesome-icon :icon="['fas', 'xmark']" />
                   </span>
@@ -97,37 +119,59 @@
           <div class="flex flex-col text-gray-50 items-center">
             <div class="divide-y border border-gray-50 rounded-xl">
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2 font-bold">Feature</div>
-                <div class="p-2 font-bold">Cost</div>
+                <div class="p-2 font-bold text-xs sm:text-md md:text-base">
+                  Feature
+                </div>
+                <div class="p-2 font-bold text-xs sm:text-md md:text-base">
+                  Cost
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">Users Included</div>
-                <div class="p-2 text-center">5</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Users Included
+                </div>
+                <div class="p-2 text-xs sm:text-md md:text-base text-center">
+                  5
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">Additional Users</div>
-                <div class="p-2">$75 / User / Month</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Additional Users
+                </div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  $75 / User / Month
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">Automations</div>
-                <div class="p-2">Free + Unlimited</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Automations
+                </div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Free + Unlimited
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">Email</div>
-                <div class="p-2">Free + Unlimited</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">Email</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Free + Unlimited
+                </div>
               </div>
 
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">SMS</div>
-                <div class="p-2">Free + 0.0079 / SMS</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">SMS</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Free + 0.0079 / SMS
+                </div>
               </div>
               <div class="grid grid-cols-2 divide-x">
-                <div class="p-2">Custom Development</div>
-                <div class="p-2">Unlimited</div>
+                <div class="p-2 text-xs sm:text-md md:text-base">
+                  Custom Development
+                </div>
+                <div class="p-2 text-xs sm:text-md md:text-base">Unlimited</div>
               </div>
             </div>
 
