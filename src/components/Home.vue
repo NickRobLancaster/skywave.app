@@ -25,7 +25,7 @@ const websiteStore = useWebsiteStore();
     class="bg-blue-400 flex flex-row justify-center max-md:pb-6 md:pb-44 px-5"
   >
     <div
-      class="rounded-xl bg-gray-50 p-4 md:px-8 md:pb-8 -mt-8 md:-mt-52 container"
+      class="rounded-xl bg-gray-50 p-4 md:px-8 md:pb-8 -mt-24 md:-mt-52 container"
     >
       <video
         id="automation-preview"
