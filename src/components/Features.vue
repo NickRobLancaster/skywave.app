@@ -1,33 +1,42 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+import { useWebsiteStore } from "../../stores/websiteStore";
+
+const websiteStore = useWebsiteStore();
+</script>
 
 <template>
   <!-- HERO -->
   <div
-    class="h-screen flex flex-col justify-center items-center gap-10 p-5 bg-gradient-to-br from-purple-500 to-purple-300 text-white"
+    class="h-screen flex flex-col justify-center items-center gap-10 p-5 bg-gradient-to-b from-purple-500 to-purple-300 text-white"
   >
     <h1 class="text-5xl font-bold">Features</h1>
     <p class="text-2xl text-center">
-      The work OS that lets you shape workflows, YOUR WAY.
+      A Toolbelt of Features to Keep Your Operations Smooth and Seamless
     </p>
-    <button
-      class="active:animate-press bg-blue-500 text-white rounded-full px-4 py-3 shadow-md"
-    >
-      Get Started
-    </button>
   </div>
 
-  <!-- FEATURE GLANCE - GIFS -->
-  <div class="bg-red-500 h-screen"></div>
+  <div class="bg-purple-300 flex flex-row justify-center pb-44 px-5">
+    <div
+      class="rounded-xl bg-gray-50 p-4 md:px-8 -mt-52 md:pb-8 flex flex-row justify-center container"
+    >
+      <div class="-mt-12 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-5">
+        <!-- BASE PLAN -->
+        <div
+          v-for="(feature, i) in websiteStore.features"
+          class="rounded p-5 border border-slate-400 shadow-lg glass bg-gray-50 h-52 flex flex-col justify-center items-center"
+        >
+          <font-awesome-icon
+            :icon="['fas', feature.icon]"
+            class="text-5xl text-gray-600"
+          />
 
-  <!-- TRUSTED BY - LIST OF COMPANIES -->
-  <div class="bg-orange-500 h-screen"></div>
-
-  <!-- TAG LINE - Step into a world of seamless work experiences powered by a suite of products designed to flex and scale to your way of working -->
-  <div class="bg-yellow-500 h-screen"></div>
-
-  <!-- RATINGS - Captera, ETC -->
-  <div class="bg-green-500 h-screen"></div>
-
-  <!-- TAG LINE - The work OS that lets you shape workflows, YOUR WAY. Boost your team's alignment, efficiency, and productivy by customizing any workflow to fit your needs - ANOTHER GIF showing summary -->
-  <div class="bg-blue-500 h-screen"></div>
+          <h3 class="text-xl text-gray-500 p-4 text-center">
+            {{ feature.name }}
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>

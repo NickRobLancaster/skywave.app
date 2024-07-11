@@ -5,6 +5,7 @@
     <div class="lg:hidden">
       <SupportChat />
     </div>
+
     <div>
       <Click2Call />
     </div>

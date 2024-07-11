@@ -3,31 +3,145 @@
 <template>
   <!-- HERO -->
   <div
-    class="h-screen flex flex-col justify-center items-center gap-10 p-5 bg-gradient-to-br from-emerald-500 to-emerald-300 text-white"
+    class="h-screen flex flex-col justify-center items-center gap-10 p-5 bg-gradient-to-b from-emerald-500 to-emerald-300 text-white"
   >
     <h1 class="text-5xl font-bold">Pricing</h1>
     <p class="text-2xl text-center">
-      The work OS that lets you shape workflows, YOUR WAY.
+      <!-- blurb about pricing -->
+      Flexibility and Convenience for Your Budget
     </p>
-    <button
-      class="active:animate-press bg-blue-500 text-white rounded-full px-4 py-3 shadow-md"
-    >
-      Get Started
-    </button>
   </div>
 
-  <!-- FEATURE GLANCE - GIFS -->
-  <div class="bg-red-500 h-screen"></div>
+  <div class="bg-emerald-300 flex flex-row justify-center pb-44 px-5">
+    <div
+      class="rounded-xl bg-gray-50 p-4 md:px-8 md:pb-8 -mt-52 flex flex-row justify-center"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- BASE PLAN -->
+        <div
+          class="-mt-12 mb-1 rounded p-5 border border-slate-400 shadow-lg shadow-blue-400 bg-blue-400 glass"
+        >
+          <h3 class="text-3xl text-white p-4 text-center">Base</h3>
 
-  <!-- TRUSTED BY - LIST OF COMPANIES -->
-  <div class="bg-orange-500 h-screen"></div>
+          <h4 class="text-white p-4 text-center mb-5">
+            <span class="text-5xl"> $375 </span>
+            <br />
+            <span> / Month </span>
+          </h4>
 
-  <!-- TAG LINE - Step into a world of seamless work experiences powered by a suite of products designed to flex and scale to your way of working -->
-  <div class="bg-yellow-500 h-screen"></div>
+          <div class="flex flex-col text-gray-50 items-center">
+            <div class="divide-y border border-gray-50 rounded-xl">
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2 font-bold">Feature</div>
+                <div class="p-2 font-bold">Cost</div>
+              </div>
 
-  <!-- RATINGS - Captera, ETC -->
-  <div class="bg-green-500 h-screen"></div>
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">Users Included</div>
+                <div class="p-2 text-center">5</div>
+              </div>
 
-  <!-- TAG LINE - The work OS that lets you shape workflows, YOUR WAY. Boost your team's alignment, efficiency, and productivy by customizing any workflow to fit your needs - ANOTHER GIF showing summary -->
-  <div class="bg-blue-500 h-screen"></div>
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">Additional Users</div>
+                <div class="p-2">$75 / User / Month</div>
+              </div>
+
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">Automations</div>
+                <div class="p-2">Free + Unlimited</div>
+              </div>
+
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">Email</div>
+                <div class="p-2">Free + Unlimited</div>
+              </div>
+
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">SMS</div>
+                <div class="p-2">Free + 0.0079 / SMS</div>
+              </div>
+
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">Custom Development</div>
+                <div class="p-2 text-center">
+                  <span class="py-1 bg-rose-400 text-gray-50 rounded-xl px-2">
+                    <font-awesome-icon :icon="['fas', 'xmark']" />
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- get started -->
+            <div class="p-2 mt-6">
+              <button
+                class="active:animate-press bg-blue-500 text-white rounded-full px-4 py-3 shadow-md"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- enterprise -->
+        <div
+          class="md:-mt-12 mb-1 rounded p-5 border border-slate-400 shadow-lg shadow-amber-400 bg-amber-400 glass"
+        >
+          <h3 class="text-3xl text-white p-4 text-center">Enterprise</h3>
+
+          <h4 class="text-white p-4 text-center mb-5">
+            <span class="text-5xl"> $2,999 </span>
+            <br />
+            <span> / Month </span>
+          </h4>
+
+          <div class="flex flex-col text-gray-50 items-center">
+            <div class="divide-y border border-gray-50 rounded-xl">
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2 font-bold">Feature</div>
+                <div class="p-2 font-bold">Cost</div>
+              </div>
+
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">Users Included</div>
+                <div class="p-2 text-center">5</div>
+              </div>
+
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">Additional Users</div>
+                <div class="p-2">$75 / User / Month</div>
+              </div>
+
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">Automations</div>
+                <div class="p-2">Free + Unlimited</div>
+              </div>
+
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">Email</div>
+                <div class="p-2">Free + Unlimited</div>
+              </div>
+
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">SMS</div>
+                <div class="p-2">Free + 0.0079 / SMS</div>
+              </div>
+              <div class="grid grid-cols-2 divide-x">
+                <div class="p-2">Custom Development</div>
+                <div class="p-2">Unlimited</div>
+              </div>
+            </div>
+
+            <!-- get started -->
+            <div class="p-2 mt-6">
+              <button
+                class="active:animate-press bg-blue-500 text-white rounded-full px-4 py-3 shadow-md"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
