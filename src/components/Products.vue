@@ -13,46 +13,46 @@ const pillMenu = ref([
     modules: [
       {
         name: "Debt Settlement Calculator",
-        color: "red",
+        color: "blue",
         released: true,
         pathName: "debt-settlement",
       },
       {
         name: "Credit Repair Dispute System",
-        color: "blue",
+        color: "emerald",
         released: true,
         pathName: "credit-repair",
       },
 
       {
         name: "Student Loan Qualification",
-        color: "orange",
+        color: "purple",
         released: true,
         pathName: "student-loan",
       },
       {
         name: "Tax Resolution",
-        color: "yellow",
+        color: "gray",
         released: false,
         pathName: "tax-resolution",
       },
       {
         name: "MCA Management",
-        color: "emerald",
+        color: "gray",
         released: false,
         pathName: "merchant-cash-advances",
       },
 
       {
         name: "SBA Loans",
-        color: "purple",
+        color: "gray",
         released: false,
         pathName: "sba-loans",
       },
 
       {
         name: "Tax Overages",
-        color: "sky",
+        color: "gray",
         released: false,
         pathName: "tax-overages",
       },
@@ -76,11 +76,11 @@ const handlePillClick = (pill) => {
   >
     <h1 class="text-5xl font-bold">Products</h1>
     <p class="text-2xl text-center">Our Suite of Software Solutions</p>
-    <button
+    <!-- <button
       class="active:animate-press bg-blue-500 text-white rounded-full px-4 py-3 shadow-md"
     >
       Get Started
-    </button>
+    </button> -->
   </div>
 
   <div class="bg-indigo-300 flex flex-row justify-center pb-44 px-5">
@@ -115,6 +115,17 @@ const handlePillClick = (pill) => {
             >
               E-Signatures
             </button>
+            <button
+              @click="handlePillClick('integrations')"
+              :class="`${
+                chosenPill === 'integrations'
+                  ? 'bg-indigo-500 hover:bg-indigo-700 text-white'
+                  : 'bg-gray-50 text-gray-600 hover:text-white hover:bg-indigo-700'
+              } btn border-none rounded-full px-4 py-2 shadow-md`"
+              class="btn border-none bg-gray-50 rounded-full px-4 py-2 shadow-md"
+            >
+              Integrations
+            </button>
           </div>
         </div>
 
@@ -136,7 +147,7 @@ const handlePillClick = (pill) => {
                 v-if="!item.released"
                 class="absolute -bottom-2 right-0 bg-rose-500 py-1 px-2 rounded-full text-xs"
               >
-                Coming Soon!
+                Coming Soon
               </span>
             </router-link>
           </div>

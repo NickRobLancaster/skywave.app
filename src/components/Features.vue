@@ -25,7 +25,7 @@ const websiteStore = useWebsiteStore();
         <!-- BASE PLAN -->
         <div
           v-for="(feature, i) in websiteStore.features"
-          class="rounded p-5 border border-slate-400 shadow-lg glass bg-gray-50 h-52 flex flex-col justify-center items-center"
+          class="rounded-xl p-5 border border-slate-400 shadow-lg glass bg-gray-50 h-52 flex flex-col justify-center items-center"
         >
           <font-awesome-icon
             :icon="['fas', feature.icon]"
