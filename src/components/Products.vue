@@ -91,8 +91,8 @@ const handlePillClick = (pill) => {
         class="-mt-12 bg-gray-50 p-5 w-full rounded-xl flex flex-col gap-5 items-center shadow-lg shadow-indigo-300"
       >
         <!-- pill nav -->
-        <div class="p-2 bg-gray-200 rounded-full">
-          <div class="flex flex-row justify-center gap-4">
+        <div class="bg-gray-200 rounded-full max-w-full">
+          <div class="flex flex-row gap-4 overflow-x-auto rounded-full p-2">
             <button
               @click="handlePillClick('crm')"
               :class="`${
