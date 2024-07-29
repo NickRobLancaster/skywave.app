@@ -4,6 +4,15 @@ import { createRouter, createWebHistory, onBeforeRouteLeave } from "vue-router";
 import Website from "./components/Website.vue";
 import Home from "./components/Home.vue";
 import Products from "./components/Products.vue";
+//products
+import ProductDebtSettlement from "./components/ProductDebtSettlement.vue";
+import ProductCreditRepair from "./components/ProductCreditRepair.vue";
+import ProductStudent from "./components/ProductStudent.vue";
+import ProductTaxResolution from "./components/ProductTaxResolution.vue";
+import ProductMCA from "./components/ProductMCA.vue";
+import ProductSBA from "./components/ProductSBA.vue";
+import ProductTaxOverages from "./components/ProductTaxOverages.vue";
+
 import Features from "./components/Features.vue";
 import Pricing from "./components/Pricing.vue";
 import GettingStarted from "./components/GettingStarted.vue";
@@ -28,6 +37,50 @@ const routes = [
         path: "products", // Path should be relative
         name: "products",
         components: { root: Products },
+
+        children: [
+          {
+            path: "debt-settlement",
+            name: "debt-settlement",
+            component: ProductDebtSettlement,
+          },
+          //Credit Repair Dispute System
+          {
+            path: "credit-repair",
+            name: "credit-repair",
+            component: ProductCreditRepair,
+          },
+
+          {
+            path: "student-loan",
+            name: "student-loan",
+            component: ProductStudent,
+          },
+          {
+            path: "tax-resolution",
+            name: "tax-resolution",
+            component: ProductTaxResolution,
+          },
+
+          //merchant cash advance
+          {
+            path: "merchant-cash-advances",
+            name: "merchant-cash-advances",
+            component: ProductMCA,
+          },
+
+          //SBA Loans
+          {
+            path: "sba-loans",
+            name: "sba-loans",
+            component: ProductSBA,
+          },
+          {
+            path: "tax-overages",
+            name: "tax-overages",
+            component: ProductTaxOverages,
+          },
+        ],
       },
       {
         path: "features", // Path should be relative

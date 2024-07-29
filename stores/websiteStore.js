@@ -149,6 +149,7 @@ export const useWebsiteStore = defineStore("main", {
     removeLastRoute() {
       this.routeHistory.pop();
     },
+
   },
   getters: {
     doubleCount() {
