@@ -93,7 +93,7 @@ export const useWebsiteStore = defineStore("main", {
     scrollToSection(sectionId) {
       const element = document.getElementById(sectionId);
       if (element) {
-        const offset = 250; // Adjust this value as needed
+        const offset = 100; // Adjust this value as needed
         const elementPosition =
           element.getBoundingClientRect().top + window.scrollY;
         const offsetPosition = elementPosition - offset;

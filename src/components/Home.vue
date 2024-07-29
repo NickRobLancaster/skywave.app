@@ -1,9 +1,38 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
 import { useWebsiteStore } from "../../stores/websiteStore";
 
 const websiteStore = useWebsiteStore();
+
+const videoElement = ref(null);
+
+let observer;
+
+const handleIntersection = (entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      videoElement.value.play().catch((error) => {
+        console.error("Error attempting to play the video:", error);
+      });
+    } else {
+      videoElement.value.pause();
+    }
+  });
+};
+
+onMounted(() => {
+  if (videoElement.value) {
+    observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
+    observer.observe(videoElement.value);
+  }
+});
+
+onUnmounted(() => {
+  if (observer && videoElement.value) {
+    observer.unobserve(videoElement.value);
+  }
+});
 </script>
 
 <template>
@@ -25,15 +54,23 @@ const websiteStore = useWebsiteStore();
     class="bg-blue-400 flex flex-row justify-center max-md:pb-6 md:pb-44 px-5"
   >
     <div
-      class="rounded-xl bg-gray-50 p-4 md:px-8 md:pb-8 -mt-24 md:-mt-52 container"
+      class="rounded-xl bg-gray-50 p-4 md:px-8 md:pb-8 -mt-24 md:-mt-52 md:w-5/6 flex flex-row justify-center"
     >
-      <video
-        id="automation-preview"
-        controls
-        class="-mt-12 mb-1 rounded p-2 border border-slate-400 shadow-lg shadow-blue-400 glass"
+      <div
+        class="-mt-12 mb-1 rounded-xl p-2 border border-slate-400 shadow-lg shadow-blue-400 glass"
       >
-        <source src="/images/automation-preview.mp4" type="video/mp4" />
-      </video>
+        <video
+          ref="videoElement"
+          id="automation-preview"
+          controls
+          autoplay
+          loop
+          muted
+          class="md:border-b md:border-gray-600"
+        >
+          <source src="/images/automation-preview.mp4" type="video/mp4" />
+        </video>
+      </div>
 
       <!-- <img
         src="../../public/images/sw-v2-contact-file.png"
