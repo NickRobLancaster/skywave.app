@@ -5,68 +5,57 @@ import { useWebsiteStore } from "../../stores/websiteStore";
 
 const websiteStore = useWebsiteStore();
 
-const chosenPill = ref("crm");
-
 const pillMenu = ref([
   {
-    name: "crm",
+    name: "CRM",
+    pathName: "crm",
     modules: [
       {
         name: "Debt Settlement Calculator",
-        color: "blue",
         released: true,
         pathName: "debt-settlement",
       },
       {
         name: "Credit Repair Dispute System",
-        color: "emerald",
         released: true,
         pathName: "credit-repair",
       },
 
       {
         name: "Student Loan Qualification",
-        color: "purple",
         released: true,
         pathName: "student-loan",
       },
       {
         name: "Tax Resolution",
-        color: "gray",
         released: false,
         pathName: "tax-resolution",
       },
       {
         name: "MCA Management",
-        color: "gray",
         released: false,
         pathName: "merchant-cash-advances",
       },
 
       {
         name: "SBA Loans",
-        color: "gray",
         released: false,
         pathName: "sba-loans",
       },
 
       {
         name: "Tax Overages",
-        color: "gray",
         released: false,
         pathName: "tax-overages",
       },
     ],
   },
   {
-    name: "E-Signatures",
+    name: "Integrations",
+    pathName: "integrations",
     modules: [],
   },
 ]);
-
-const handlePillClick = (pill) => {
-  chosenPill.value = pill;
-};
 </script>
 
 <template>
@@ -93,62 +82,14 @@ const handlePillClick = (pill) => {
         <!-- pill nav -->
         <div class="bg-gray-200 rounded-full max-w-full">
           <div class="flex flex-row gap-4 overflow-x-auto rounded-full p-2">
-            <button
-              @click="handlePillClick('crm')"
-              :class="`${
-                chosenPill === 'crm'
-                  ? 'bg-indigo-500 hover:bg-indigo-700 text-white'
-                  : 'bg-gray-50 text-gray-600 hover:text-white hover:bg-indigo-700'
-              } btn border-none rounded-full px-4 py-2 shadow-md`"
-              class="btn border-none bg-gray-50 rounded-full px-4 py-2 shadow-md"
-            >
-              CRM
-            </button>
-            <button
-              @click="handlePillClick('esign')"
-              :class="`${
-                chosenPill === 'esign'
-                  ? 'bg-indigo-500 hover:bg-indigo-700 text-white'
-                  : 'bg-gray-50 text-gray-600 hover:text-white hover:bg-indigo-700'
-              } btn border-none rounded-full px-4 py-2 shadow-md`"
-              class="btn border-none bg-gray-50 rounded-full px-4 py-2 shadow-md"
-            >
-              E-Signatures
-            </button>
-            <button
-              @click="handlePillClick('integrations')"
-              :class="`${
-                chosenPill === 'integrations'
-                  ? 'bg-indigo-500 hover:bg-indigo-700 text-white'
-                  : 'bg-gray-50 text-gray-600 hover:text-white hover:bg-indigo-700'
-              } btn border-none rounded-full px-4 py-2 shadow-md`"
-              class="btn border-none bg-gray-50 rounded-full px-4 py-2 shadow-md"
-            >
-              Integrations
-            </button>
-          </div>
-        </div>
-
-        <div
-          v-if="chosenPill === 'crm'"
-          class="bg-gray-200 rounded-full max-w-full"
-        >
-          <div class="flex flex-row gap-4 overflow-x-auto rounded-full p-2">
             <router-link
-              v-for="(item, i) in pillMenu[0].modules"
+              v-for="(item, i) in pillMenu"
               :key="i"
               :to="{ name: item.pathName }"
-              :class="`bg-${item.color}-500 hover:bg-${item.color}-700`"
-              class="relative btn border-none text-white rounded-full px-4 py-2 shadow-md"
+              class="relative btn border-none rounded-full px-4 py-2 shadow-md bg-gray-50 text-gray-600 hover:text-white hover:bg-indigo-700"
+              active-class="disabled bg-indigo-500 hover:bg-indigo-700 text-white"
             >
               {{ item.name }}
-
-              <span
-                v-if="!item.released"
-                class="absolute -bottom-2 right-0 bg-rose-500 py-1 px-2 rounded-full text-xs"
-              >
-                Coming Soon
-              </span>
             </router-link>
           </div>
         </div>

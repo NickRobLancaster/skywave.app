@@ -35,16 +35,14 @@ const subscribe = async () => {
 </script>
 
 <template>
-  <div
-    class="flex flex-col gap-5 bg-[url('../../public/images/bg-newsletter-pattern.png')]"
-  >
+  <div class="flex flex-col gap-5 bg-gray-50">
     <div
       class="flex flex-col gap-5 py-24 items-center justify-center backdrop-brightness-15 backdrop-blur-sm shadow-lg px-10"
     >
-      <h1 class="text-4xl text-gray-50">Email Newsletter</h1>
+      <h1 class="text-4xl text-gray-500">Email Newsletter</h1>
 
-      <p class="text-gray-200 text-center">
-        Get the latest news, updates and offers delivered to your inbox
+      <p class="text-gray-500 text-center">
+        Get Skywave News, Deals, and Updates Delivered to Your Inbox
       </p>
 
       <div class="flex flex-col gap-5">
@@ -65,13 +63,12 @@ const subscribe = async () => {
             type="email"
             :validation="[['required'], ['email']]"
             :validation-messages="{
-              required: 'Email is required',
+              required: 'Email is required to subscribe',
               email: 'Please enter a valid email address',
             }"
-            messages-class="text-red-500"
+            messages-class="bg-red-400 text-white rounded-full py-1 px-2 text-xs mt-1 text-center"
             validation-visibility="blur"
-            placeholder="jim@dundermifflin.com"
-            input-class="$reset input text-center bg-white text-gray-600"
+            input-class="$reset input bg-white text-gray-600 border border-gray-300 rounded p-4"
             inner-class="w-full max-w-full"
             outer-class="w-full max-w-full"
             v-model="websiteStore.user.email"
@@ -80,7 +77,7 @@ const subscribe = async () => {
         <button
           @click="submitNewsletterSubscriptionForm"
           type="submit"
-          class="bg-blue-500 text-white py-4 rounded-2xl"
+          class="bg-gray-500 text-white btn border-none rounded-full"
         >
           Subscribe
         </button>

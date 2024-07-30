@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    font-family: "Roboto", sans-serif;
+  }
+
   /* Webkit-based browsers */
   *::-webkit-scrollbar {
     width: 8px;

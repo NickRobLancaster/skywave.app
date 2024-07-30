@@ -4,6 +4,8 @@ import { createRouter, createWebHistory, onBeforeRouteLeave } from "vue-router";
 import Website from "./components/Website.vue";
 import Home from "./components/Home.vue";
 import Products from "./components/Products.vue";
+import ProductCRM from "./components/ProductCRM.vue";
+import ProductIntegrations from "./components/ProductIntegrations.vue";
 //products
 import ProductDebtSettlement from "./components/ProductDebtSettlement.vue";
 import ProductCreditRepair from "./components/ProductCreditRepair.vue";
@@ -40,45 +42,59 @@ const routes = [
 
         children: [
           {
-            path: "debt-settlement",
-            name: "debt-settlement",
-            component: ProductDebtSettlement,
-          },
-          //Credit Repair Dispute System
-          {
-            path: "credit-repair",
-            name: "credit-repair",
-            component: ProductCreditRepair,
-          },
+            path: "crm",
+            name: "crm",
+            component: ProductCRM,
+            redirect: { name: "debt-settlement" },
 
-          {
-            path: "student-loan",
-            name: "student-loan",
-            component: ProductStudent,
-          },
-          {
-            path: "tax-resolution",
-            name: "tax-resolution",
-            component: ProductTaxResolution,
-          },
+            children: [
+              {
+                path: "debt-settlement",
+                name: "debt-settlement",
+                component: ProductDebtSettlement,
+              },
+              //Credit Repair Dispute System
+              {
+                path: "credit-repair",
+                name: "credit-repair",
+                component: ProductCreditRepair,
+              },
 
-          //merchant cash advance
-          {
-            path: "merchant-cash-advances",
-            name: "merchant-cash-advances",
-            component: ProductMCA,
-          },
+              {
+                path: "student-loan",
+                name: "student-loan",
+                component: ProductStudent,
+              },
+              {
+                path: "tax-resolution",
+                name: "tax-resolution",
+                component: ProductTaxResolution,
+              },
 
-          //SBA Loans
-          {
-            path: "sba-loans",
-            name: "sba-loans",
-            component: ProductSBA,
+              //merchant cash advance
+              {
+                path: "merchant-cash-advances",
+                name: "merchant-cash-advances",
+                component: ProductMCA,
+              },
+
+              //SBA Loans
+              {
+                path: "sba-loans",
+                name: "sba-loans",
+                component: ProductSBA,
+              },
+              {
+                path: "tax-overages",
+                name: "tax-overages",
+                component: ProductTaxOverages,
+              },
+            ],
           },
           {
-            path: "tax-overages",
-            name: "tax-overages",
-            component: ProductTaxOverages,
+            path: "integrations",
+            name: "integrations",
+            component: ProductIntegrations,
           },
         ],
       },
