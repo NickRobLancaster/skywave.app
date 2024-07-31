@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from "vue";
 
+import { useWebsiteStore } from "../../stores/websiteStore";
+
+const websiteStore = useWebsiteStore();
+
 const modules = ref([
   {
     name: "Debt Settlement Calculator",
@@ -47,12 +51,13 @@ const modules = ref([
   <div
     class="flex flex-col md:flex-row w-full rounded-t-xl md:rounded-xl overflow-clip"
   >
-    <div class="bg-gray-200 max-w-full flex flex-row md:h-full">
+    <div class="bg-slate-300 max-w-full flex flex-row md:h-full">
       <div class="flex flex-row md:flex-col gap-4 p-2 overflow-x-auto">
         <router-link
           v-for="(item, i) in modules"
           :key="i"
           :to="{ name: item.pathName }"
+          @click="websiteStore.scrollToSection('products-preview')"
           :class="`${
             !item.released
               ? 'disabled pointer-events-none bg-gray-500 text-gray-50 hover:text-white hover:bg-indigo-700'
@@ -73,7 +78,7 @@ const modules = ref([
       </div>
     </div>
 
-    <div class="flex-1 h-full bg-gray-50">
+    <div class="flex-1 h-full bg-slate-300">
       <router-view />
     </div>
   </div>

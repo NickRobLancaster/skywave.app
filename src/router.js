@@ -39,6 +39,7 @@ const routes = [
         path: "products", // Path should be relative
         name: "products",
         components: { root: Products },
+        redirect: { name: "debt-settlement" },
 
         children: [
           {

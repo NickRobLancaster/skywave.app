@@ -77,6 +77,7 @@ const pillMenu = ref([
       class="rounded-xl bg-gray-50 p-4 md:px-8 -mt-52 md:pb-8 flex flex-row justify-center container"
     >
       <div
+        id="products-preview"
         class="-mt-12 bg-gray-50 p-5 w-full rounded-xl flex flex-col gap-5 items-center shadow-lg shadow-indigo-300"
       >
         <!-- pill nav -->
@@ -85,6 +86,7 @@ const pillMenu = ref([
             <router-link
               v-for="(item, i) in pillMenu"
               :key="i"
+              @click="websiteStore.scrollToSection('products-preview')"
               :to="{ name: item.pathName }"
               class="relative btn border-none rounded-full px-4 py-2 shadow-md bg-gray-50 text-gray-600 hover:text-white hover:bg-indigo-700"
               active-class="disabled bg-indigo-500 hover:bg-indigo-700 text-white"
