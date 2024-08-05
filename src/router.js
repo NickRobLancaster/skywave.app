@@ -21,9 +21,24 @@ import GettingStarted from "./components/GettingStarted.vue";
 import TermsOfService from "./components/TermsOfService.vue";
 import PrivacyPolicy from "./components/PrivacyPolicy.vue";
 
+import EsignCoordinateGenerator from "./components/EsignCoordinateGenerator.vue";
+import EsignCoordinatesGenerator2 from "./components/EsignCoordinatesGenerator2.vue";
+
 import { useWebsiteStore } from "./../stores/websiteStore";
 
 const routes = [
+  {
+    path: "/components",
+    name: "components",
+    redirect: { name: "esign-2-coords" },
+    children: [
+      {
+        path: "esign-coordinates",
+        name: "esign-coordinates",
+        component: EsignCoordinateGenerator,
+      },
+    ],
+  },
   {
     path: "/",
     name: "root",
