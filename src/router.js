@@ -22,15 +22,15 @@ import TermsOfService from "./components/TermsOfService.vue";
 import PrivacyPolicy from "./components/PrivacyPolicy.vue";
 
 import EsignCoordinateGenerator from "./components/EsignCoordinateGenerator.vue";
-import EsignCoordinatesGenerator2 from "./components/EsignCoordinatesGenerator2.vue";
 
 import { useWebsiteStore } from "./../stores/websiteStore";
 
+//comment for pushing to live
 const routes = [
   {
     path: "/components",
     name: "components",
-    redirect: { name: "esign-2-coords" },
+    redirect: { name: "esign-coordinates" },
     children: [
       {
         path: "esign-coordinates",
