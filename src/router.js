@@ -117,6 +117,7 @@ const routes = [
             path: "integrations",
             name: "integrations",
             component: ProductIntegrations,
+            redirect: { name: "payment-processors" },
             children: [
               {
                 path: "payment-processors",
