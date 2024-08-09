@@ -59,17 +59,11 @@ onUnmounted(() => {
       <div
         class="-mt-12 mb-1 rounded-xl p-2 border border-slate-400 shadow-lg shadow-blue-400 glass"
       >
-        <video
-          ref="videoElement"
+        <VideoPreviewComponent
           id="automation-preview"
-          controls
-          autoplay
-          loop
-          muted
-          class="md:border-b md:border-gray-600"
-        >
-          <source src="/images/automation-preview.mp4" type="video/mp4" />
-        </video>
+          src="/images/automation-preview.mp4"
+          classes="md:border-b md:border-gray-600"
+        />
       </div>
 
       <!-- <img

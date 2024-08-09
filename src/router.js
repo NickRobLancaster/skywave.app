@@ -14,6 +14,12 @@ import ProductTaxResolution from "./components/ProductTaxResolution.vue";
 import ProductMCA from "./components/ProductMCA.vue";
 import ProductSBA from "./components/ProductSBA.vue";
 import ProductTaxOverages from "./components/ProductTaxOverages.vue";
+//integrations
+import IntegrationsPaymentProcessors from "./components/IntegrationsPaymentProcessors.vue";
+import IntegrationsSMS from "./components/IntegrationsSMS.vue";
+import IntegrationsEmailsSMTP from "./components/IntegrationsEmailsSMTP.vue";
+import IntegrationsElectronicSignatures from "./components/IntegrationsElectronicSignatures.vue";
+import IntegrationsWebhooks from "./components/IntegrationsWebhooks.vue";
 
 import Features from "./components/Features.vue";
 import Pricing from "./components/Pricing.vue";
@@ -111,6 +117,33 @@ const routes = [
             path: "integrations",
             name: "integrations",
             component: ProductIntegrations,
+            children: [
+              {
+                path: "payment-processors",
+                name: "payment-processors",
+                component: IntegrationsPaymentProcessors,
+              },
+              {
+                path: "sms",
+                name: "sms",
+                component: IntegrationsSMS,
+              },
+              {
+                path: "emails-smtp",
+                name: "emails-smtp",
+                component: IntegrationsEmailsSMTP,
+              },
+              {
+                path: "electronic-signatures",
+                name: "electronic-signatures",
+                component: IntegrationsElectronicSignatures,
+              },
+              {
+                path: "webhooks",
+                name: "webhooks",
+                component: IntegrationsWebhooks,
+              },
+            ],
           },
         ],
       },
