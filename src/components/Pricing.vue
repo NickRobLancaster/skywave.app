@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+import { useWebsiteStore } from "../../stores/websiteStore";
+
+const websiteStore = useWebsiteStore();
+</script>
 
 <template>
   <!-- HERO -->
@@ -95,11 +101,13 @@
 
             <!-- get started -->
             <div class="p-2 mt-6">
-              <button
+              <a
+                :href="websiteStore.onboarding_form"
+                target="_blank"
                 class="active:animate-press bg-blue-500 text-white rounded-full px-4 py-3 shadow-md"
               >
                 Get Started
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -177,11 +185,13 @@
 
             <!-- get started -->
             <div class="p-2 mt-6">
-              <button
-                class="active:animate-press bg-blue-500 text-white rounded-full px-4 py-3 shadow-md"
+              <a
+                :href="websiteStore.onboarding_form"
+                target="_blank"
+                class="active:animate-press bg-amber-500 text-white rounded-full px-4 py-3 shadow-md"
               >
                 Get Started
-              </button>
+              </a>
             </div>
           </div>
         </div>

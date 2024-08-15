@@ -8,6 +8,8 @@ export const useWebsiteStore = defineStore("main", {
       toast_notifications: [],
 
       routeHistory: [],
+
+      onboarding_form: "https://form.jotform.com/242007152609045",
       //company details
       company: {
         name: "Skywave CRM",
@@ -149,7 +151,6 @@ export const useWebsiteStore = defineStore("main", {
     removeLastRoute() {
       this.routeHistory.pop();
     },
-
   },
   getters: {
     doubleCount() {
