@@ -5,6 +5,8 @@ import { defineStore } from "pinia";
 export const useWebsiteStore = defineStore("main", {
   state: () => {
     return {
+      compliance_mode: true,
+
       toast_notifications: [],
 
       routeHistory: [],
@@ -16,12 +18,12 @@ export const useWebsiteStore = defineStore("main", {
         email: "info@skywave.app",
         phone: "8556866162",
         address: {
-          building: "Tibbetts Porfessional Building",
-          street: "3742 Tibbetts St",
-          street2: "Suite 101",
+          building: "Skywave Inc.",
+          street: "17130 Van Buren Blvd",
+          street2: "Suite 408",
           city: "Riverside",
           state: "CA",
-          zip: "92506",
+          zip: "92504",
         },
 
         social: {
@@ -63,15 +65,15 @@ export const useWebsiteStore = defineStore("main", {
         { name: "Audit Trail", icon: "fa-history" },
         { name: "Role Based Permissions", icon: "fa-user-lock" },
         { name: "Leaderboards", icon: "fa-trophy" },
-        { name: "Text Messages", icon: "fa-sms" },
+        { name: "Conversational SMS", icon: "fa-sms" },
         { name: "Client Inboxes", icon: "fa-inbox" },
         { name: "Document Library", icon: "fa-folder-open" },
-        { name: "E-signatures", icon: "fa-pen-square" },
+        { name: "E-Signatures", icon: "fa-pen-square" },
         { name: "Operator Panel", icon: "fa-headset" },
         { name: "Automated Workflows", icon: "fa-cogs" },
         { name: "Qualification System", icon: "fa-check-circle" },
         { name: "Industry Pre-configuration", icon: "fa-industry" },
-        { name: "Email Marketing", icon: "fa-envelope" },
+        { name: "Conversational Email", icon: "fa-envelope" },
         { name: "Client Portal", icon: "fa-users" },
         { name: "Commission Tracking", icon: "fa-dollar-sign" },
         { name: "ACH & CC Processing", icon: "fa-credit-card" },
@@ -117,6 +119,7 @@ export const useWebsiteStore = defineStore("main", {
     toggleOpen(itemToToggle) {
       console.log("GLOBAL TOGGLE", itemToToggle);
       this[itemToToggle] = true;
+      console.log("GLOBAL TOGGLE", this[itemToToggle]);
     },
 
     toggleClose(itemToToggle) {

@@ -8,51 +8,11 @@ const websiteStore = useWebsiteStore();
 const pillMenu = ref([
   {
     name: "CRM",
-    pathName: "crm",
-    modules: [
-      {
-        name: "Debt Settlement Calculator",
-        released: true,
-        pathName: "debt-settlement",
-      },
-      {
-        name: "Credit Repair Dispute System",
-        released: true,
-        pathName: "credit-repair",
-      },
-
-      {
-        name: "Student Loan Qualification",
-        released: true,
-        pathName: "student-loan",
-      },
-      {
-        name: "Tax Resolution",
-        released: false,
-        pathName: "tax-resolution",
-      },
-      {
-        name: "MCA Management",
-        released: false,
-        pathName: "merchant-cash-advances",
-      },
-
-      {
-        name: "SBA Loans",
-        released: false,
-        pathName: "sba-loans",
-      },
-
-      {
-        name: "Tax Overages",
-        released: false,
-        pathName: "tax-overages",
-      },
-    ],
+    componentName: "crm-tab",
   },
   {
     name: "Integrations",
-    pathName: "integrations",
+    componentName: "integrations-tab",
     modules: [],
   },
 ]);
@@ -87,7 +47,7 @@ const pillMenu = ref([
               v-for="(item, i) in pillMenu"
               :key="i"
               @click="websiteStore.scrollToSection('products-preview')"
-              :to="{ name: item.pathName }"
+              :to="{ name: item.componentName }"
               class="relative btn border-none rounded-full px-4 py-2 shadow-md bg-gray-50 text-gray-600 hover:text-white hover:bg-indigo-700"
               active-class="disabled bg-indigo-500 hover:bg-indigo-700 text-white"
             >

@@ -9,22 +9,6 @@ const route = useRoute();
 
 import { useWebsiteStore } from "./../../stores/websiteStore";
 const websiteStore = useWebsiteStore();
-
-onMounted(() => {
-  const websiteStore = useWebsiteStore();
-  websiteStore.toggleOpen("showGetStarted");
-});
-
-const routeBack = () => {
-  websiteStore.toggleClose("showGetStarted");
-  //if vue-router history length is greater than 1 then go back
-  if (websiteStore.routeHistory.length > 1) {
-    router.go(-1);
-  } else {
-    //else push to home
-    router.push("/home");
-  }
-};
 </script>
 
 <template>
@@ -38,7 +22,6 @@ const routeBack = () => {
       leave-to-class="opacity-0"
     >
       <div
-        @click="routeBack"
         v-if="websiteStore.showGetStarted"
         class="fixed h-screen w-screen z-50 cursor-pointer"
       ></div>
@@ -53,71 +36,40 @@ const routeBack = () => {
       leave-to-class="-translate-x-full"
     >
       <div
-        @click.self="routeBack"
+        @click.self="websiteStore.toggleClose('showGetStarted')"
         v-if="websiteStore.showGetStarted"
         class="fixed w-screen h-screen flex flex-col justify-center items-center z-60"
       >
-        <div class="bg-gray-100 w-full h-full lg:h-5/6 lg:w-5/6 flex flex-col">
-          <button
-            @click="routeBack"
-            class="ml-auto active:animate-press text-2xl px-3 py-1 rounded"
-          >
-            <font-awesome-icon :icon="['fas', 'times']" />
-          </button>
-          <div class="flex flex-col items-center p-5">
-            <h1 class="text-3xl font-bold">Get Started With</h1>
-            <CompanyLogo width="64" />
-          </div>
+        <div
+          class="flex flex-col w-full md:w-1/2 justify-center rounded overflow-clip"
+        >
           <div>
             <!-- form -->
             <div>
-              <div class="flex flex-col gap-3 p-5">
-                <form class="flex flex-col gap-5">
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    class="w-full p-3 text-gray- bg-white border border-gray-300 rounded"
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    class="w-full p-3 text-gray- bg-white border border-gray-300 rounded"
-                  />
-
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    class="w-full p-3 text-gray- bg-white border border-gray-300 rounded"
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="Phone Number"
-                    class="w-full p-3 text-gray- bg-white border border-gray-300 rounded"
-                  />
-
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    class="w-full p-3 text-gray- bg-white border border-gray-300 rounded"
-                  />
-
-                  <input
-                    type="password"
-                    placeholder="Confirm Password"
-                    class="w-full p-3 text-gray- bg-white border border-gray-300 rounded"
-                  />
-
-                  <div class="flex flex-row">
-                    <button type="button" class="sw-btn bg-gray-500">
-                      Last
-                    </button>
-                    <button type="button" class="sw-btn bg-blue-500 ml-auto">
-                      Next
-                    </button>
-                  </div>
-                </form>
+              <div class="relative flex flex-col bg-blue-200">
+                <button
+                  @click="websiteStore.toggleClose('showGetStarted')"
+                  class="absolute hover:bg-gray-300 rounded-full top-5 right-5 ml-auto active:animate-press text-2xl px-3 py-1"
+                >
+                  <font-awesome-icon :icon="['fas', 'times']" />
+                </button>
+                <iframe
+                  id="JotFormIFrame-242007152609045"
+                  title="Skywave CRM Account Sign-up"
+                  onload="window.parent.scrollTo(0,0)"
+                  allowtransparency="true"
+                  allow="geolocation; microphone; camera; fullscreen"
+                  src="https://form.jotform.com/242007152609045"
+                  frameborder="0"
+                  style="
+                    min-width: 100%;
+                    max-width: 100%;
+                    height: 539px;
+                    border: none;
+                  "
+                  scrolling="no"
+                >
+                </iframe>
               </div>
             </div>
           </div>

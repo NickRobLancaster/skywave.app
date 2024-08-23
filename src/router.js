@@ -4,9 +4,10 @@ import { createRouter, createWebHistory, onBeforeRouteLeave } from "vue-router";
 import Website from "./components/Website.vue";
 import Home from "./components/Home.vue";
 import Products from "./components/Products.vue";
-import ProductCRM from "./components/ProductCRM.vue";
-import ProductIntegrations from "./components/ProductIntegrations.vue";
+import ProductCRMTab from "./components/ProductCRMTab.vue";
+import ProductIntegrationsTab from "./components/ProductIntegrationsTab.vue";
 //products
+import ProductCRM from "./components/ProductCRM.vue";
 import ProductDebtSettlement from "./components/ProductDebtSettlement.vue";
 import ProductCreditRepair from "./components/ProductCreditRepair.vue";
 import ProductStudent from "./components/ProductStudent.vue";
@@ -60,16 +61,21 @@ const routes = [
         path: "products", // Path should be relative
         name: "products",
         components: { root: Products },
-        redirect: { name: "debt-settlement" },
+        redirect: { name: "crm-tab" },
 
         children: [
           {
             path: "crm",
-            name: "crm",
-            component: ProductCRM,
-            redirect: { name: "debt-settlement" },
+            name: "crm-tab",
+            component: ProductCRMTab,
+            redirect: { name: "crm" },
 
             children: [
+              {
+                path: "crm",
+                name: "crm",
+                component: ProductCRM,
+              },
               {
                 path: "debt-settlement",
                 name: "debt-settlement",
@@ -115,8 +121,8 @@ const routes = [
           },
           {
             path: "integrations",
-            name: "integrations",
-            component: ProductIntegrations,
+            name: "integrations-tab",
+            component: ProductIntegrationsTab,
             redirect: { name: "payment-processors" },
             children: [
               {

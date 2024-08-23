@@ -8,7 +8,14 @@ const websiteStore = useWebsiteStore();
 
 <template>
   <footer class="bg-gray-800 text-white flex flex-col items-between">
-    <div class="flex flex-col lg:grid md:grid-cols-5 bg-gray-600 p-5 gap-5">
+    <div
+      :class="`${
+        websiteStore.compliance_mode
+          ? 'lg:grid md:grid-cols-4'
+          : 'lg:grid md:grid-cols-5'
+      }`"
+      class="flex flex-col bg-gray-600 p-5 gap-5"
+    >
       <div class="flex flex-col gap-4 lg:items-center">
         <img
           src="https://skywave.app/wp-content/uploads/2020/06/skywave-transparent-small-1.png"
@@ -39,7 +46,10 @@ const websiteStore = useWebsiteStore();
         </ul>
       </div>
 
-      <div class="flex flex-col gap-4 lg:items-center">
+      <div
+        v-if="!websiteStore.compliance_mode"
+        class="flex flex-col gap-4 lg:items-center"
+      >
         <div class="flex flex-col gap-4">
           <h3 class="text-xl font-bold">Industry Tools</h3>
           <ul class="flex flex-col gap-2 list-disc list-inside">
@@ -96,10 +106,10 @@ const websiteStore = useWebsiteStore();
               Livesigner E-Signature
             </li>
             <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
-              Inbound / Outbound Email System
+              Emails (BYOC) - Inbound / Outbound
             </li>
             <li class="text-gray-200 hover:text-gray-400 cursor-pointer">
-              SMS Infra - Inbound / Outbound
+              SMS (BYOC) - Inbound / Outbound
             </li>
           </ul>
         </div>
@@ -119,7 +129,6 @@ const websiteStore = useWebsiteStore();
                     <font-awesome-icon :icon="['fas', 'location-pin']" />
                   </span>
                   <span class="hover:text-green-200 cursor-pointer">
-                    {{ websiteStore.company.address.building }}<br />
                     {{ websiteStore.company.address.street }}<br />
                     {{ websiteStore.company.address.street2 }}<br />
                     {{ websiteStore.company.address.city }},

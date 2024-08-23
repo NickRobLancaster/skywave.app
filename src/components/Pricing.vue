@@ -22,7 +22,14 @@ const websiteStore = useWebsiteStore();
     <div
       class="rounded-xl bg-gray-50 p-4 md:px-8 md:pb-8 -mt-52 flex flex-row justify-center"
     >
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div
+        :class="`${
+          websiteStore.compliance_mode
+            ? 'grid grid-cols-1 md:grid-cols-1'
+            : 'grid md:grid-cols-2'
+        }`"
+        class="gap-8"
+      >
         <!-- BASE PLAN -->
         <div
           class="-mt-12 mb-1 rounded p-5 border border-slate-400 shadow-lg shadow-blue-400 bg-blue-400 glass"
@@ -114,6 +121,7 @@ const websiteStore = useWebsiteStore();
 
         <!-- enterprise -->
         <div
+          v-if="!websiteStore.compliance_mode"
           class="md:-mt-12 mb-1 rounded p-5 border border-slate-400 shadow-lg shadow-amber-400 bg-amber-400 glass"
         >
           <h3 class="text-3xl text-white p-4 text-center">Enterprise</h3>
