@@ -35,52 +35,21 @@ const subscribe = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-5 bg-gray-50">
-    <div
-      class="flex flex-col gap-5 py-24 items-center justify-center backdrop-brightness-15 backdrop-blur-sm shadow-lg px-10"
-    >
-      <h1 class="text-4xl text-gray-500">Email Newsletter</h1>
-
-      <p class="text-gray-500 text-center">
-        Get Skywave News, Deals, and Updates Delivered to Your Inbox
-      </p>
-
-      <div class="flex flex-col gap-5">
-        <FormKit
-          type="form"
-          id="newletter-subscription-form"
-          :incomplete-message="false"
-          form-class="text-white h-full flex flex-col justify-between"
-          @submit="subscribe"
-          outer-class="m-0"
-          :actions="false"
-          :submit-attrs="{
-            'data-theme': `light`,
-            ignore: true,
-          }"
+  <div class="flex flex-col gap-5 bg-[#f3f3fe]">
+    <div class="flex flex-col gap-5 items-center">
+      <div class="flex flex-row items-center gap-5 pt-28">
+        <iframe
+          id="JotFormIFrame-242946442743058"
+          title="Email Newsletter"
+          onload="window.parent.scrollTo(0,0)"
+          allowtransparency="true"
+          allow="geolocation; microphone; camera; fullscreen"
+          src="https://form.jotform.com/242946442743058"
+          frameborder="0"
+          style="min-width: 100%; max-width: 100%; height: 575px; border: none"
+          scrolling="no"
         >
-          <FormKit
-            type="email"
-            :validation="[['required'], ['email']]"
-            :validation-messages="{
-              required: 'Email is required to subscribe',
-              email: 'Please enter a valid email address',
-            }"
-            messages-class="bg-red-400 text-white rounded-full py-1 px-2 text-xs mt-1 text-center"
-            validation-visibility="blur"
-            input-class="$reset input bg-white text-gray-600 border border-gray-300 rounded p-4"
-            inner-class="w-full max-w-full"
-            outer-class="w-full max-w-full"
-            v-model="websiteStore.user.email"
-          />
-        </FormKit>
-        <button
-          @click="submitNewsletterSubscriptionForm"
-          type="submit"
-          class="bg-gray-500 text-white btn border-none rounded-full"
-        >
-          Subscribe
-        </button>
+        </iframe>
       </div>
     </div>
   </div>

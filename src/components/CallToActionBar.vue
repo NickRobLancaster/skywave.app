@@ -11,6 +11,10 @@
     </div>
 
     <div>
+      <ScheduleDemo />
+      <ScheduleDemoButton />
+    </div>
+    <div>
       <GettingStarted />
       <GetStartedButton />
     </div>

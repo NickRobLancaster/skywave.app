@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useWebsiteStore } from "../../stores/websiteStore";
 import phoneFormat from "../../utils/phoneFormat";
+import { copyText } from "../../utils/copyText";
 
 const websiteStore = useWebsiteStore();
 </script>
@@ -11,14 +12,14 @@ const websiteStore = useWebsiteStore();
     <div
       :class="`${
         websiteStore.compliance_mode
-          ? 'lg:grid md:grid-cols-4'
-          : 'lg:grid md:grid-cols-5'
+          ? 'lg:grid md:grid-cols-3'
+          : 'lg:grid md:grid-cols-4'
       }`"
       class="flex flex-col bg-gray-600 p-5 gap-5"
     >
       <div class="flex flex-col gap-4 lg:items-center">
         <img
-          src="https://skywave.app/wp-content/uploads/2020/06/skywave-transparent-small-1.png"
+          src="/images/skywave.png"
           alt="Skywave Company Logo"
           class="w-40 border border-slate-400 rounded p-1 bg-gray-50"
         />
@@ -78,7 +79,7 @@ const websiteStore = useWebsiteStore();
         </div>
       </div>
 
-      <div class="flex flex-col gap-4 lg:items-center">
+      <!-- <div class="flex flex-col gap-4 lg:items-center">
         <div class="flex flex-col gap-4">
           <h3 class="text-xl font-bold">Resources</h3>
           <ul class="flex flex-col gap-2 list-disc list-inside">
@@ -93,7 +94,7 @@ const websiteStore = useWebsiteStore();
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
 
       <div class="flex flex-col gap-4 lg:items-center">
         <div class="flex flex-col gap-4">
@@ -120,7 +121,9 @@ const websiteStore = useWebsiteStore();
           <h3 class="text-xl font-bold text-left">Contact Us</h3>
           <ul class="flex flex-col gap-2 text-sm md:text-base">
             <li class="text-gray-200">
+              <!-- cursor pointer events disabled on the google maps link cause no new location has been established yet -->
               <a
+                class="pointer-events-none"
                 target="_blank"
                 href="https://www.google.com/maps/place/Datacore+CRM/@33.9470667,-117.4009004,17z/data=!3m1!4b1!4m6!3m5!1s0x80dcb15fe6a4b84f:0x976dd481cf9be3a!8m2!3d33.9470667!4d-117.3983255!16s%2Fg%2F11fsqkmnn9?entry=ttu"
               >
@@ -139,7 +142,7 @@ const websiteStore = useWebsiteStore();
               </a>
             </li>
 
-            <li class="text-gray-200">
+            <li class="text-gray-200 flex flex-row items-center gap-3">
               <a :href="`tel:+${websiteStore.company.phone}`">
                 <span class="mr-2 text-blue-300">
                   <font-awesome-icon :icon="['fas', 'phone']" />
@@ -148,9 +151,21 @@ const websiteStore = useWebsiteStore();
                   {{ phoneFormat(websiteStore.company.phone) }}
                 </span>
               </a>
+
+              <button
+                @click="
+                  copyText({
+                    type: 'Phone',
+                    copiedItem: websiteStore.company.phone,
+                  })
+                "
+                class="btn btn-xs"
+              >
+                <font-awesome-icon :icon="['fas', 'copy']" />
+              </button>
             </li>
 
-            <li class="text-gray-200">
+            <li class="text-gray-200 flex flex-row items-center gap-3">
               <a :href="`mailto:${websiteStore.company.email}`">
                 <span class="mr-2 text-red-300">
                   <font-awesome-icon :icon="['fas', 'envelope']" />
@@ -159,6 +174,17 @@ const websiteStore = useWebsiteStore();
                   {{ websiteStore.company.email }}
                 </span>
               </a>
+              <button
+                @click="
+                  copyText({
+                    type: 'Email',
+                    copiedItem: websiteStore.company.email,
+                  })
+                "
+                class="btn btn-xs"
+              >
+                <font-awesome-icon :icon="['fas', 'copy']" />
+              </button>
             </li>
           </ul>
         </div>
@@ -209,7 +235,7 @@ const websiteStore = useWebsiteStore();
     <div
       class="bg-gray-700 p-2 flex flex-row items-center justify-center max-md:mb-16"
     >
-      <p>© 2016 Skywave CRM</p>
+      <p>© 2024 Skywave CRM</p>
     </div>
   </footer>
 </template>

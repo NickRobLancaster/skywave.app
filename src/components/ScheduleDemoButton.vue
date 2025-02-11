@@ -14,9 +14,9 @@ const websiteStore = useWebsiteStore();
 <template>
   <!-- MOST LIKELY A DROP IN CHAT SYSTEM - THIS BUTTON WILL TRIGGER IT -->
   <button
-    @click="websiteStore.toggleOpen('showGetStarted')"
-    class="active:animate-press bg-emerald-500 text-white rounded-full md:px-4 py-3 shadow-md whitespace-nowrap text-xs md:text-base"
+    @click="websiteStore.toggleOpen('showScheduleDemo')"
+    class="active:animate-press bg-purple-500 text-white rounded-full md:px-4 py-3 shadow-md whitespace-nowrap text-xs md:text-base"
   >
-    <span class="px-1"> Get Started </span>
+    <span class="px-1"> Schedule Demo </span>
   </button>
 </template>

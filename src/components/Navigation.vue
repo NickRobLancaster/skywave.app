@@ -16,10 +16,10 @@ const changePageScrollTop = () => {
     class="h-full max-md:w-full overflow-y-auto flex flex-col md:flex-row divide-gray-300 divide-y bg-white text-center"
   >
     <div class="flex flex-row items-center p-2">
-      <p class="md:hidden">Menu</p>
+      <p class="md:hidden text-gray-500">Menu</p>
       <button
         @click="websiteStore.toggleClose('showHamburgerMenu')"
-        class="md:hidden ml-auto active:animate-press text-2xl px-3 py-1 rounded"
+        class="md:hidden ml-auto active:animate-press text-2xl px-3 py-1 rounded-full bg-gray-300 text-white"
       >
         <font-awesome-icon :icon="['fas', 'times']" />
       </button>

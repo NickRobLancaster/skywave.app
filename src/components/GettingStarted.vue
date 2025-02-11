@@ -23,7 +23,7 @@ const websiteStore = useWebsiteStore();
     >
       <div
         v-if="websiteStore.showGetStarted"
-        class="fixed h-screen w-screen z-50 cursor-pointer"
+        class="fixed h-screen w-screen z-50 cursor-pointer backdrop-brightness-50"
       ></div>
     </transition>
 
@@ -49,10 +49,11 @@ const websiteStore = useWebsiteStore();
               <div class="relative flex flex-col bg-blue-200">
                 <button
                   @click="websiteStore.toggleClose('showGetStarted')"
-                  class="absolute hover:bg-gray-300 rounded-full top-5 right-5 ml-auto active:animate-press text-2xl px-3 py-1"
+                  class="absolute bg-gray-200 hover:bg-gray-300 rounded-full top-5 right-5 ml-auto active:animate-press text-2xl px-3 py-1"
                 >
                   <font-awesome-icon :icon="['fas', 'times']" />
                 </button>
+
                 <iframe
                   id="JotFormIFrame-242007152609045"
                   title="Skywave CRM Account Sign-up"

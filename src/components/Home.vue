@@ -40,14 +40,31 @@ onUnmounted(() => {
   <div
     class="h-screen flex flex-col justify-center items-center gap-10 p-5 bg-gradient-to-b from-blue-900 to-blue-400 text-white"
   >
-    <h1 class="text-5xl font-bold text-center">Skywave CRM</h1>
-    <p class="text-2xl text-center">It's Time to Automate Your Workflows</p>
-    <button
-      @click="websiteStore.scrollToSection('automation-preview')"
-      class="active:animate-press bg-blue-500 text-white rounded-full px-5 py-4 shadow-md"
-    >
-      See How
-    </button>
+    <h1 class="text-5xl font-bold text-center">
+      It's Time to Automate Your Workflows
+    </h1>
+    <p class="text-2xl text-center">
+      Design and Develop with the user experience in mind with automation at
+      it's core
+    </p>
+    <div class="flex flex-col md:flex-row gap-5">
+      <div class="bg-gray-200 rounded-full max-w-full">
+        <div class="flex flex-row gap-4 overflow-x-auto rounded-full p-2">
+          <button
+            @click="websiteStore.scrollToSection('automation-preview')"
+            class="active:animate-press bg-blue-500 hover:bg-blue-600 text-white rounded-full px-5 py-4 shadow-md text-xs md:text-base"
+          >
+            See How
+          </button>
+          <button
+            @click="websiteStore.toggleOpen('showScheduleDemo')"
+            class="active:animate-press bg-purple-500 hover:bg-purple-600 text-white rounded-full px-5 py-4 shadow-md text-xs md:text-base"
+          >
+            Schedule a Demo
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div

@@ -22,17 +22,16 @@ const websiteStore = useWebsiteStore();
       class="rounded-xl bg-gray-50 p-4 md:px-8 -mt-52 md:pb-8 flex flex-row justify-center container"
     >
       <div class="-mt-12 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-5">
-        <!-- BASE PLAN -->
         <div
           v-for="(feature, i) in websiteStore.features"
           class="rounded-xl p-5 border border-slate-400 shadow-lg glass bg-gray-50 h-52 flex flex-col justify-center items-center"
         >
           <font-awesome-icon
             :icon="['fas', feature.icon]"
-            class="text-5xl text-gray-600"
+            class="text-2xl md:text-5xl text-gray-600"
           />
 
-          <h3 class="text-xl text-gray-500 p-4 text-center">
+          <h3 class="text-sm md:text-xl text-gray-500 p-4 text-center">
             {{ feature.name }}
           </h3>
         </div>

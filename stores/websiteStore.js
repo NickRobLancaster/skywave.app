@@ -89,6 +89,7 @@ export const useWebsiteStore = defineStore("main", {
       ],
 
       showGetStarted: false,
+      showScheduleDemo: false,
       showHamburgerMenu: false,
       showSupportChat: false,
     };

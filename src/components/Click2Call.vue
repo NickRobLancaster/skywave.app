@@ -69,7 +69,7 @@ const openCallDropdown = async () => {
   <div class="relative">
     <button
       @click="openCallDropdown"
-      class="active:animate-press bg-blue-500 text-white rounded-full px-4 py-3 shadow-md"
+      class="active:animate-press bg-blue-500 text-white rounded-full px-4 py-3 shadow-md text-xs md:text-base"
     >
       <font-awesome-icon :icon="['fas', 'phone']" />
     </button>

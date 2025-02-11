@@ -7,13 +7,13 @@ const websiteStore = useWebsiteStore();
 
 const pillMenu = ref([
   {
-    name: "CRM",
-    componentName: "crm-tab",
-  },
-  {
     name: "Integrations",
     componentName: "integrations-tab",
     modules: [],
+  },
+  {
+    name: "CRM",
+    componentName: "crm-tab",
   },
 ]);
 </script>
@@ -25,11 +25,21 @@ const pillMenu = ref([
   >
     <h1 class="text-5xl font-bold">Products</h1>
     <p class="text-2xl text-center">Our Suite of Software Solutions</p>
-    <!-- <button
-      class="active:animate-press bg-blue-500 text-white rounded-full px-4 py-3 shadow-md"
-    >
-      Get Started
-    </button> -->
+    <!-- pill nav -->
+    <div class="bg-gray-200 rounded-full max-w-full">
+      <div class="flex flex-row gap-4 overflow-x-auto rounded-full p-2">
+        <router-link
+          v-for="(item, i) in pillMenu"
+          :key="i"
+          @click="websiteStore.scrollToSection('products-preview')"
+          :to="{ name: item.componentName }"
+          class="relative btn border-none rounded-full px-4 py-2 shadow-md bg-gray-50 text-gray-600 hover:text-white hover:bg-indigo-700"
+          active-class="disabled bg-indigo-500 hover:bg-indigo-700 text-white"
+        >
+          {{ item.name }}
+        </router-link>
+      </div>
+    </div>
   </div>
 
   <div class="bg-indigo-300 flex flex-row justify-center pb-44 px-5">
@@ -49,7 +59,7 @@ const pillMenu = ref([
               @click="websiteStore.scrollToSection('products-preview')"
               :to="{ name: item.componentName }"
               class="relative btn border-none rounded-full px-4 py-2 shadow-md bg-gray-50 text-gray-600 hover:text-white hover:bg-indigo-700"
-              active-class="disabled bg-indigo-500 hover:bg-indigo-700 text-white"
+              active-class="disabled bg-green-500 hover:bg-green-700 text-white"
             >
               {{ item.name }}
             </router-link>

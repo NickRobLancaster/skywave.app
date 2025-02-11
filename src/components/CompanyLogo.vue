@@ -20,7 +20,7 @@ const width = ref(props.width);
 <template>
   <div class="flex items-center gap-2">
     <img
-      src="https://skywave.app/wp-content/uploads/2020/06/skywave-transparent-small-1.png"
+      src="/images/skywave.png"
       alt="Skywave CRM Company Logo"
       :class="`w-${width}`"
     />

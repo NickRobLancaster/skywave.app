@@ -29,7 +29,7 @@ const scrollToTop = () => {
     <button
       v-show="scrollY > 100"
       @click="scrollToTop"
-      class="bg-gray-50 px-2 py-1 rounded text-gray-400"
+      class="bg-gray-100 border-none px-2 py-1 rounded text-gray-400"
     >
       <font-awesome-icon :icon="['fas', 'chevron-up']" />
     </button>

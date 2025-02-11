@@ -28,24 +28,10 @@ import GettingStarted from "./components/GettingStarted.vue";
 import TermsOfService from "./components/TermsOfService.vue";
 import PrivacyPolicy from "./components/PrivacyPolicy.vue";
 
-import EsignCoordinateGenerator from "./components/EsignCoordinateGenerator.vue";
-
 import { useWebsiteStore } from "./../stores/websiteStore";
 
 //comment for pushing to live
 const routes = [
-  {
-    path: "/components",
-    name: "components",
-    redirect: { name: "esign-coordinates" },
-    children: [
-      {
-        path: "esign-coordinates",
-        name: "esign-coordinates",
-        component: EsignCoordinateGenerator,
-      },
-    ],
-  },
   {
     path: "/",
     name: "root",
@@ -61,7 +47,7 @@ const routes = [
         path: "products", // Path should be relative
         name: "products",
         components: { root: Products },
-        redirect: { name: "crm-tab" },
+        redirect: { name: "integrations-tab" },
 
         children: [
           {

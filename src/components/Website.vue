@@ -5,7 +5,7 @@ import { ref, Teleport } from "vue";
 <template>
   <ToastNotification />
 
-  <div class="fixed bottom-2 left-2">
+  <div class="fixed bottom-3 left-1 z-40">
     <BackToTop />
   </div>
 

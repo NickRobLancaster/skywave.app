@@ -124,8 +124,9 @@ module.exports = {
       "acid",
       "lemonade",
     ],
+
     styled: true,
     utils: true,
-    base: true,
+    base: false,
   },
 };

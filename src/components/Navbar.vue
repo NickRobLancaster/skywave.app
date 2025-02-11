@@ -7,7 +7,7 @@
   >
     <!-- COMPANY LOGO -->
     <img
-      src="https://skywave.app/wp-content/uploads/2020/06/skywave-transparent-small-1.png"
+      src="/images/skywave.png"
       alt="Skywave Company Logo"
       class="w-52 py-3"
     />
